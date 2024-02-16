@@ -1,5 +1,6 @@
 const compression = require("compression");
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 var app = express();
 
@@ -7,6 +8,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(
+	rateLimit({
+		windowMs: 1 * 60 * 1000,
+		limit: 20,
+	})
+);
 app.use(compression());
 app.use(helmet());
 app.use(express.json());
