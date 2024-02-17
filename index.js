@@ -1,8 +1,8 @@
-#!/usr/bin/env node
-const app = require("../app");
-const server = require("debug")("project-inventory:server");
+require("dotenv").config();
+const mongoose = require("mongoose");
 
 const port = process.env.PORT || "3000";
+const uri = process.env.MONGODB_URI || "";
 
 const onError = error => {
 	switch (error.code) {
