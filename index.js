@@ -1,3 +1,4 @@
+const serverLog = require("debug")("project-inventory:server");
 require("dotenv").config();
 const app = require("./app");
 const mongoose = require("mongoose");
@@ -29,8 +30,9 @@ const onError = error => {
 	}
 };
 
-const onListening = () => {
-	server(`Listening on http://localhost:${port}`);
+const onListening = async () => {
+	serverLog(`Listening on http://localhost:${port}`);
+	await connectDatabase();
 };
 
 app.listen(port, onListening).on("error", onError);
