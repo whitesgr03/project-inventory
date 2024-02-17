@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const GoodsSchema = new Schema(
+const ProductSchema = new Schema(
 	{
 		name: { type: String, required: true, maxLength: 100 },
 		description: { type: String, required: true },
@@ -18,13 +18,13 @@ const GoodsSchema = new Schema(
 		virtuals: {
 			url: {
 				get() {
-					return `/inventory/goods/${this._id}`;
+					return `/inventory/product/${this._id}`;
 				},
 			},
 		},
 	}
 );
 
-const GoodsModel = mongoose.model("Goods", GoodsSchema);
+const ProductModel = mongoose.model("product", ProductSchema);
 
-module.exports = GoodsModel;
+module.exports = ProductModel;
