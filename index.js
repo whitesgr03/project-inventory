@@ -1,4 +1,6 @@
 const serverLog = require("debug")("project-inventory:server");
+const databaseLog = require("debug")("project-inventory:mongoose");
+
 require("dotenv").config();
 const app = require("./app");
 const mongoose = require("mongoose");
@@ -20,10 +22,10 @@ const connectDatabase = async () => {
 const onError = error => {
 	switch (error.code) {
 		case "EACCES":
-			server(`Port ${port} requires elevated privileges`);
+			serverLog(`Port ${port} requires elevated privileges`);
 			process.exit(1);
 		case "EADDRINUSE":
-			server(`Port ${port} is already in use`);
+			serverLog(`Port ${port} is already in use`);
 			process.exit(1);
 		default:
 			throw error;
