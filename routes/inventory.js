@@ -33,3 +33,5 @@ router
 	.post(productController.productDeletePost);
 router.get("/product/:id", productController.productDetail);
 router.get("/products", productController.productList);
+
+module.exports = router;
