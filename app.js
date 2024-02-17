@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const mongoose = require("mongoose");
+
 const compression = require("compression");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
