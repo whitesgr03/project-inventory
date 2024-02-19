@@ -1,0 +1,83 @@
+/* normalize */
+@import url("https://necolas.github.io/normalize.css/latest/normalize.css");
+/* Roboto font */
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+@import url("layout.css");
+@import url("sidebar.css");
+@import url("header.css");
+@import url("main.css");
+@import url("footer.css");
+
+:root {
+	--dark-scheme-color: #a1a1a1;
+	--dark-scheme-bgc: #121212;
+
+	--light-scheme-color: #000;
+	--light-scheme-bgc: #fff;
+
+	--sidebar-bgc: #5dbff8;
+	--main-content-bgc: #e2e8f0;
+	--header-content-shadow: #cacdd4;
+
+	/* --main-opacity-color: rgba(128, 128, 128, 0.2);
+	--main-background-color: rgb(226, 232, 240);
+	--main-paragraph-color: rgb(128, 128, 128); */
+}
+
+* {
+	box-sizing: border-box;
+	font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol";
+}
+
+[hidden] {
+	display: none !important;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+p,
+h1,
+h2,
+ul,
+li {
+	margin: 0;
+	padding: 0;
+}
+
+button {
+	border: 0;
+	outline: none;
+	padding: 0;
+	background-color: transparent;
+	cursor: pointer;
+	color: inherit;
+}
+
+li {
+	list-style: none;
+}
+
+input,
+textarea {
+	outline: 0;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+img,
+svg {
+	vertical-align: middle;
+}
+
+svg {
+	pointer-events: none;
+}
