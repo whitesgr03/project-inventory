@@ -1,0 +1,9 @@
+.container {
+	height: 100vh;
+	display: grid;
+	grid-template: 1fr 5fr auto / minmax(auto, 1fr) 5fr;
+	grid-template-areas:
+		"sidebar header"
+		"sidebar main"
+		"sidebar footer";
+}
