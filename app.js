@@ -24,7 +24,13 @@ app.use(
 	})
 );
 app.use(compression());
-app.use(helmet());
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			"script-src": ["'self'", "code.iconify.design"],
+		},
+	})
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
