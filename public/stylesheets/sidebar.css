@@ -22,8 +22,6 @@ nav ul {
 	font-size: 1.2rem;
 	display: flex;
 	flex-direction: column;
-	row-gap: 10px;
-	padding: 10px 0;
 }
 
 nav ul a {
