@@ -64,15 +64,42 @@ header .theme .icon span {
 	top: 0;
 }
 
-.container.light header .theme .icon span:last-of-type {
-	opacity: 0;
-	visibility: hidden;
-	pointer-events: none;
+/* light scheme */
+.light header {
+	box-shadow: 0px 5px 5px 1px var(--light-scheme-shadow);
+	background-color: var(--light-scheme-bgc);
+	color: var(--light-scheme-color);
 }
-.container.dark header .theme .icon span:first-of-type {
-	opacity: 0;
-	visibility: hidden;
-	pointer-events: none;
+
+.light header h1 a {
+	color: var(--light-scheme-highlight-color);
+}
+
+.light header button:hover {
+	background-color: var(--light-button-link-hover-bgc);
+}
+
+.light header .hamburger > div .line {
+	background-color: var(--light-scheme-color);
+}
+
+/* dark scheme */
+.dark header {
+	border-bottom-color: var(--light-scheme-shadow);
+	background-color: var(--dark-scheme-bgc);
+	color: var(--dark-scheme-color);
+}
+
+.dark header h1 a {
+	color: var(--dark-scheme-highlight-color);
+}
+
+.dark header button:hover {
+	background-color: var(--dark-button-link-hover-bgc);
+}
+
+.dark header .hamburger > div .line {
+	background-color: var(--dark-scheme-color);
 }
 
 /* header {
