@@ -8,7 +8,14 @@ const Products = require("../models/product");
 router.get(
 	"/",
 	asyncHandler(async (req, res, next) => {
-		res.send("This is index page");
+		const numCategories = Category.countDocuments().exec();
+		const numProducts = Products.countDocuments().exec();
+
+		res.render("index", {
+			title: "Project Y",
+			categories_count: await numCategories,
+			products_count: await numProducts,
+		});
 	})
 );
 
