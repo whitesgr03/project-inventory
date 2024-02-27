@@ -8,31 +8,23 @@ html(lang='en')
         link(rel='stylesheet', href='stylesheets/index.css')
     body
         div.container
-            nav
-                div.logo
-                    a(href='/')
-                        //- img(src='#' alt='logo')
-                        h1 Project Y
-                ul
-                    li
-                        a(href='/')
-                            iconify-icon.icon(icon="mdi:home", width="1.5em", height="1.5em")
-                            div.wrap Home
-                        
-                    li
-                        a(href='/inventory/category')
-                            iconify-icon.icon(icon="mdi:pets", width="1.5em", height="1.5em")
-                            div.wrap All Categories
-
-                    li
-                        a(href='/inventory/products')
-                            iconify-icon.icon(icon="tabler:dog-bowl" width="1.5em" height="1.5em")
-                            div.wrap All Products
-
             header
-                block header
+                button.hamburger(type='button' tabindex)
+                    div
+                        span.line
+                        span.line
+                        span.line
+                    | Menu
 
-            main
+                h1.logo
+                    a(href='/')= title
+
+                button.theme(type='button' tabindex)
+                    div.icon
+                        span.mdi--weather-sunny
+                        span.mdi--moon-and-stars
+                    | Theme
+
                 block content
 
             footer This is footer
