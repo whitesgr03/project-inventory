@@ -79,3 +79,11 @@ svg {
 svg {
 	pointer-events: none;
 }
+
+.icon span {
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
