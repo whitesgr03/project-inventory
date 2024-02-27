@@ -16,7 +16,7 @@ const ProductSchema = new Schema(
 	},
 	{
 		virtuals: {
-			url: {
+			detailUrl: {
 				get() {
 					return `/inventory/product/${this._id}`;
 				},
