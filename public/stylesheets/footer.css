@@ -15,3 +15,17 @@ footer .icon {
 	width: 45px;
 	height: 45px;
 }
+
+/* light scheme */
+.light footer {
+	box-shadow: 0px -5px 5px 1px var(--light-scheme-shadow);
+	background-color: var(--light-scheme-bgc);
+	color: var(--light-scheme-color);
+}
+
+/* dark scheme */
+.dark footer {
+	border-top-color: var(--light-scheme-shadow);
+	background-color: var(--dark-scheme-bgc);
+	color: var(--dark-scheme-color);
+}
