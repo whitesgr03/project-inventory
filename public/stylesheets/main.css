@@ -1,7 +1,6 @@
 main {
 	--main-content-bgc: #e2e8f0;
 	grid-area: main;
-	background-color: var(--main-content-bgc);
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
