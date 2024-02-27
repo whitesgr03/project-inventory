@@ -10,13 +10,17 @@
 @import url("footer.css");
 
 :root {
-	--dark-scheme-color: #a1a1a1;
-	--dark-scheme-bgc: #121212;
+	--dark-scheme-color: #d1d1d1;
+	--dark-scheme-highlight-color: #f2a145;
+	--dark-scheme-bgc: #0a1324;
+	--dark-scheme-shadow: #cacdd4;
+	--dark-button-link-hover-bgc: #483b2e;
 
 	--light-scheme-color: #000;
+	--light-scheme-highlight-color: #195c86;
 	--light-scheme-bgc: #e9e3e3;
 	--light-scheme-shadow: #cacdd4;
-	--light-button-link--hover-bgc: #a1a1a1;
+	--light-button-link-hover-bgc: #a1a1a1;
 }
 
 * {
