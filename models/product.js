@@ -21,6 +21,11 @@ const ProductSchema = new Schema(
 					return `/inventory/product/${this._id}`;
 				},
 			},
+			imageUrl: {
+				get() {
+					return `https://storage.googleapis.com/project-inventory/${this.name}`;
+				}
+			}
 		},
 	}
 );
