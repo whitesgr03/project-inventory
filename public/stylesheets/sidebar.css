@@ -28,11 +28,7 @@ nav ul a {
 	display: flex;
 	align-items: center;
 	column-gap: 0.5rem;
-	padding: 0 10px;
-}
-
-nav ul a:hover {
-	background-color: var(--light-button-link--hover-bgc);
+	padding: 1px 10px;
 }
 
 nav ul a:hover {
