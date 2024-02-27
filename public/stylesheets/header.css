@@ -1,0 +1,127 @@
+header {
+	grid-area: header;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--light-scheme-bgc);
+	box-shadow: 0px 5px 5px 1px var(--light-scheme-shadow);
+	z-index: 1;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+header button {
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+header button:hover {
+	background-color: var(--light-button-link--hover-bgc);
+}
+
+header h1 a {
+	font-style: italic;
+}
+
+/* hamburger */
+header .hamburger > div {
+	height: 45px;
+	width: 35px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	position: relative;
+}
+header .hamburger > div .line {
+	--hamburgerLineHeight: 3px;
+	display: inline-block;
+	width: 100%;
+	height: var(--hamburgerLineHeight);
+	background-color: black;
+	transition: all 0.3s ease;
+}
+header .hamburger > div.active {
+	justify-content: center;
+}
+header .hamburger > div.active .line:nth-child(1) {
+	transform: translateY(calc(var(--hamburgerLineHeight))) rotate(-45deg);
+}
+header .hamburger > div.active .line:nth-child(2) {
+	opacity: 0;
+}
+header .hamburger > div.active .line:nth-child(3) {
+	transform: translateY(calc(0px - var(--hamburgerLineHeight))) rotate(45deg);
+}
+
+/* theme */
+header .theme .icon {
+	width: 45px;
+	height: 45px;
+	position: relative;
+}
+
+header .theme .icon span {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.container.light header .theme .icon span:last-of-type {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+.container.dark header .theme .icon span:first-of-type {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+/* header {
+	--header-link-bgc: #3b9fd8;
+	grid-area: header;
+	padding: 1rem 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--light-scheme-bgc);
+	box-shadow: 0px 5px 5px 1px var(--header-content-shadow);
+	z-index: 1;
+	position: relative;
+} */
+
+/* header h2 {
+	font-size: 2.5rem;
+}
+
+header .link-wrap {
+	overflow: hidden;
+	border: 1.5px solid transparent;
+	border-radius: 10px;
+	background-color: var(--sidebar-bgc);
+	transition: transform 0.1s ease;
+}
+
+header .link-wrap:hover {
+	border-color: var(--light-scheme-color);
+}
+
+header .link-wrap:active {
+	transform: scale(0.85);
+}
+
+header .link-wrap a {
+	display: block;
+	padding: 15px 40px;
+	color: var(--light-scheme-bgc);
+	transition: transform 0.3s ease;
+}
+
+header .link-wrap:hover a {
+	transform: scale(1.2);
+	background-color: var(--header-link-bgc);
+} */
