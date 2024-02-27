@@ -34,9 +34,32 @@ nav ul a {
 nav ul a:hover {
 	font-style: italic;
 }
+
 nav ul a .icon {
 	display: flex;
 	align-items: center;
 	width: 30px;
 	height: 30px;
+}
+
+/* dark scheme */
+.dark nav {
+	background-color: var(--dark-scheme-bgc);
+	border-color: var(--dark-scheme-shadow);
+	border-top: 0;
+}
+
+.dark nav ul a:hover {
+	background-color: var(--dark-button-link-hover-bgc);
+}
+
+/* light scheme */
+
+.light nav {
+	background-color: var(--light-scheme-bgc);
+	border-color: var(--light-scheme-shadow);
+}
+
+.light nav ul a:hover {
+	background-color: var(--light-button-link-hover-bgc);
 }
