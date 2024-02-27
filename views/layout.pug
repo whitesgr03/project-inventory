@@ -25,7 +25,29 @@ html(lang='en')
                         span.mdi--moon-and-stars
                     | Theme
 
+            main
+                nav
+                    ul
+                        li
+                            a(href='/')
+                                div.icon
+                                    span.mdi--home
+                                | Home
+                        li
+                            a(href='/inventory/category')
+                                div.icon
+                                    span.mdi--pets
+                                | All Categories
+                        li
+                            a(href='/inventory/products')
+                                div.icon
+                                    span.tabler--dog-bowl
+                                | All Products
                 block content
 
-            footer This is footer
+            footer 
+                a(href="#" rel="noreferrer" target="_blank" aria-label="visit author's github")
+                div.icon
+                    span.mdi--github 
+                span © 2023 - Designed & coded by Weiss Bai
                 
