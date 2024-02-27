@@ -1,6 +1,5 @@
 nav {
-	background-color: var(--light-scheme-bgc);
-	border: 1px solid var(--light-scheme-shadow);
+	border: 1px solid transparent;
 	border-left: 0;
 	display: flex;
 	flex-direction: column;
