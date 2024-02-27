@@ -18,10 +18,6 @@ header button {
 	align-items: center;
 }
 
-header button:hover {
-	background-color: var(--light-button-link--hover-bgc);
-}
-
 header h1 a {
 	font-style: italic;
 }
