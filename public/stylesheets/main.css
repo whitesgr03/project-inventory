@@ -43,3 +43,39 @@ main .counts ul {
 	row-gap: 1rem;
 	align-items: center;
 }
+
+/* light scheme */
+.light main {
+	background-color: var(--main-content-bgc);
+	color: var(--light-scheme-color);
+}
+
+.light main .counts {
+	border-color: var(--light-scheme-color);
+}
+
+.light main .counts h3 {
+	color: var(--light-scheme-highlight-color);
+}
+
+.light main .text .title span {
+	color: var(--light-scheme-highlight-color);
+}
+
+/* dark scheme */
+.dark main {
+	background-color: var(--dark-scheme-bgc);
+	color: var(--dark-scheme-color);
+}
+
+.dark main .counts {
+	border-color: var(--dark-scheme-color);
+}
+
+.dark main .counts h3 {
+	color: var(--dark-scheme-highlight-color);
+}
+
+.dark main .text .title span {
+	color: var(--dark-scheme-highlight-color);
+}
