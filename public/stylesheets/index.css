@@ -14,15 +14,9 @@
 	--dark-scheme-bgc: #121212;
 
 	--light-scheme-color: #000;
-	--light-scheme-bgc: #fff;
-
-	--sidebar-bgc: #5dbff8;
-	--main-content-bgc: #e2e8f0;
-	--header-content-shadow: #cacdd4;
-
-	/* --main-opacity-color: rgba(128, 128, 128, 0.2);
-	--main-background-color: rgb(226, 232, 240);
-	--main-paragraph-color: rgb(128, 128, 128); */
+	--light-scheme-bgc: #e9e3e3;
+	--light-scheme-shadow: #cacdd4;
+	--light-button-link--hover-bgc: #a1a1a1;
 }
 
 * {
