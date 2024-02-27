@@ -25,9 +25,19 @@ app.use(
 );
 app.use(compression());
 app.use(
-	helmet.contentSecurityPolicy({
-		directives: {
-			"script-src": ["'self'", "code.iconify.design"],
+	helmet({
+		contentSecurityPolicy: {
+			directives: {
+				"img-src": [
+					"storage.googleapis.com",
+					"data:",
+				],
+				"style-src": [
+					"'self'",
+					"fonts.googleapis.com",
+					"necolas.github.io",
+				],
+			},
 		},
 	})
 );
