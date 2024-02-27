@@ -40,8 +40,7 @@ header .hamburger > div .line {
 	display: inline-block;
 	width: 100%;
 	height: var(--hamburgerLineHeight);
-	background-color: black;
-	transition: all 0.3s ease;
+	transition: all 0.3s ease, background-color 0s;
 }
 header .hamburger > div.active {
 	justify-content: center;
