@@ -9,21 +9,23 @@ html(lang='en')
     body
         div.container
             header
-                button.hamburger(type='button' tabindex)
-                    div
-                        span.line
-                        span.line
-                        span.line
-                    | Menu
+                div.hamburger
+                    button(type='button' tabindex)
+                        div
+                            span.line
+                            span.line
+                            span.line
+                        | Menu
 
                 h1.logo
                     a(href='/')= title
 
-                button.theme(type='button' tabindex)
-                    div.icon
-                        span.mdi--weather-sunny
-                        span.mdi--moon-and-stars
-                    | Theme
+                div.theme
+                    button(type='button' tabindex)
+                        div.icon
+                            span.mdi--weather-sunny
+                            span.mdi--moon-and-stars
+                        | Theme
 
             main
                 nav
