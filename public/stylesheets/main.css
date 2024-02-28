@@ -5,13 +5,14 @@ main {
 	grid-template: 1fr / 1fr;
 	position: relative;
 }
+
+main .content {
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
 	align-items: center;
 	justify-content: center;
 	padding: 15px 10px;
-	position: relative;
 }
 
 main .text {
