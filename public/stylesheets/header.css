@@ -123,54 +123,7 @@ header .theme .icon span {
 }
 
 @media (min-width: 1024px) {
-
-
 	header h1 {
 		font-size: 2.5rem;
 	}
 }
-
-/* header {
-	--header-link-bgc: #3b9fd8;
-	grid-area: header;
-	padding: 1rem 2rem;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background-color: var(--light-scheme-bgc);
-	box-shadow: 0px 5px 5px 1px var(--header-content-shadow);
-	z-index: 1;
-	position: relative;
-} */
-
-/* header h2 {
-	font-size: 2.5rem;
-}
-
-header .link-wrap {
-	overflow: hidden;
-	border: 1.5px solid transparent;
-	border-radius: 10px;
-	background-color: var(--sidebar-bgc);
-	transition: transform 0.1s ease;
-}
-
-header .link-wrap:hover {
-	border-color: var(--light-scheme-color);
-}
-
-header .link-wrap:active {
-	transform: scale(0.85);
-}
-
-header .link-wrap a {
-	display: block;
-	padding: 15px 40px;
-	color: var(--light-scheme-bgc);
-	transition: transform 0.3s ease;
-}
-
-header .link-wrap:hover a {
-	transform: scale(1.2);
-	background-color: var(--header-link-bgc);
-} */
