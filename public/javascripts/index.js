@@ -9,14 +9,14 @@ const handleClick = e => {
 };
 
 const handleCloseHamburger = () => {
-	const hamburgerBtn = document.querySelector(".hamburger > div");
+	const hamburgerBtn = document.querySelector(".hamburger button > div");
 	const sidebar = document.querySelector("nav");
 	hamburgerBtn.classList.remove("active");
 	sidebar.classList.remove("show");
 };
 
 const handleActiveHamburger = () => {
-	const hamburgerBtn = document.querySelector(".hamburger > div");
+	const hamburgerBtn = document.querySelector(".hamburger button > div");
 	const sidebar = document.querySelector("nav");
 	hamburgerBtn.classList.toggle("active");
 	sidebar.classList.toggle("show");
