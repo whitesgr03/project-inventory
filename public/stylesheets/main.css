@@ -1,6 +1,10 @@
 main {
 	--main-content-bgc: #e2e8f0;
 	grid-area: main;
+	display: grid;
+	grid-template: 1fr / 1fr;
+	position: relative;
+}
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
