@@ -98,7 +98,7 @@ header .theme .icon span {
 	background-color: var(--dark-button-link-hover-bgc);
 }
 
-.dark header .hamburger > div .line {
+.dark header .hamburger button > div .line {
 	background-color: var(--dark-scheme-color);
 }
 
