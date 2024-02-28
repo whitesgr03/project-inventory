@@ -62,3 +62,32 @@ nav ul a .icon {
 .light nav ul a:hover {
 	background-color: var(--light-button-link-hover-bgc);
 }
+
+@media (min-width: 500px) {
+	nav {
+		right: 50%;
+	}
+}
+
+@media (min-width: 768px) {
+	nav {
+		grid-area: sidebar;
+		position: relative;
+		transform: translateX(0%);
+		border-bottom: 0;
+		border-top: 0;
+	}
+
+	nav ul a:hover {
+		font-style: normal;
+	}
+
+	nav ul a .icon {
+		width: 30px;
+		height: 30px;
+	}
+
+	.light nav {
+		border-color: var(--light-scheme-color);
+	}
+}
