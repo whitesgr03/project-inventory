@@ -23,7 +23,7 @@ header h1 a {
 }
 
 /* hamburger */
-header .hamburger > div {
+header .hamburger button > div {
 	height: 45px;
 	width: 35px;
 	display: flex;
@@ -31,23 +31,23 @@ header .hamburger > div {
 	justify-content: space-evenly;
 	position: relative;
 }
-header .hamburger > div .line {
+header .hamburger button > div .line {
 	--hamburgerLineHeight: 3px;
 	display: inline-block;
 	width: 100%;
 	height: var(--hamburgerLineHeight);
 	transition: all 0.3s ease, background-color 0s;
 }
-header .hamburger > div.active {
+header .hamburger button > div.active {
 	justify-content: center;
 }
-header .hamburger > div.active .line:nth-child(1) {
+header .hamburger button > div.active .line:nth-child(1) {
 	transform: translateY(calc(var(--hamburgerLineHeight))) rotate(-45deg);
 }
-header .hamburger > div.active .line:nth-child(2) {
+header .hamburger button > div.active .line:nth-child(2) {
 	opacity: 0;
 }
-header .hamburger > div.active .line:nth-child(3) {
+header .hamburger button > div.active .line:nth-child(3) {
 	transform: translateY(calc(0px - var(--hamburgerLineHeight))) rotate(45deg);
 }
 
