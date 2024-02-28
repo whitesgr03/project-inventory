@@ -94,7 +94,7 @@ header .theme .icon span {
 	color: var(--dark-scheme-highlight-color);
 }
 
-.dark header button:hover {
+.dark header > div:hover {
 	background-color: var(--dark-button-link-hover-bgc);
 }
 
