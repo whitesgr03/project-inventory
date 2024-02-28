@@ -75,11 +75,11 @@ header .theme .icon span {
 	color: var(--light-scheme-highlight-color);
 }
 
-.light header button:hover {
+.light header > div:hover {
 	background-color: var(--light-button-link-hover-bgc);
 }
 
-.light header .hamburger > div .line {
+.light header .hamburger button > div .line {
 	background-color: var(--light-scheme-color);
 }
 
