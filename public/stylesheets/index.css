@@ -118,6 +118,20 @@ svg {
 
 /* dark scheme */
 
+.dark * {
+	font-weight: 300;
+}
+
+.dark h1,
+.dark h1 a,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+	font-weight: 500;
+}
+
 .dark .mdi--github,
 .dark .mdi--home,
 .dark .mdi--pets,
@@ -133,6 +147,20 @@ svg {
 }
 
 /* light scheme */
+
+.light * {
+	font-weight: 400;
+}
+
+.light h1,
+.light h1 a,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6 {
+	font-weight: 700;
+}
 
 .light .mdi--moon-and-stars {
 	opacity: 0;
