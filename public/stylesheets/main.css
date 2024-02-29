@@ -14,15 +14,16 @@ main .content > div {
 	height: 100%;
 }
 
+/* home */
+main .home {
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
 	align-items: center;
 	justify-content: center;
-	padding: 15px 10px;
 }
 
-main .text {
+main .home .text {
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
@@ -32,13 +33,13 @@ main .text {
 	text-align: center;
 }
 
-main .text .title span {
+main .home .text .title span {
 	font-size: 2rem;
 	margin-bottom: 1rem;
 	display: block;
 }
 
-main .counts {
+main .home .counts {
 	display: flex;
 	flex-direction: column;
 	row-gap: 1rem;
@@ -49,7 +50,7 @@ main .counts {
 	width: 25%;
 }
 
-main .counts ul {
+main .home .counts ul {
 	display: flex;
 	flex-direction: column;
 	row-gap: 1rem;
