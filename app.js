@@ -28,10 +28,7 @@ app.use(
 	helmet({
 		contentSecurityPolicy: {
 			directives: {
-				"img-src": [
-					"storage.googleapis.com",
-					"data:",
-				],
+				"img-src": ["storage.googleapis.com", "data:"],
 				"style-src": [
 					"'self'",
 					"fonts.googleapis.com",
