@@ -50,7 +50,8 @@ h1,
 h2,
 h3,
 ul,
-li {
+li,
+td {
 	margin: 0;
 	padding: 0;
 }
