@@ -37,8 +37,8 @@ nav ul a:hover {
 nav ul a .icon {
 	display: flex;
 	align-items: center;
-	width: 45px;
-	height: 45px;
+	width: 30px;
+	height: 30px;
 }
 
 /* dark scheme */
