@@ -1,5 +1,17 @@
 const asyncHandler = require("express-async-handler");
 
+const Category = require("../models/category");
+const Product = require("../models/product");
+
+const index = asyncHandler(async (req, res, next) => {
+	const numCategories = Category.countDocuments().exec();
+	const numProducts = Product.countDocuments().exec();
+
+	res.render("index", {
+		categories_count: await numCategories,
+		products_count: await numProducts,
+	});
+});
 
 const categoryList = asyncHandler(async (req, res, next) => {
 	res.send("This is category list page");
@@ -31,6 +43,7 @@ const categoryDeletePost = [
 ];
 
 module.exports = {
+	index,
 	categoryList,
 	categoryDetail,
 	categoryCreateGet,
