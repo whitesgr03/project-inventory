@@ -14,7 +14,14 @@ const index = asyncHandler(async (req, res, next) => {
 });
 
 const categoryList = asyncHandler(async (req, res, next) => {
-	res.send("This is category list page");
+	const categories = await Category.find({}, { _id: 0, description: 0 })
+		.sort({ name: 1 })
+		.exec();
+
+	res.render("categoryList", {
+		title: "Category List",
+		categories,
+	});
 });
 const categoryDetail = asyncHandler(async (req, res, next) => {
 	res.send("This is category detail page");
