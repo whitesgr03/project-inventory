@@ -1,12 +1,13 @@
 extends layout
 
 block content
-    div.text
-        p.title #[span Welcome] to our Express website developed
-        p.description A very basic #[em Inventory management] app for virtual stores
-    div.counts
-        h3 Record Counts
-        ul
-            li #[strong Categories:] #{categories_count}
-            li #[strong Products:] #{products_count}
+    div.home
+        div.text
+            p.title #[span Welcome] to our Express website developed
+            p.description A very basic #[em Inventory management] app for virtual stores
+        div.counts
+            h3 Record Counts
+            ul
+                li #[strong Categories:] #{categories_count}
+                li #[strong Products:] #{products_count}
 
