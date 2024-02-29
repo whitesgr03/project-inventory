@@ -57,6 +57,47 @@ main .home .counts ul {
 	align-items: center;
 }
 
+/* category */
+main .category {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+main .category .title {
+	display: flex;
+	align-items: center;
+	column-gap: 0.5rem;
+}
+main .category .title .icon {
+	width: 30px;
+	height: 100%;
+}
+
+main .category .board {
+	flex: 1 1 100%;
+}
+
+main .category table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+main .category table th {
+	padding: 15px;
+}
+
+main .category table a {
+	display: inline-block;
+	width: 100%;
+	padding: 15px;
+}
+
+main .category table a:hover {
+	font-style: italic;
+}
+
 /* light scheme */
 .light main {
 	background-color: var(--main-content-bgc);
@@ -73,6 +114,17 @@ main .home .counts ul {
 
 .light main .text .title span {
 	color: var(--light-scheme-highlight-color);
+}
+
+.light main .category table {
+	border-color: var(--light-scheme-color);
+}
+.light main .category table th {
+	background-color: var(--light-button-link-hover-bgc);
+}
+.light main .category table a:hover {
+	background-color: var(--light-table-link-hover-bgc);
+	font-weight: 700;
 }
 
 /* dark scheme */
@@ -93,6 +145,25 @@ main .home .counts ul {
 	color: var(--dark-scheme-highlight-color);
 }
 
+.dark main .category table {
+	border-color: var(--dark-scheme-color);
+}
+
+.dark main .category table th {
+	background-color: var(--dark-button-link-hover-bgc);
+}
+
+.dark main .category table a:hover {
+	background-color: var(--dark-table-link-hover-bgc);
+	font-weight: 500;
+}
+
+@media (min-width: 500px) {
+	main .category {
+		width: 80%;
+		margin: 0 auto;
+	}
+}
 @media (min-width: 768px) {
 	main {
 		grid-template:
