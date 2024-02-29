@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    div.category
+        div.title 
+            div.icon
+                span.mdi--pets
+            h2= title
+
+        div.board
+            table(border="1")
+                thead 
+                    tr
+                        th Name
+                tbody 
+                    each category in categories
+                        tr
+                            td 
+                                a(href=category.url)= category.name
