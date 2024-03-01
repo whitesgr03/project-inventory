@@ -1,5 +1,5 @@
 @import url("home.css");
-@import url("categoryList.css");
+
 main {
 	--main-content-bgc: #e2e8f0;
 	grid-area: main;
@@ -12,6 +12,26 @@ main .content {
 	padding: 15px 10px;
 }
 
+main .category,
+main .category div,
+main .product {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+main .category .title,
+main .product .title {
+	display: flex;
+	align-items: center;
+	column-gap: 0.5rem;
+}
+
+main .category .title .icon,
+main .product .title .icon {
+	width: 30px;
+	height: 30px;
+}
 
 main ul.list {
 	display: flex;
@@ -69,5 +89,9 @@ main ul.list li a:hover {
 			"sidebar content" 1fr
 			"sidebar content" 1fr
 			/ auto 1fr;
+	}
+	.product .title .icon,
+	.category .title .icon {
+		display: none;
 	}
 }
