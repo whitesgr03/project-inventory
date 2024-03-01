@@ -1,3 +1,5 @@
+@import url("home.css");
+@import url("categoryList.css");
 main {
 	--main-content-bgc: #e2e8f0;
 	grid-area: main;
@@ -14,117 +16,10 @@ main .content > div {
 	height: 100%;
 }
 
-/* home */
-main .home {
-	display: flex;
-	flex-direction: column;
-	row-gap: 2rem;
-	align-items: center;
-	justify-content: center;
-}
-
-main .home .text {
-	display: flex;
-	flex-direction: column;
-	row-gap: 2rem;
-	align-items: center;
-	justify-content: center;
-	padding: 0 20px;
-	text-align: center;
-}
-
-main .home .text .title span {
-	font-size: 2rem;
-	margin-bottom: 1rem;
-	display: block;
-}
-
-main .home .counts {
-	display: flex;
-	flex-direction: column;
-	row-gap: 1rem;
-	border: 1px solid transparent;
-	border-radius: 10px;
-	padding: 20px 10px;
-	min-width: 200px;
-	width: 25%;
-}
-
-main .home .counts ul {
-	display: flex;
-	flex-direction: column;
-	row-gap: 1rem;
-	align-items: center;
-}
-
-/* category */
-main .category {
-	display: flex;
-	flex-direction: column;
-	row-gap: 20px;
-}
-
-main .category .title {
-	display: flex;
-	align-items: center;
-	column-gap: 0.5rem;
-}
-main .category .title .icon {
-	width: 30px;
-	height: 100%;
-}
-
-main .category .board {
-	flex: 1 1 100%;
-}
-
-main .category table {
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-main .category table th {
-	padding: 15px;
-}
-
-main .category table a {
-	display: inline-block;
-	width: 100%;
-	padding: 15px;
-}
-
-main .category table a:hover {
-	font-style: italic;
-}
-
 /* light scheme */
 .light main {
 	background-color: var(--main-content-bgc);
 	color: var(--light-scheme-color);
-}
-
-.light main .counts {
-	border-color: var(--light-scheme-color);
-}
-
-.light main .counts h3 {
-	color: var(--light-scheme-highlight-color);
-}
-
-.light main .text .title span {
-	color: var(--light-scheme-highlight-color);
-}
-
-.light main .category table {
-	border-color: var(--light-scheme-color);
-}
-.light main .category table th {
-	background-color: var(--light-button-link-hover-bgc);
-}
-.light main .category table a:hover {
-	background-color: var(--light-table-link-hover-bgc);
-	font-weight: 700;
 }
 
 /* dark scheme */
@@ -133,46 +28,11 @@ main .category table a:hover {
 	color: var(--dark-scheme-color);
 }
 
-.dark main .counts {
-	border-color: var(--dark-scheme-color);
-}
-
-.dark main .counts h3 {
-	color: var(--dark-scheme-highlight-color);
-}
-
-.dark main .text .title span {
-	color: var(--dark-scheme-highlight-color);
-}
-
-.dark main .category table {
-	border-color: var(--dark-scheme-color);
-}
-
-.dark main .category table th {
-	background-color: var(--dark-button-link-hover-bgc);
-}
-
-.dark main .category table a:hover {
-	background-color: var(--dark-table-link-hover-bgc);
-	font-weight: 500;
-}
-
-@media (min-width: 500px) {
-	main .category {
-		width: 80%;
-		margin: 0 auto;
-	}
-}
 @media (min-width: 768px) {
 	main {
 		grid-template:
 			"sidebar content" 1fr
 			"sidebar content" 1fr
 			/ auto 1fr;
-	}
-
-	main .content {
-		grid-area: content;
 	}
 }
