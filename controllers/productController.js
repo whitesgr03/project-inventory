@@ -1,8 +1,16 @@
 const asyncHandler = require("express-async-handler");
 
+const Product = require("../models/product");
 
 const productList = asyncHandler(async (req, res, next) => {
-	res.send("This is product list page");
+	const products = await Product.find({}, { name: 1 })
+		.sort({ name: 1 })
+		.exec();
+
+	res.render("productList", {
+		title: "Product List",
+		products,
+	});
 });
 const productDetail = asyncHandler(async (req, res, next) => {
 	res.send("This is product detail page");
