@@ -12,8 +12,24 @@ main .content {
 	padding: 15px 10px;
 }
 
-main .content > div {
-	height: 100%;
+
+main ul.list {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid transparent;
+}
+
+main ul.list li a {
+	display: inline-block;
+	width: 100%;
+	padding: 10px;
+}
+
+main ul.list li:not(:last-of-type) a {
+	border-bottom: 1px solid transparent;
+}
+main ul.list li a:hover {
+	font-style: italic;
 }
 
 /* light scheme */
@@ -22,11 +38,30 @@ main .content > div {
 	color: var(--light-scheme-color);
 }
 
+.light main .content ul.list,
+.light main .content ul.list li:not(:last-of-type) a {
+	border-color: var(--light-scheme-color);
+}
+
+.light main .content ul.list li a:hover {
+	background-color: var(--light-list-link-hover-bgc);
+}
+
 /* dark scheme */
 .dark main {
 	background-color: var(--dark-scheme-bgc);
 	color: var(--dark-scheme-color);
 }
+
+.dark main .content ul.list,
+.dark main .content ul.list li:not(:last-of-type) a {
+	border-color: var(--dark-scheme-color);
+}
+
+.dark main .content ul.list li a:hover {
+	background-color: var(--dark-list-link-hover-bgc);
+}
+
 
 @media (min-width: 768px) {
 	main {
