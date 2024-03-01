@@ -4,6 +4,7 @@
 	row-gap: 2rem;
 	align-items: center;
 	justify-content: center;
+	height: 100%;
 }
 
 .home .title {
