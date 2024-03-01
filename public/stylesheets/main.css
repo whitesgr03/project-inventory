@@ -82,6 +82,12 @@ main ul.list li a:hover {
 	background-color: var(--dark-list-link-hover-bgc);
 }
 
+@media (min-width: 500px) {
+	main .content {
+		width: 80%;
+		margin: 0 auto;
+	}
+}
 
 @media (min-width: 768px) {
 	main {
