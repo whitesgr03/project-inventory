@@ -24,7 +24,26 @@ const categoryList = asyncHandler(async (req, res, next) => {
 	});
 });
 const categoryDetail = asyncHandler(async (req, res, next) => {
-	res.send("This is category detail page");
+	const [category, products] = await Promise.all([
+		Category.findById(req.params.id, { name: 1 }).exec(),
+		Product.find({ category: req.params.id }, { name: 1 })
+			.sort({ name: 1 })
+			.exec(),
+	]);
+
+	const categoryNotFound = () => {
+		const err = new Error("Category not found");
+		err.status = 404;
+		return next(err);
+	};
+
+	category === null
+		? categoryNotFound()
+		: res.render("categoryDetail", {
+				title: "Category Detail",
+				category,
+				products,
+		  });
 });
 const categoryCreateGet = asyncHandler(async (req, res, next) => {
 	res.send("This is category create get page");
