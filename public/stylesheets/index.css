@@ -130,7 +130,8 @@ svg {
 .dark h3,
 .dark h4,
 .dark h5,
-.dark h6 {
+.dark h6,
+.dark strong {
 	font-weight: 500;
 }
 
@@ -160,7 +161,8 @@ svg {
 .light h3,
 .light h4,
 .light h5,
-.light h6 {
+.light h6,
+.light strong {
 	font-weight: 700;
 }
 
