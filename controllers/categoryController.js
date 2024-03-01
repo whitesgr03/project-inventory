@@ -14,7 +14,7 @@ const index = asyncHandler(async (req, res, next) => {
 });
 
 const categoryList = asyncHandler(async (req, res, next) => {
-	const categories = await Category.find({}, { _id: 0, description: 0 })
+	const categories = await Category.find({}, { description: 0 })
 		.sort({ name: 1 })
 		.exec();
 
