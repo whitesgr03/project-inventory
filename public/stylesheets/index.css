@@ -15,14 +15,14 @@
 	--dark-scheme-bgc: #0a1324;
 	--dark-scheme-shadow: #cacdd4;
 	--dark-button-link-hover-bgc: #483b2e;
-	--dark-table-link-hover-bgc: #573614;
+	--dark-list-link-hover-bgc: #573614;
 
 	--light-scheme-color: #000;
 	--light-scheme-highlight-color: #195c86;
 	--light-scheme-bgc: #e9e3e3;
 	--light-scheme-shadow: #cacdd4;
 	--light-button-link-hover-bgc: #a1a1a1;
-	--light-table-link-hover-bgc: #c4c4c4;
+	--light-list-link-hover-bgc: #c4c4c4;
 }
 
 * {
