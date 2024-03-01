@@ -1,9 +1,12 @@
 extends layout
 
 block content
-    div.categoryDetail
-        div.title 
-            h3 Products for category: #{category.name}
+    div.category
+        h2= category.name
+
+        div
+            h3 Description:
+            p=category.description
 
         div.board
             if products.length
