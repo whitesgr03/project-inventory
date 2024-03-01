@@ -56,15 +56,15 @@
 
 /* dark scheme */
 
-.dark .counts {
+.dark .home .counts {
 	border-color: var(--dark-scheme-color);
 }
 
-.dark .counts h3 {
+.dark .home .counts h3 {
 	color: var(--dark-scheme-highlight-color);
 }
 
-.dark .title span {
+.dark .home .title span {
 	color: var(--dark-scheme-highlight-color);
 }
 
