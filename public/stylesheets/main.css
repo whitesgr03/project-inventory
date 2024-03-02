@@ -12,6 +12,7 @@ main .content {
 	padding: 15px 10px;
 }
 
+/* category and product */
 main .category,
 main .category div,
 main .product {
@@ -33,6 +34,7 @@ main .product .title .icon {
 	height: 30px;
 }
 
+/* list */
 main ul.list {
 	display: flex;
 	flex-direction: column;
