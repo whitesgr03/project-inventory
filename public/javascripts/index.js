@@ -37,4 +37,10 @@ const setDarkScheme = () => {
 	return darkScheme;
 };
 
+const getDarkScheme = () =>
+	(JSON.parse(localStorage.getItem("darkScheme")) ?? setDarkScheme()) &&
+	container.classList.add("dark");
+
+getDarkScheme();
+
 container.addEventListener("click", handleClick);
