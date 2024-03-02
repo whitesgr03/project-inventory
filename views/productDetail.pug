@@ -1,0 +1,18 @@
+
+extends layout
+
+block content
+    div.product        
+        h2= product.name
+
+        div 
+            a(href=product.detailUrl+'/delete') Delete Product
+            a(href=product.detailUrl+'/update') Update Product
+        
+        img(src=product.imageUrl, alt=product.name)
+
+        p #[strong Category:] #{product.category.name}
+        p #[strong Description:] #{product.description}
+        p #[strong Price:] $#{product.price}
+        p #[strong Quantity:] #{product.quantity}
+
