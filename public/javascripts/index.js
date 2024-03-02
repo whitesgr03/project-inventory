@@ -27,12 +27,13 @@ const handleChangeTheme = () =>
 		? container.classList.replace("dark", "light")
 		: container.classList.replace("light", "dark");
 
-const checkPrefersColorScheme = () => {
-	const colorScheme =
+const setDarkScheme = () => {
+	const darkScheme =
 		window.matchMedia("(prefers-color-scheme: dark)")?.matches ?? false;
-	container.classList.add(colorScheme ? "dark" : "light");
-};
 
-checkPrefersColorScheme();
+	localStorage.setItem("darkScheme", JSON.stringify(darkScheme));
+
+	return darkScheme;
+};
 
 container.addEventListener("click", handleClick);
