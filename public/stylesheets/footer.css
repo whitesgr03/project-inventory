@@ -9,6 +9,9 @@ footer {
 	padding: 10px;
 	background-color: var(--light-scheme-bgc);
 	z-index: 1;
+	box-shadow: 0px -5px 5px 1px var(--light-scheme-shadow);
+	background-color: var(--light-scheme-bgc);
+	color: var(--light-scheme-color);
 }
 
 footer .icon {
@@ -16,18 +19,12 @@ footer .icon {
 	height: 45px;
 }
 
-/* light scheme */
-.light footer {
-	box-shadow: 0px -5px 5px 1px var(--light-scheme-shadow);
-	background-color: var(--light-scheme-bgc);
-	color: var(--light-scheme-color);
-}
-
 /* dark scheme */
 .dark footer {
 	border-top-color: var(--light-scheme-shadow);
 	background-color: var(--dark-scheme-bgc);
 	color: var(--dark-scheme-color);
+	box-shadow: none;
 }
 
 @media (min-width: 768px) {
@@ -36,8 +33,8 @@ footer .icon {
 		height: 30px;
 	}
 
-	.light footer {
-		box-shadow: 0px 0px 0px 0px transparent;
+	footer {
+		box-shadow: none;
 		border-top-color: var(--light-scheme-color);
 	}
 }

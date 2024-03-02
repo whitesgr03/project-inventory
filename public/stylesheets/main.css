@@ -1,11 +1,12 @@
 @import url("home.css");
 
 main {
-	--main-content-bgc: #e2e8f0;
 	grid-area: main;
 	display: grid;
 	grid-template: 1fr / 1fr;
 	position: relative;
+	background-color: #e2e8f0;
+	color: var(--light-scheme-color);
 }
 
 main .content {
@@ -37,7 +38,7 @@ main .product .title .icon {
 main ul.list {
 	display: flex;
 	flex-direction: column;
-	border: 1px solid transparent;
+	border: 1px solid var(--light-scheme-color);
 }
 
 main ul.list li a {
@@ -47,24 +48,10 @@ main ul.list li a {
 }
 
 main ul.list li:not(:last-of-type) a {
-	border-bottom: 1px solid transparent;
+	border-bottom: 1px solid var(--light-scheme-color);
 }
 main ul.list li a:hover {
 	font-style: italic;
-}
-
-/* light scheme */
-.light main {
-	background-color: var(--main-content-bgc);
-	color: var(--light-scheme-color);
-}
-
-.light main .content ul.list,
-.light main .content ul.list li:not(:last-of-type) a {
-	border-color: var(--light-scheme-color);
-}
-
-.light main .content ul.list li a:hover {
 	background-color: var(--light-list-link-hover-bgc);
 }
 

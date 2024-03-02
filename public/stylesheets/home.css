@@ -21,17 +21,22 @@
 	font-size: 2rem;
 	margin-bottom: 1rem;
 	display: block;
+	color: var(--light-scheme-highlight-color);
 }
 
 .home .counts {
 	display: flex;
 	flex-direction: column;
 	row-gap: 20px;
-	border: 1px solid transparent;
+	border: 1px solid var(--light-scheme-color);
 	border-radius: 10px;
 	padding: 20px 10px;
 	min-width: 200px;
 	width: 25%;
+}
+
+.home .counts h3 {
+	color: var(--light-scheme-highlight-color);
 }
 
 .home .counts ul {
@@ -39,20 +44,6 @@
 	flex-direction: column;
 	row-gap: 20px;
 	align-items: center;
-}
-
-/* light scheme */
-
-.light .home .counts {
-	border-color: var(--light-scheme-color);
-}
-
-.light .home .counts h3 {
-	color: var(--light-scheme-highlight-color);
-}
-
-.light .home .title span {
-	color: var(--light-scheme-highlight-color);
 }
 
 /* dark scheme */

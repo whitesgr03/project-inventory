@@ -1,5 +1,5 @@
 nav {
-	border: 1px solid transparent;
+	border: 1px solid var(--light-scheme-shadow);
 	border-left: 0;
 	display: flex;
 	flex-direction: column;
@@ -12,6 +12,7 @@ nav {
 	right: 20%;
 	transform: translateX(-100%);
 	transition: transform 0.3s ease;
+	background-color: var(--light-scheme-bgc);
 }
 
 nav.show {
@@ -32,6 +33,7 @@ nav ul a {
 
 nav ul a:hover {
 	font-style: italic;
+	background-color: var(--light-button-link-hover-bgc);
 }
 
 nav ul a .icon {
@@ -52,17 +54,6 @@ nav ul a .icon {
 	background-color: var(--dark-button-link-hover-bgc);
 }
 
-/* light scheme */
-
-.light nav {
-	background-color: var(--light-scheme-bgc);
-	border-color: var(--light-scheme-shadow);
-}
-
-.light nav ul a:hover {
-	background-color: var(--light-button-link-hover-bgc);
-}
-
 @media (min-width: 500px) {
 	nav {
 		right: 50%;
@@ -76,6 +67,7 @@ nav ul a .icon {
 		transform: translateX(0%);
 		border-bottom: 0;
 		border-top: 0;
+		border-color: var(--light-scheme-color);
 	}
 
 	nav ul a:hover {
@@ -85,9 +77,5 @@ nav ul a .icon {
 	nav ul a .icon {
 		width: 30px;
 		height: 30px;
-	}
-
-	.light nav {
-		border-color: var(--light-scheme-color);
 	}
 }

@@ -9,6 +9,9 @@ header {
 	left: 0;
 	right: 0;
 	border-bottom: 1px solid transparent;
+	box-shadow: 0px 5px 5px 1px var(--light-scheme-shadow);
+	background-color: var(--light-scheme-bgc);
+	color: var(--light-scheme-color);
 }
 
 header button {
@@ -20,6 +23,11 @@ header button {
 
 header h1 a {
 	font-style: italic;
+	color: var(--light-scheme-highlight-color);
+}
+
+header > div:hover {
+	background-color: var(--light-button-link-hover-bgc);
 }
 
 /* hamburger */
@@ -37,6 +45,7 @@ header .hamburger button > div .line {
 	width: 100%;
 	height: var(--hamburgerLineHeight);
 	transition: all 0.3s ease, background-color 0s;
+	background-color: var(--light-scheme-color);
 }
 header .hamburger button > div.active {
 	justify-content: center;
@@ -64,30 +73,12 @@ header .theme .icon span {
 	top: 0;
 }
 
-/* light scheme */
-.light header {
-	box-shadow: 0px 5px 5px 1px var(--light-scheme-shadow);
-	background-color: var(--light-scheme-bgc);
-	color: var(--light-scheme-color);
-}
-
-.light header h1 a {
-	color: var(--light-scheme-highlight-color);
-}
-
-.light header > div:hover {
-	background-color: var(--light-button-link-hover-bgc);
-}
-
-.light header .hamburger button > div .line {
-	background-color: var(--light-scheme-color);
-}
-
 /* dark scheme */
 .dark header {
 	border-bottom-color: var(--light-scheme-shadow);
 	background-color: var(--dark-scheme-bgc);
 	color: var(--dark-scheme-color);
+	box-shadow: none;
 }
 
 .dark header h1 a {
@@ -116,7 +107,7 @@ header .theme .icon span {
 		height: 30px;
 	}
 
-	.light header {
+	header {
 		box-shadow: 0px 0px 0px 0px transparent;
 		border-bottom-color: var(--light-scheme-color);
 	}
