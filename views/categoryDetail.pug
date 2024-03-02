@@ -4,10 +4,8 @@ block content
     div.category
         h2= category.name
 
-        div
-            h3 Description:
-            p=category.description
-
+        p #[strong Description:] #{category.description}
+        
         h3 Category's products
         if products.length
                 ul.list
