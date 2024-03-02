@@ -13,7 +13,23 @@ const productList = asyncHandler(async (req, res, next) => {
 	});
 });
 const productDetail = asyncHandler(async (req, res, next) => {
-	res.send("This is product detail page");
+	const product = await Product.findById(req.params.id)
+		.populate("category")
+		.sort({ name: 1 })
+		.exec();
+
+	const productNotFound = () => {
+		const err = new Error("Product not found");
+		err.status = 404;
+		return next(err);
+	};
+
+	product === null
+		? productNotFound()
+		: res.render("productDetail", {
+				title: "Product Detail",
+				product,
+		  });
 });
 const productCreateGet = asyncHandler(async (req, res, next) => {
 	res.send("This is product create get page");
