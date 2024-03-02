@@ -23,9 +23,10 @@ const handleActiveHamburger = () => {
 };
 
 const handleChangeTheme = () =>
-	container.classList.contains("dark")
-		? container.classList.replace("dark", "light")
-		: container.classList.replace("light", "dark");
+	localStorage.setItem(
+		"darkScheme",
+		JSON.stringify(container.classList.toggle("dark"))
+	);
 
 const setDarkScheme = () => {
 	const darkScheme =
