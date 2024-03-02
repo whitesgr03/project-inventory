@@ -8,12 +8,11 @@ block content
             h3 Description:
             p=category.description
 
-        div
-            h3 Category's products
-            if products.length
-                    ul.list
-                        each product, index in products
-                            li 
-                                a(href=product.detailUrl) #{index + 1}. #{product.name}
-            else
-                p This category has no products.
+        h3 Category's products
+        if products.length
+                ul.list
+                    each product, index in products
+                        li 
+                            a(href=product.detailUrl) #{index + 1}. #{product.name}
+        else
+            p This category has no products.
