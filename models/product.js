@@ -23,9 +23,9 @@ const ProductSchema = new Schema(
 			},
 			imageUrl: {
 				get() {
-					return `https://storage.googleapis.com/project-inventory/${this.name}`;
-				}
-			}
+					return `https://storage.googleapis.com/project-inventory-bucket/${this.name}.jpg`;
+				},
+			},
 		},
 	}
 );
