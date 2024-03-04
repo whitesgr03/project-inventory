@@ -1,7 +1,7 @@
 const serverLog = require("debug")("project-inventory:server");
 const databaseLog = require("debug")("project-inventory:mongoose");
 
-require("dotenv").config();
+const os = require("node:os");
 const app = require("./app");
 const mongoose = require("mongoose");
 
