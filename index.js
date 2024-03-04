@@ -5,6 +5,10 @@ const os = require("node:os");
 const app = require("./app");
 const mongoose = require("mongoose");
 
+const IP_Address = os
+	.networkInterfaces()
+	.en0.find(interface => interface.family === "IPv4").address;
+
 const port = process.env.PORT || "3000";
 const uri = process.env.MONGODB_URI || "";
 
