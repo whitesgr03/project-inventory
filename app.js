@@ -17,28 +17,30 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-app.use(
-	rateLimit({
-		windowMs: 1 * 60 * 1000,
-		limit: 20,
-	})
-);
-app.use(compression());
-app.use(
-	helmet({
-		contentSecurityPolicy: {
-			directives: {
-				"img-src": ["storage.googleapis.com", "data:"],
-				"style-src": [
-					"'self'",
-					"fonts.googleapis.com",
-					"necolas.github.io",
-				],
-			},
-		},
-	})
-);
+process.env.NODE_ENV === "production" &&
+	app.use(
+		rateLimit({
+			windowMs: 1 * 60 * 1000,
+			limit: 20,
+		})
+	);
 
+process.env.NODE_ENV === "production" &&
+	app.use(
+		helmet({
+			contentSecurityPolicy: {
+				directives: {
+					imgSrc: ["storage.googleapis.com", "data:"],
+					styleSrc: [
+						"'self'",
+						"fonts.googleapis.com",
+						"necolas.github.io",
+					],
+				},
+			},
+		})
+	);
+app.use(compression());
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
