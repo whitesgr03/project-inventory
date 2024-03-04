@@ -100,6 +100,17 @@ svg {
 	pointer-events: none;
 }
 
+.container {
+	height: 100vh;
+	display: grid;
+	grid-template:
+		"header" auto
+		"main  " 1fr
+		"footer" auto
+		/ auto;
+	overflow: scroll;
+}
+
 .icon span {
 	display: inline-block;
 	background-repeat: no-repeat;
