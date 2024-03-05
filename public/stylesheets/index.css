@@ -156,6 +156,10 @@ svg {
 	font-weight: 500;
 }
 
+.dark img {
+	filter: brightness(0.8) contrast(1.2);
+}
+
 .dark .mdi--github,
 .dark .mdi--home,
 .dark .mdi--pets,
