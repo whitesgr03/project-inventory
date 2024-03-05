@@ -52,3 +52,9 @@
 .dark .home p span {
 	color: var(--dark-scheme-highlight-color);
 }
+
+@media (min-width: 1000px) {
+	.home .counts {
+		width: 300px;
+	}
+}
