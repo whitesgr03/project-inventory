@@ -7,17 +7,11 @@
 	height: 100%;
 }
 
-.home .title {
-	display: flex;
-	flex-direction: column;
-	row-gap: 20px;
-	align-items: center;
-	justify-content: center;
-	padding: 0 20px;
+.home p {
 	text-align: center;
 }
 
-.home .title span {
+.home p span {
 	font-size: 2rem;
 	margin-bottom: 1rem;
 	display: block;
@@ -56,6 +50,6 @@
 	color: var(--dark-scheme-highlight-color);
 }
 
-.dark .home .title span {
+.dark .home p span {
 	color: var(--dark-scheme-highlight-color);
 }
