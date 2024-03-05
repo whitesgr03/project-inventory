@@ -9,6 +9,24 @@ html(lang='en')
     body
         div.container
             header
+                nav
+                    ul
+                        li
+                            a(href='/')
+                                div.icon
+                                    span.mdi--home
+                                | Home
+                        li
+                            a(href='/inventory/categories')
+                                div.icon
+                                    span.mdi--pets
+                                | All Categories
+                        li
+                            a(href='/inventory/products')
+                                div.icon
+                                    span.tabler--dog-bowl
+                                | All Products
+                
                 div.hamburger
                     button(type='button' tabindex)
                         div
