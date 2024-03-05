@@ -5,12 +5,12 @@ nav {
 	flex-direction: column;
 	row-gap: 4rem;
 	white-space: nowrap;
-
 	background-color: var(--light-scheme-bgc);
 }
 
 nav.show {
 	transform: translateX(0%);
+	transition: transform 0.3s ease;
 }
 
 nav ul {
