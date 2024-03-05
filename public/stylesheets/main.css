@@ -41,6 +41,13 @@ main .product .title .icon {
 	height: 30px;
 }
 
+main .category .topBar > div:last-of-type,
+main .product .topBar > div:last-of-type {
+	display: flex;
+	justify-content: flex-end;
+	column-gap: 20px;
+}
+
 main .product.detail .image {
 	text-align: center;
 }
