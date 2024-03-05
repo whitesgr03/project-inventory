@@ -12,4 +12,12 @@ block content
                 a(href=product.detailUrl+'/update') 
                     span.icon.mdi--edit
                     | Update
+        div.detail
+            div.image
+                img(src=product.imageUrl, alt=product.name, srcset="/images/Giant_Snake_Dog_Toy_200.jpg 200w, /images/Giant_Snake_Dog_Toy_400.jpg 400w, /images/Giant_Snake_Dog_Toy_800.jpg 800w", sizes="(min-width: 1000px) 200px, 400px")
+            div.info
+                p #[strong Category:] #{product.category.name}
+                p #[strong Price:] $#{product.price}
+                p #[strong Quantity:] #{product.quantity}
+                p #[strong Description:] #{product.description}
 
