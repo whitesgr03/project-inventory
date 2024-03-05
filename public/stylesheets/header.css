@@ -69,19 +69,6 @@ header .hamburger button > div.active .line:nth-child(3) {
 	transform: translateY(calc(0px - var(--hamburgerLineHeight))) rotate(45deg);
 }
 
-/* theme */
-header .theme .icon {
-	width: 45px;
-	height: 45px;
-	position: relative;
-}
-
-header .theme .icon span {
-	position: absolute;
-	left: 0;
-	top: 0;
-}
-
 /* dark scheme */
 .dark header {
 	border-bottom: 1px solid var(--light-scheme-shadow);
@@ -124,10 +111,5 @@ header .theme .icon span {
 
 	header .hamburger {
 		display: none;
-	}
-
-	header .theme .icon {
-		width: 30px;
-		height: 30px;
 	}
 }

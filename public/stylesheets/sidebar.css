@@ -49,9 +49,4 @@ nav ul .icon {
 	nav ul a:hover {
 		font-style: normal;
 	}
-
-	nav ul a .icon {
-		width: 30px;
-		height: 30px;
-	}
 }

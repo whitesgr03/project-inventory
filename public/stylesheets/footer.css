@@ -13,11 +13,6 @@ footer {
 	color: var(--light-scheme-color);
 }
 
-footer .icon {
-	width: 45px;
-	height: 45px;
-}
-
 /* dark scheme */
 .dark footer {
 	border-top-color: var(--light-scheme-shadow);
@@ -27,11 +22,6 @@ footer .icon {
 }
 
 @media (min-width: 1000px) {
-	footer .icon {
-		width: 30px;
-		height: 30px;
-	}
-
 	footer {
 		box-shadow: none;
 		border-top-color: var(--light-scheme-color);
