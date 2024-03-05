@@ -184,15 +184,7 @@ main ul.list li a:hover {
 		display: none;
 	}
 
-	main .product.detail {
-		display: grid;
-		column-gap: 20px;
-		grid-template:
-			"topBar topBar" auto
-			"image info" 1fr
-			/ 40% 60%;
-		justify-content: center;
-		align-items: center;
+	main .product {
 		height: 100%;
 	}
 
