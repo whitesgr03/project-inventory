@@ -25,7 +25,7 @@
 	border: 1px solid var(--light-scheme-color);
 	border-radius: 10px;
 	padding: 20px 10px;
-	
+	width: 200px;
 }
 
 .home .counts h3 {
