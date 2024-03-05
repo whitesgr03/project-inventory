@@ -37,8 +37,8 @@ main .product .title {
 
 main .category .title .icon,
 main .product .title .icon {
-	width: 30px;
-	height: 30px;
+	width: var(--icon-desktop-size);
+	height: var(--icon-desktop-size);
 }
 
 main .category .topBar > div:last-of-type,

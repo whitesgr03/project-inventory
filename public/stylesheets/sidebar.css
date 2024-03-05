@@ -30,11 +30,9 @@ nav ul a:hover {
 	background-color: var(--light-button-link-hover-bgc);
 }
 
-nav ul a .icon {
-	display: flex;
-	align-items: center;
-	width: 30px;
-	height: 30px;
+nav ul .icon {
+	width: var(--icon-desktop-size);
+	height: var(--icon-desktop-size);
 }
 
 /* dark scheme */
