@@ -110,12 +110,12 @@ svg {
 	overflow: scroll;
 }
 
-.icon span {
+.icon {
 	display: inline-block;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	width: 100%;
-	height: 100%;
+	width: var(--icon-mobile-size);
+	height: var(--icon-mobile-size);
 }
 
 .mdi--moon-and-stars {
@@ -178,7 +178,9 @@ svg {
 }
 
 .dark .mdi--moon-and-stars {
-	opacity: 1;
-	visibility: visible;
-	pointer-events: auto;
+@media (min-width: 1000px) {
+	.icon {
+		width: var(--icon-desktop-size);
+		height: var(--icon-desktop-size);
+	}
 }
