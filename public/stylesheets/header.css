@@ -13,6 +13,16 @@ header {
 	color: var(--light-scheme-color);
 }
 
+header nav {
+	z-index: 2;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 20%;
+	transform: translateX(-100%);
+	transition: transform 0.3s ease;
+}
+
 header button {
 	display: flex;
 	flex-direction: column;
