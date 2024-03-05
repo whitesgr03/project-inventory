@@ -84,7 +84,7 @@ header .theme .icon span {
 
 /* dark scheme */
 .dark header {
-	border-bottom-color: var(--light-scheme-shadow);
+	border-bottom: 1px solid var(--light-scheme-shadow);
 	background-color: var(--dark-scheme-bgc);
 	color: var(--dark-scheme-color);
 	box-shadow: none;
