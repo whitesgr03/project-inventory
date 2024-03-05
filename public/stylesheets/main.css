@@ -46,6 +46,7 @@ main .topBar h2 {
 	column-gap: 10px;
 }
 
+main .topBar .feature {
 	display: flex;
 	justify-content: flex-end;
 	column-gap: 20px;
