@@ -47,22 +47,7 @@ nav ul a .icon {
 	background-color: var(--dark-button-link-hover-bgc);
 }
 
-@media (min-width: 500px) {
-	nav {
-		right: 50%;
-	}
-}
-
-@media (min-width: 768px) {
-	nav {
-		grid-area: sidebar;
-		position: relative;
-		transform: translateX(0%);
-		border-bottom: 0;
-		border-top: 0;
-		border-color: var(--light-scheme-color);
-	}
-
+@media (min-width: 1000px) {
 	nav ul a:hover {
 		font-style: normal;
 	}
