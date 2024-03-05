@@ -9,6 +9,10 @@ main {
 	color: var(--light-scheme-color);
 }
 
+main nav {
+	display: none;
+}
+
 main .content {
 	padding: 15px 10px;
 }
