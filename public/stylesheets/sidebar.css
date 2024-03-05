@@ -41,7 +41,6 @@ nav ul a .icon {
 .dark nav {
 	background-color: var(--dark-scheme-bgc);
 	border-color: var(--dark-scheme-shadow);
-	border-top: 0;
 }
 
 .dark nav ul a:hover {
