@@ -4,9 +4,13 @@ block content
     div.category
         div.topBar
             h2= category.name
-            div
-                a(href=category.url+'/delete') Delete Category
-                a(href=category.url+'/update') Update Category
+            div.feature
+                a(href=category.url+'/delete') 
+                    span.icon.mdi--delete
+                    | Delete
+                a(href=category.url+'/update') 
+                    span.icon.mdi--edit
+                    | Update
         
 
         p #[strong Description:] #{category.description}
