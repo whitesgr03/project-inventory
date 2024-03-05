@@ -28,21 +28,24 @@ main .product {
 	row-gap: 20px;
 }
 
-main .category .title,
-main .product .title {
-	display: flex;
-	align-items: center;
-	column-gap: 0.5rem;
-}
-
-main .category .title .icon,
-main .product .title .icon {
+main h2 .icon {
 	width: var(--icon-desktop-size);
 	height: var(--icon-desktop-size);
 }
 
-main .category .topBar > div:last-of-type,
-main .product .topBar > div:last-of-type {
+/* topBar */
+main .topBar {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+main .topBar h2 {
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+}
+
 	display: flex;
 	justify-content: flex-end;
 	column-gap: 20px;
@@ -85,12 +88,12 @@ main ul.list li a:hover {
 	color: var(--dark-scheme-color);
 }
 
-.dark main .content ul.list,
-.dark main .content ul.list li:not(:last-of-type) a {
+.dark main ul.list,
+.dark main ul.list li:not(:last-of-type) a {
 	border-color: var(--dark-scheme-color);
 }
 
-.dark main .content ul.list li a:hover {
+.dark main ul.list li a:hover {
 	background-color: var(--dark-list-link-hover-bgc);
 }
 
@@ -141,8 +144,7 @@ main ul.list li a:hover {
 		margin: 20px 10%;
 	}
 
-	main .product .title .icon,
-	main .category .title .icon {
+	main h2 .icon {
 		display: none;
 	}
 
