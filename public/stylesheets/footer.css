@@ -26,7 +26,7 @@ footer .icon {
 	box-shadow: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1000px) {
 	footer .icon {
 		width: 30px;
 		height: 30px;
