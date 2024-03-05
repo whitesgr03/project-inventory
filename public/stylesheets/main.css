@@ -51,7 +51,24 @@ main .topBar h2 {
 	column-gap: 20px;
 }
 
-main .product.detail .image {
+main .topBar .feature .icon {
+	width: var(--icon-desktop-size);
+	height: var(--icon-desktop-size);
+}
+
+main .topBar .feature a {
+	padding: 0 5px;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	font-weight: 700;
+	color: var(--light-scheme-highlight-color);
+}
+
+main .topBar .feature a:hover {
+	background-color: var(--light-button-link-hover-bgc);
+}
+
 	text-align: center;
 }
 
@@ -95,6 +112,15 @@ main ul.list li a:hover {
 
 .dark main ul.list li a:hover {
 	background-color: var(--dark-list-link-hover-bgc);
+}
+
+.dark main .topBar .feature a {
+	font-weight: 500;
+	color: var(--dark-scheme-highlight-color);
+}
+
+.dark main .topBar .feature a:hover {
+	background-color: var(--dark-button-link-hover-bgc);
 }
 
 @media (min-width: 400px) {
