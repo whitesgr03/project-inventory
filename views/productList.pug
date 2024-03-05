@@ -3,13 +3,9 @@ extends layout
 block content
     div.product
         div.topBar
-            div.title 
+            h2
                 span.icon.tabler--dog-bowl
-                h2= title
-            div
-                a(href='/product/create') Create Product
-        
-
+                | #{title}
         ul.list
             each product, index in products
                 li 

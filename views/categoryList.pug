@@ -3,12 +3,9 @@ extends layout
 block content
     div.category
         div.topBar
-            div.title 
+            h2 
                 span.icon.mdi--pets
-                h2= title
-            div
-                
-                a(href='/category/create') Create Category
+                | #{title}
         
 
         ul.list
