@@ -130,15 +130,4 @@ header .theme .icon span {
 		width: 30px;
 		height: 30px;
 	}
-
-	header {
-		box-shadow: 0px 0px 0px 0px transparent;
-		border-bottom-color: var(--light-scheme-color);
-	}
-}
-
-@media (min-width: 1024px) {
-	header h1 {
-		font-size: 2.5rem;
-	}
 }
