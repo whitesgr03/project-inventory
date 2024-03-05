@@ -22,6 +22,9 @@
 	--light-scheme-shadow: #cacdd4;
 	--light-button-link-hover-bgc: #a1a1a1;
 	--light-list-link-hover-bgc: #c4c4c4;
+
+	--icon-mobile-size: 45px;
+	--icon-desktop-size: 30px;
 }
 
 * {
