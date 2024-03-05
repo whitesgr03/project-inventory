@@ -162,7 +162,7 @@ main ul.list li a:hover {
 		grid-template:
 			"sidebar content" 1fr
 			"sidebar content" 1fr
-			/ auto 1fr;
+			/ 20% 80%;
 	}
 
 	main nav {
