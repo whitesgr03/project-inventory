@@ -35,7 +35,7 @@ header h1 a {
 	color: var(--light-scheme-highlight-color);
 }
 
-header > div:hover {
+header button:hover {
 	background-color: var(--light-button-link-hover-bgc);
 }
 
@@ -81,7 +81,7 @@ header .hamburger button > div.active .line:nth-child(3) {
 	color: var(--dark-scheme-highlight-color);
 }
 
-.dark header > div:hover {
+.dark header button:hover {
 	background-color: var(--dark-button-link-hover-bgc);
 }
 
