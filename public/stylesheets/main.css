@@ -169,7 +169,6 @@ main ul.list li a:hover {
 		display: block;
 		grid-area: sidebar;
 		position: relative;
-		transform: translateX(0%);
 		border-bottom: 0;
 		border-top: 0;
 		border-color: var(--light-scheme-color);
