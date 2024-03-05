@@ -59,9 +59,3 @@
 .dark .home .title span {
 	color: var(--dark-scheme-highlight-color);
 }
-
-@media (min-width: 768px) {
-	.content {
-		grid-area: content;
-	}
-}
