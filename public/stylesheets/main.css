@@ -165,10 +165,6 @@ main ul.list li a:hover {
 		row-gap: 20px;
 	}
 
-	main .product.detail .topBar > div {
-		margin-left: auto;
-	}
-
 	main .product.detail .image {
 		grid-area: image;
 		flex: 1 1 60%;
