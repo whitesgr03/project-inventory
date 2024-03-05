@@ -2,10 +2,11 @@ extends layout
 
 block content
     div.category
-        div.title 
-            div.icon
-                span.mdi--pets
-            h2= title
+        div.topBar
+            div.title 
+                div.icon
+                    span.mdi--pets
+                h2= title
 
         ul.list
             each category, index in categories
