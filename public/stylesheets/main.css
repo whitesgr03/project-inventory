@@ -15,6 +15,9 @@ main nav {
 
 main .content {
 	margin: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 /* category and product */
