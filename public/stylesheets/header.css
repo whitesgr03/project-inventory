@@ -3,7 +3,6 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	z-index: 1;
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -11,10 +10,10 @@ header {
 	box-shadow: 0px 5px 5px 1px var(--light-scheme-shadow);
 	background-color: var(--light-scheme-bgc);
 	color: var(--light-scheme-color);
+	z-index: 1;
 }
 
 header nav {
-	z-index: 2;
 	position: absolute;
 	top: 100%;
 	left: 0;
