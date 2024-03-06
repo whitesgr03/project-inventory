@@ -1,0 +1,77 @@
+form {
+	border-radius: 10px;
+	border: 3px solid var(--light-scheme-color);
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+
+form label {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+
+form label:focus-within {
+	color: black;
+}
+
+form label input,
+form label textarea {
+	min-height: 45px;
+	width: 100%;
+	padding: 5px;
+	border-radius: 10px;
+	border: 1px solid var(--light-scheme-color);
+	background-color: var(--light-scheme-bgc);
+}
+
+form label input.error + span,
+form label textarea.error + span {
+	opacity: 1;
+}
+
+form label span {
+	display: inline-block;
+	opacity: 0;
+}
+
+form button {
+	min-height: 45px;
+	color: var(--light-scheme-color);
+	background-color: var(--light-scheme-bgc);
+	border-radius: 10px;
+	border: 1px solid var(--light-scheme-color);
+	padding: 10px 20px;
+	align-self: center;
+}
+
+form button:hover {
+	background-color: var(--light-button-link-hover-bgc);
+}
+
+/* dark scheme */
+
+.dark form {
+	border-color: var(--dark-scheme-color);
+	border-width: 1px;
+}
+
+.dark form label input,
+.dark form label textarea {
+	background-color: var(--dark-button-link-hover-bgc);
+	border: 0;
+	color: var(--dark-scheme-color);
+}
+
+.dark form button {
+	color: var(--dark-scheme-color);
+	background-color: var(--dark-button-link-hover-bgc);
+	border-color: var(--dark-scheme-color);
+	border: 0;
+}
+
+.dark form button:hover {
+	background-color: var(--dark-list-link-hover-bgc);
+}
