@@ -23,6 +23,7 @@ footer {
 @media (min-width: 1000px) {
 	footer {
 		box-shadow: none;
-		border-top-color: var(--light-scheme-color);
+		border-top: 1px solid var(--light-scheme-color);
+
 	}
 }
