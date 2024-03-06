@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema(
 	{
-		name: { type: String, required: true, maxLength: 100 },
+		name: { type: String, required: true, maxLength: 30 },
 		description: { type: String, required: true },
 	},
 	{
