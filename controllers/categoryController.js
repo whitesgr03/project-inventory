@@ -46,7 +46,9 @@ const categoryDetail = asyncHandler(async (req, res, next) => {
 		  });
 });
 const categoryCreateGet = asyncHandler(async (req, res, next) => {
-	res.send("This is category create get page");
+	res.render("categoryForm", {
+		title: "Add a new category",
+	});
 });
 const categoryCreatePost = asyncHandler(async (req, res, next) => {
 	res.send("This is category create post page");
