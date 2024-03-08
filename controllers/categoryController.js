@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 const Category = require("../models/category");
 const Product = require("../models/product");
@@ -50,9 +51,45 @@ const categoryCreateGet = asyncHandler(async (req, res, next) => {
 		title: "Add a new category",
 	});
 });
-const categoryCreatePost = asyncHandler(async (req, res, next) => {
-	res.send("This is category create post page");
-});
+const categoryCreatePost = [
+	body("name", "The name must be input and less than 30 long.")
+		.trim()
+		.isLength({ min: 1, max: 30 })
+		.escape(),
+	body("description", "The description must be input.")
+		.trim()
+		.notEmpty()
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		const category = new Category({ ...req.body });
+
+		const isCategoryExist = async () => {
+			const categoryExist = await Category.findOne({
+				name: req.body.name,
+			}).exec();
+
+			const addNewCategory = async () => {
+				await category.save();
+				res.redirect(category.url);
+			};
+
+			categoryExist
+				? res.redirect(categoryExist.url)
+				: await addNewCategory();
+		};
+
+		const renderErrorMessages = () =>
+			res.render("categoryForm", {
+				title: "Add a new category",
+				category,
+				errors: errors.mapped(),
+			});
+		
+		errors.isEmpty() ? isCategoryExist() : renderErrorMessages();
+	}),
+];
+
 const categoryUpdateGet = asyncHandler(async (req, res, next) => {
 	res.send("This is category update get page");
 });
