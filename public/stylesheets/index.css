@@ -9,20 +9,25 @@
 @import url("footer.css");
 
 :root {
+	/* light */
+	--light-scheme-color: #000;
+	--light-scheme-highlight-color: #175073;
+	--light-scheme-bgc: #e9e3e3;
+	--light-scheme-shadow: #cacdd4;
+
+	--light-button-link-hover-bgc: #a1a1a1;
+	--light-list-link-hover-bgc: #c4c4c4;
+
+	/* dark */
 	--dark-scheme-color: #d1d1d1;
 	--dark-scheme-highlight-color: #f2a145;
 	--dark-scheme-bgc: #0a1324;
 	--dark-scheme-shadow: #cacdd4;
+
 	--dark-button-link-hover-bgc: #483b2e;
 	--dark-list-link-hover-bgc: #573614;
 
-	--light-scheme-color: #000;
-	--light-scheme-highlight-color: #195c86;
-	--light-scheme-bgc: #e9e3e3;
-	--light-scheme-shadow: #cacdd4;
-	--light-button-link-hover-bgc: #a1a1a1;
-	--light-list-link-hover-bgc: #c4c4c4;
-
+	/* icon */
 	--icon-mobile-size: 45px;
 	--icon-desktop-size: 30px;
 }
