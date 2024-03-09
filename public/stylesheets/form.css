@@ -45,6 +45,8 @@ form label textarea:hover {
 	border-width: 2px;
 	border-color: var(--light-scheme-highlight-color);
 }
+
+form span {
 	display: inline-block;
 	opacity: 0;
 }
