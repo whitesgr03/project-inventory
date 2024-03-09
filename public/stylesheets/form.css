@@ -94,7 +94,6 @@ form button:hover {
 .dark form label input,
 .dark form label textarea {
 	background-color: var(--dark-button-link-hover-bgc);
-	border: 0;
 	color: var(--dark-scheme-color);
 
 .dark form label input:hover,
