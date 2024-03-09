@@ -26,10 +26,10 @@ const connectDatabase = async () => {
 const onError = error => {
 	switch (error.code) {
 		case "EACCES":
-			serverLog(`Port ${port} requires elevated privileges`);
+			serverLog(`Port ${PORT} requires elevated privileges`);
 			process.exit(1);
 		case "EADDRINUSE":
-			serverLog(`Port ${port} is already in use`);
+			serverLog(`Port ${PORT} is already in use`);
 			process.exit(1);
 		default:
 			throw error;
@@ -37,9 +37,9 @@ const onError = error => {
 };
 
 const onListening = async () => {
-	serverLog(`Listening on Local:    http://localhost:${port}`);
-	serverLog(`Listening on On Your Network:  http://${IP_Address}:${port}`);
-	await connectDatabase();
+	serverLog(`Listening on Local:    http://localhost:${PORT}`);
+	serverLog(`Listening on On Your Network:  http://${IP_Address}:${PORT}`);
+	connectDatabase();
 };
 
 app.listen(port, onListening).on("error", onError);
