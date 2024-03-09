@@ -8,10 +8,16 @@ form {
 	row-gap: 10px;
 }
 
-form label {
-	display: flex;
-	flex-direction: column;
-	row-gap: 10px;
+form label.error {
+	color: var(--light-error-label-color);
+}
+form label.error input,
+form label.error textarea {
+	border-color: var(--light-error-label-color);
+}
+form label.error + span {
+	opacity: 1;
+	color: var(--light-error-label-color);
 }
 
 form label:focus-within {
@@ -58,6 +64,18 @@ form button:hover {
 	--dark-error-label-color: #ff7575;
 	border-color: var(--dark-scheme-color);
 	border-width: 1px;
+}
+
+.dark form label.error {
+	color: var(--dark-error-label-color);
+}
+.dark form label.error input,
+.dark form label.error textarea {
+	border-color: var(--dark-error-label-color);
+}
+.dark form label.error + span {
+	opacity: 1;
+	color: var(--dark-error-label-color);
 }
 
 .dark form label input,
