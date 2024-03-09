@@ -6,7 +6,7 @@ main {
 	display: grid;
 	grid-template: 1fr / 1fr;
 	position: relative;
-	background-color: #e2e8f0;
+	background-color: #e1e9ef;
 	color: var(--light-scheme-color);
 	z-index: 0;
 }
