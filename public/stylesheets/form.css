@@ -33,6 +33,7 @@ form label textarea {
 	padding: 5px;
 	border-radius: 10px;
 	margin-top: 10px;
+	border: 2px solid var(--light-scheme-color);
 	background-color: var(--light-scheme-bgc);
 }
 
