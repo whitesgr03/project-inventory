@@ -36,12 +36,14 @@ form label textarea {
 	background-color: var(--light-scheme-bgc);
 }
 
-form label input.error + span,
-form label textarea.error + span {
-	opacity: 1;
+/* input and textarea pseudo-class will override error style */
+form label input:focus,
+form label textarea:focus,
+form label input:hover,
+form label textarea:hover {
+	border-width: 2px;
+	border-color: var(--light-scheme-highlight-color);
 }
-
-form label span {
 	display: inline-block;
 	opacity: 0;
 }
@@ -90,6 +92,12 @@ form button:hover {
 	background-color: var(--dark-button-link-hover-bgc);
 	border: 0;
 	color: var(--dark-scheme-color);
+
+.dark form label input:hover,
+.dark form label textarea:hover,
+.dark form label input:focus,
+.dark form label textarea:focus {
+	border-color: var(--dark-scheme-highlight-color);
 }
 
 .dark form button {
