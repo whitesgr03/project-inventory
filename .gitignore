@@ -2,8 +2,8 @@ node_modules
 
 *.env
 
-project-inventory*
+project*
 
 images/
 
-populatedb.js
+local/
