@@ -17,7 +17,11 @@ const ProductSchema = new Schema(
 	},
 	{
 		virtuals: {
-			detailUrl: {
+			encodeName: {
+				get() {
+					return encodeURIComponent(this.name);
+				},
+			},
 				get() {
 					return `/inventory/product/${this._id}`;
 				},
