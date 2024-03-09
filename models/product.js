@@ -29,7 +29,11 @@ const ProductSchema = new Schema(
 			},
 			imageUrl: {
 				get() {
-					return `https://storage.googleapis.com/project-inventory-bucket/${this.name}.jpg`;
+					return `https://storage.googleapis.com/project-inventory-${
+						this.isUserCreated ? "user" : "bucket"
+					}/${this.encodeName}.jpg`;
+				},
+			},
 				},
 			},
 		},
