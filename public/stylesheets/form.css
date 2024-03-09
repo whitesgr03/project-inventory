@@ -20,8 +20,10 @@ form label.error + span {
 	color: var(--light-error-label-color);
 }
 
+/* This label pseudo-class will override error style  */
+form label:hover,
 form label:focus-within {
-	color: black;
+	color: var(--light-scheme-highlight-color);
 }
 
 form label input,
@@ -76,6 +78,11 @@ form button:hover {
 .dark form label.error + span {
 	opacity: 1;
 	color: var(--dark-error-label-color);
+}
+
+.dark form label:hover,
+.dark form label:focus-within {
+	color: var(--dark-scheme-highlight-color);
 }
 
 .dark form label input,
