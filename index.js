@@ -20,6 +20,8 @@ const connectDatabase = async () => {
 		process.exit(1);
 	};
 
+	mongoose.connect(URI).catch(err => handleError(err));
+
 };
 
 const onError = error => {
