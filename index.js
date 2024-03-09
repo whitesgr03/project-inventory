@@ -14,13 +14,12 @@ const IP_Address = os
 
 const connectDatabase = async () => {
 	databaseLog("Start connecting");
-	try {
-		await mongoose.connect(uri);
-		databaseLog("Connecting successfully");
-	} catch (err) {
+
+	const handleError = err => {
 		databaseLog(`${err.name}: ${err.message}`);
 		process.exit(1);
-	}
+	};
+
 };
 
 const onError = error => {
