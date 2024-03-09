@@ -42,7 +42,7 @@ main .topBar {
 	row-gap: 20px;
 }
 
-main .topBar h2 {
+main .topBar .title {
 	display: flex;
 	align-items: center;
 	column-gap: 10px;
