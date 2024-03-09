@@ -75,6 +75,11 @@ li {
 	padding: 0;
 }
 
+p {
+	white-space: break-spaces;
+	overflow-wrap: anywhere;
+}
+
 button {
 	border: 0;
 	padding: 0;
