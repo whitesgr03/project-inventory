@@ -5,11 +5,8 @@ block content
         h2= title
         
         form(method="POST")
-            label(for="category_name") Name
-                input#category_name(type="text" name="name" title="The name must be alphabet."  pattern="^[A-Za-z0-9\\s&\\-]{1,30}$" required value=(category ? category.name : ''))
-                span.message(aria-live="polite") This is a placeholder.
-
-            label(for="category_description") Description
-                textarea#category_description(name="description" title="The description must be alphabet." rows="5" required value=(category ? category.description : ''))
-                span.message(aria-live="polite") This is a placeholder.
+            label(class= errors && errors.name ? 'error' : '' for="category_name") Name
+            span.message(aria-live="polite")= errors && errors.name ? errors.name.msg : 'This is a placeholder'
+            label(class= errors && errors.description ? 'error' : '' for="category_description") Description
+            span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
             button(type="submit") Submit
