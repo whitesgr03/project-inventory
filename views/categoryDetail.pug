@@ -3,7 +3,7 @@ extends layout
 block content
     div.category
         div.topBar
-            h2= category.name
+            h2!= category.name
             div.feature
                 a(href=category.url+'/delete') 
                     span.icon.mdi--delete
@@ -13,13 +13,13 @@ block content
                     | Update
         
 
-        p #[strong Description:] #{category.description}
+        p #[strong Description:] !{category.description}
         
         h3 Category's products
         if products.length
                 ul.list
                     each product, index in products
                         li 
-                            a(href=product.detailUrl) #{index + 1}. #{product.name}
+                            a(href=product.detailUrl) #{index + 1}. !{product.name}
         else
             p This category has no products.
