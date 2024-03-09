@@ -22,6 +22,11 @@ const connectDatabase = async () => {
 
 	mongoose.connect(URI).catch(err => handleError(err));
 
+	mongoose.connection.on("connected", () =>
+		databaseLog("Connecting successfully")
+	);
+
+	mongoose.connection.on("error", err => handleError(err));
 };
 
 const onError = error => {
