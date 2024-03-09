@@ -6,7 +6,23 @@ block content
         
         form(method="POST")
             label(class= errors && errors.name ? 'error' : '' for="category_name") Name
+                input#category_name(
+                    type="text" 
+                    name="name" 
+                    value!=category ? category.name : ''
+                    title="The name must be input and less than 30 long." 
+                    maxlength="30"
+                    pattern="^.{1,30}$"
+                    required
+                )
             span.message(aria-live="polite")= errors && errors.name ? errors.name.msg : 'This is a placeholder'
+
             label(class= errors && errors.description ? 'error' : '' for="category_description") Description
+                textarea#category_description(
+                    name="description" 
+                    title="The description must be input" 
+                    required
+                    rows="5"
+                )!= category ? category.description : ''
             span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
             button(type="submit") Submit
