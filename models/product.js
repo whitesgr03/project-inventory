@@ -34,6 +34,18 @@ const ProductSchema = new Schema(
 					}/${this.encodeName}.jpg`;
 				},
 			},
+			imageUrl_300: {
+				get() {
+					return `https://ik.imagekit.io/whitesgr03/project-inventory-${
+						this.isUserCreated ? "user" : "bucket"
+					}/tr:w-300,h-300/${this.encodeName}.jpg`;
+				},
+			},
+			imageUrl_600: {
+				get() {
+					return `https://ik.imagekit.io/whitesgr03/project-inventory-${
+						this.isUserCreated ? "user" : "bucket"
+					}/tr:w-600,h-600/${this.encodeName}.jpg`;
 				},
 			},
 		},
