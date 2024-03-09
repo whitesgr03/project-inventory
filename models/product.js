@@ -22,6 +22,7 @@ const ProductSchema = new Schema(
 					return encodeURIComponent(this.name);
 				},
 			},
+			url: {
 				get() {
 					return `/inventory/product/${this._id}`;
 				},
