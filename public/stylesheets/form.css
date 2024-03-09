@@ -62,7 +62,8 @@ form button {
 }
 
 form button:hover {
-	background-color: var(--light-button-link-hover-bgc);
+	color: var(--dark-scheme-color);
+	background-color: var(--light-scheme-highlight-color);
 }
 
 /* dark scheme */
@@ -111,5 +112,6 @@ form button:hover {
 }
 
 .dark form button:hover {
-	background-color: var(--dark-list-link-hover-bgc);
+	color: var(--light-scheme-color);
+	background-color: var(--dark-scheme-highlight-color);
 }
