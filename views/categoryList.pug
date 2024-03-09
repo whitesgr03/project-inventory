@@ -3,9 +3,9 @@ extends layout
 block content
     div.category
         div.topBar
-            h2 
+            div.title
                 span.icon.mdi--pets
-                | #{title}
+                h2= title
             div.feature
                 a(href='/inventory/category/create') 
                     span.icon.mdi--add
