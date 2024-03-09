@@ -6,10 +6,10 @@ block content
         div.topBar
             h2!= product.name
             div.feature
-                a(href=product.detailUrl+'/delete') 
+                a(href=product.url+'/delete') 
                     span.icon.mdi--delete
                     | Delete
-                a(href=product.detailUrl+'/update') 
+                a(href=product.url+'/update') 
                     span.icon.mdi--edit
                     | Update
         div.detail
