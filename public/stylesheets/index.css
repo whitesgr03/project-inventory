@@ -38,6 +38,7 @@
 		Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
 		"Segoe UI Symbol";
 	font-weight: 500;
+	overflow-wrap: break-word;
 }
 
 [hidden] {
