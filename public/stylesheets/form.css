@@ -44,6 +44,9 @@ form label > * {
 	min-height: var(--icon-desktop-size);
 	color: var(--light-scheme-color);
 }
+
+form label:hover > *,
+form label > *:focus {
 	border-color: var(--light-scheme-highlight-color);
 }
 
