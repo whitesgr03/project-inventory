@@ -95,8 +95,7 @@ form button.submit:hover {
 .dark form label.error {
 	color: var(--dark-error-label-color);
 }
-.dark form label.error input,
-.dark form label.error textarea {
+.dark form label.error > * {
 	border-color: var(--dark-error-label-color);
 }
 .dark form label.error + span {
