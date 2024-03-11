@@ -1,0 +1,88 @@
+extends layout
+
+block content
+    div.product
+        h2= title
+        
+        form(method="POST")
+
+            div
+                label(class= errors && errors.name ? 'error' : ''  for="product_name") Name
+                    input#product_name(
+                        type="text" 
+                        name="name" 
+                        value!=product ? product.name : ''
+                        title="The name must be input and less than 30 long." 
+                        maxlength="30"
+                        pattern="^.{1,30}$"
+                        required
+                    )
+                span.message(aria-live="polite")= errors && errors.name ? errors.name.msg : 'This is a placeholder'
+
+            div
+                label(class= errors && errors.category ? 'error' : '' for="product_category") Category
+
+                    select#product_category(name='category' required  title="The category must be chosen")
+                        if product
+                            option(value="" disabled) Please choose a category
+                        else
+                            option(value="" disabled selected) Please choose a category
+
+                        for category in categories
+                            if product && (product.category._id.toString() === category._id.toString())
+                                option(value=category._id selected)!= category.name
+                            else
+                                option(value=category._id)!= category.name
+
+                span.message(aria-live="polite")= errors && errors.category ? errors.category.msg : 'This is a placeholder'
+
+            div
+                label(class= errors && errors.price ? 'error' : '' for="product_price") Price
+                    input#product_price(
+                        type="number" 
+                        name="price" 
+                        min= 1
+                        value=product ? product.price : ''
+                        title="The price must be input and a number." 
+                        required
+                    )
+                span.message(aria-live="polite")= errors && errors.price ? errors.price.msg : 'This is a placeholder'
+            div 
+                label(class= errors && errors.quantity ? 'error' : '' for="product_quantity") Quantity
+                    input#product_quantity(
+                        type="number" 
+                        name="quantity"
+                        max= 999
+                        value=product ? product.quantity : ''
+                        title="The quantity must be input and a number." 
+                        required
+                    )
+                span.message(aria-live="polite")= errors && errors.quantity ? errors.quantity.msg : 'This is a placeholder'
+
+            div.description
+                label(class= errors && errors.description ? 'error' : ''  for="product_description") Description
+                    textarea#product_description(
+                        name="description" 
+                        title="The description must be input" 
+                        required
+                        rows="5"
+                    )!= product ? product.description : ''
+                span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
+
+            div.uploadImage
+                label(class= errors && errors.uploadImage ? 'error' : '' for="product_uploadImage") Upload Image (only .jpg or .jpeg)
+                    if product
+                        img.preview(src="/images/Giant Snake Dog Toy.jpg")
+                    else 
+                        div.image
+                            span.icon.mdi--file-image-outline 
+                            | Please upload a image file
+                    input#product_uploadImage(
+                        type="file" 
+                        name="uploadImage"
+                        accept=".jpg, .jpeg"
+                        title="The upload image size must be 800x800."
+                    )
+                span.message(aria-live="polite")= errors && errors.uploadImage ? errors.uploadImage.msg : 'This is a placeholder'
+                
+            button.submit(type="submit") Submit
