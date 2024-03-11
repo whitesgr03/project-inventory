@@ -113,10 +113,8 @@ form button.submit:hover {
 	color: var(--dark-scheme-color);
 }
 
-.dark form label input:hover,
-.dark form label textarea:hover,
-.dark form label input:focus,
-.dark form label textarea:focus {
+.dark form label:hover > *,
+.dark form label > *:focus {
 	border-color: var(--dark-scheme-highlight-color);
 }
 
