@@ -34,11 +34,11 @@ const ProductSchema = new Schema(
 					}/${this.encodeName}.jpg`;
 				},
 			},
-			imageUrl_300: {
+			imageUrl_400: {
 				get() {
 					return `https://ik.imagekit.io/whitesgr03/project-inventory-${
 						this.isUserCreated ? "user" : "bucket"
-					}/tr:w-300,h-300/${this.encodeName}.jpg`;
+					}/tr:w-400,h-400/${this.encodeName}.jpg`;
 				},
 			},
 			imageUrl_600: {
