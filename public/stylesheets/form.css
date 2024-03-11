@@ -55,7 +55,11 @@ form label + span {
 	opacity: 0;
 }
 
-form button {
+form > div.uploadImage label > * {
+	cursor: pointer;
+	max-width: 400px;
+	aspect-ratio: 1 / 1;
+}
 	min-height: 45px;
 	color: var(--light-scheme-color);
 	background-color: var(--light-scheme-bgc);
