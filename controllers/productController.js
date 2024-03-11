@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const Product = require("../models/product");
+const Category = require("../models/category");
 
 const productList = asyncHandler(async (req, res, next) => {
 	const products = await Product.find({}, { name: 1 })
@@ -32,7 +33,14 @@ const productDetail = asyncHandler(async (req, res, next) => {
 		  });
 });
 const productCreateGet = asyncHandler(async (req, res, next) => {
-	res.send("This is product create get page");
+	const categories = await Category.find({}, { description: 0 })
+		.sort({ name: 1 })
+		.exec();
+
+	res.render("productForm", {
+		title: "Add a new product",
+		categories,
+	});
 });
 const productCreatePost = [
 	asyncHandler(async (req, res, next) => {
