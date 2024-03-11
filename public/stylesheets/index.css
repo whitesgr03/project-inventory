@@ -101,6 +101,10 @@ textarea {
 	outline: 0;
 }
 
+form input[type="file"] {
+	display: none;
+}
+
 textarea {
 	resize: none;
 }
