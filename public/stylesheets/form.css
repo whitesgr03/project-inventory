@@ -68,16 +68,18 @@ form > div.uploadImage label .image {
 	justify-content: center;
 	row-gap: 20px;
 }
+
+form button.submit {
 	min-height: 45px;
 	color: var(--light-scheme-color);
 	background-color: var(--light-scheme-bgc);
 	border-radius: 10px;
-	border: 1px solid var(--light-scheme-color);
+	border: 2px solid var(--light-scheme-color);
 	padding: 10px 20px;
 	align-self: center;
 }
 
-form button:hover {
+form button.submit:hover {
 	color: var(--dark-scheme-color);
 	background-color: var(--light-scheme-highlight-color);
 }
