@@ -1,5 +1,3 @@
-const container = document.querySelector(".container");
-
 const handleClick = e => {
 	!e.target.closest(".hamburger") &&
 		!e.target.closest("nav") &&
@@ -25,7 +23,7 @@ const handleActiveHamburger = () => {
 const handleChangeTheme = () =>
 	localStorage.setItem(
 		"darkScheme",
-		JSON.stringify(container.classList.toggle("dark"))
+		JSON.stringify(document.body.classList.toggle("dark"))
 	);
 
 const setDarkScheme = () => {
@@ -39,8 +37,8 @@ const setDarkScheme = () => {
 
 const getDarkScheme = () =>
 	(JSON.parse(localStorage.getItem("darkScheme")) ?? setDarkScheme()) &&
-	container.classList.add("dark");
+	document.body.classList.add("dark");
 
 getDarkScheme();
 
-container.addEventListener("click", handleClick);
+document.body.addEventListener("click", handleClick);
