@@ -50,7 +50,7 @@ form label > *:focus {
 	border-color: var(--light-scheme-highlight-color);
 }
 
-form span {
+form label + span {
 	display: inline-block;
 	opacity: 0;
 }
