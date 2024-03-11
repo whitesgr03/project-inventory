@@ -26,3 +26,4 @@ block content
                         rows="5"
                     )!= category ? category.description : ''
                 span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
+            button.submit(type="submit") Submit
