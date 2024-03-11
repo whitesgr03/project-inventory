@@ -118,14 +118,14 @@ form button.submit:hover {
 	border-color: var(--dark-scheme-highlight-color);
 }
 
-.dark form button {
+.dark form button.submit {
 	color: var(--dark-scheme-color);
 	background-color: var(--dark-button-link-hover-bgc);
 	border-color: var(--dark-scheme-color);
 	border: 0;
 }
 
-.dark form button:hover {
+.dark form button.submit:hover {
 	color: var(--light-scheme-color);
 	background-color: var(--dark-scheme-highlight-color);
 }
