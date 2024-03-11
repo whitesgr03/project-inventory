@@ -10,6 +10,7 @@ form {
 	row-gap: 10px;
 }
 
+form > div {
 	display: flex;
 	flex-direction: column;
 	row-gap: 10px;
