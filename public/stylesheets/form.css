@@ -34,9 +34,7 @@ form label:focus-within {
 	color: var(--light-scheme-highlight-color);
 }
 
-form label input,
-form label textarea {
-	min-height: 45px;
+form label > * {
 	width: 100%;
 	padding: 5px;
 	border-radius: 10px;
