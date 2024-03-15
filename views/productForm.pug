@@ -3,9 +3,9 @@ extends layout
 block content
     div.product
         h2= title
-        
-        form(method="POST")
 
+        form(method="POST"  enctype="multipart/form-data")
+            
             div
                 label(class= errors && errors.name ? 'error' : ''  for="product_name") Name
                     input#product_name(
