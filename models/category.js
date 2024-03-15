@@ -6,6 +6,10 @@ const CategorySchema = new Schema(
 	{
 		name: { type: String, required: true },
 		description: { type: String, required: true },
+		expiresAfter: {
+			type: Date,
+			immutable: true,
+		},
 	},
 	{
 		virtuals: {
