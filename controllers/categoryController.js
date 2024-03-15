@@ -61,8 +61,16 @@ const categoryCreatePost = [
 		.notEmpty()
 		.escape(),
 	asyncHandler(async (req, res, next) => {
-		const errors = validationResult(req);
-		const category = new Category({ ...req.body });
+		const category =
+			process.env.NODE_ENV === "development"
+				? new Category({
+						...req.body,
+				  })
+				: new Category({
+						...req.body,
+						expiresAfter: new Date(Date.now() + (10 * 60 * 1000)),
+				  });
+
 
 		const isCategoryExist = async () => {
 			const categoryExist = await Category.findOne({
