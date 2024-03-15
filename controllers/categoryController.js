@@ -51,7 +51,7 @@ const categoryCreateGet = asyncHandler(async (req, res, next) => {
 	});
 });
 const categoryCreatePost = [
-	body("name", "The name must be input and less than 30 long.")
+	body("name", "The name length must be 1 to 30.")
 		.trim()
 		.isLength({ min: 1, max: 30 })
 		.escape(),
