@@ -68,9 +68,9 @@ block content
                 label(class= errors && errors.description ? 'error' : ''  for="product_description") Description
                     textarea#product_description(
                         name="description" 
-                        title="The description must be input" 
-                        required
+                        title="The description is required" 
                         rows="5"
+                        required
                     )!= product ? product.description : ''
                 span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
 
