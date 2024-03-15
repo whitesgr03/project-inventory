@@ -22,6 +22,11 @@ block content
             div
                 label(class= errors && errors.category ? 'error' : '' for="product_category") Category
 
+                    select#product_category(
+                        name='category' 
+                        title="The category must be chosen"
+                        required
+                        )
                         if product && product.category
                             option(value="" disabled ) Please choose a category
                         else
