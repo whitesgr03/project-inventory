@@ -13,7 +13,6 @@ const index = asyncHandler(async (req, res, next) => {
 		products_count: await numProducts,
 	});
 });
-
 const categoryList = asyncHandler(async (req, res, next) => {
 	const categories = await Category.find({}, { description: 0 })
 		.sort({ name: 1 })
@@ -74,7 +73,7 @@ const categoryCreatePost = [
 		const inputErrors = validationResult(req);
 
 		const isCategoryExist = async () => {
-			const categoryExist = await Category.findOne({
+			const existingCategory = await Category.findOne({
 				name: req.body.name,
 			}).exec();
 
@@ -83,8 +82,8 @@ const categoryCreatePost = [
 				res.redirect(category.url);
 			};
 
-			categoryExist
-				? res.redirect(categoryExist.url)
+			existingCategory
+				? res.redirect(existingCategory.url)
 				: await addNewCategory();
 		};
 		const renderErrorMessages = () => {
