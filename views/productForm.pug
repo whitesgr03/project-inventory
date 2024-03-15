@@ -59,7 +59,7 @@ block content
                         name="quantity"
                         max= 999
                         value=product ? product.quantity : ''
-                        title="The quantity must be input and a number." 
+                        title="The quantity is required and must be a number." 
                         required
                     )
                 span.message(aria-live="polite")= errors && errors.quantity ? errors.quantity.msg : 'This is a placeholder'
