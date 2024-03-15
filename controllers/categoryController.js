@@ -71,6 +71,7 @@ const categoryCreatePost = [
 						expiresAfter: new Date(Date.now() + (10 * 60 * 1000)),
 				  });
 
+		const inputErrors = validationResult(req);
 
 		const isCategoryExist = async () => {
 			const categoryExist = await Category.findOne({
@@ -86,15 +87,14 @@ const categoryCreatePost = [
 				? res.redirect(categoryExist.url)
 				: await addNewCategory();
 		};
-
-		const renderErrorMessages = () =>
+		const renderErrorMessages = () => {
 			res.render("categoryForm", {
 				title: "Add a new category",
 				category,
-				errors: errors.mapped(),
+				errors: inputErrors.mapped(),
 			});
-		
-		errors.isEmpty() ? isCategoryExist() : renderErrorMessages();
+		};
+		inputErrors.isEmpty() ? isCategoryExist() : renderErrorMessages();
 	}),
 ];
 
