@@ -1,5 +1,6 @@
 form {
 	--light-error-label-color: #911d1d;
+	/* --light-success-label-color: #0b563d; */
 	border-radius: 10px;
 	border: 2px solid var(--light-scheme-color);
 	padding: 15px;
@@ -99,9 +100,9 @@ form button.submit:hover {
 }
 
 /* dark scheme */
-
 .dark form {
 	--dark-error-label-color: #ff7575;
+	/* --dark-success-label-color: #5cb297; */
 	border-color: var(--dark-scheme-color);
 	border-width: 1px;
 }
