@@ -26,11 +26,6 @@ const ProductSchema = new Schema(
 	},
 	{
 		virtuals: {
-			encodeName: {
-				get() {
-					return encodeURIComponent(this.name);
-				},
-			},
 			url: {
 				get() {
 					return `/inventory/product/${this._id}`;
