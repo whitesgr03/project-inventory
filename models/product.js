@@ -3,6 +3,14 @@ const { unescape } = require("validator");
 
 const Schema = mongoose.Schema;
 
+const getImageName = name =>
+	`${unescape(name).replace(/[^a-z0-9]+/gi, "-")}.jpg`;
+
+const getImageUrl = (size, userCreated) =>
+	`https://ik.imagekit.io/whitesgr03/project-inventory-${
+		userCreated ? "user" : "bucket"
+	}/tr:w-${size},h-${size}/`;
+
 const ProductSchema = new Schema(
 	{
 		name: { type: String, required: true },
