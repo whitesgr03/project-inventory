@@ -61,12 +61,26 @@ form > div.uploadImage label > * {
 	aspect-ratio: 1 / 1;
 }
 
-form > div.uploadImage label .image {
+form > div.uploadImage label .image > div {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	row-gap: 20px;
+	height: 100%;
+}
+
+form > div.uploadImage label .image img {
+	border-radius: 20px;
+	display: none;
+}
+
+form > div.uploadImage label .image.preview img {
+	display: block;
+}
+
+form > div.uploadImage label .image.preview > div {
+	display: none;
 }
 
 form button.submit {
