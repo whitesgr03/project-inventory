@@ -1,3 +1,5 @@
+const inputFile = document.querySelector('input[name="image"]');
+
 const handleClick = e => {
 	const hamburgerBtn = document.querySelector(".hamburger button > div");
 	const sidebar = document.querySelector("nav");
