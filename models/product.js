@@ -39,8 +39,12 @@ const ProductSchema = new Schema(
 			imageUrl: {
 				get() {
 					return `https://storage.googleapis.com/project-inventory-${
-						this.isUserCreated ? "user" : "bucket"
-					}/${this.encodeName}.jpg`;
+			imageUrl_300: {
+				get() {
+					return (
+						getImageUrl("300", this.expiresAfter) +
+						getImageName(this.name)
+					);
 				},
 			},
 			imageUrl_400: {
