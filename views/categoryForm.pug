@@ -3,7 +3,7 @@ extends layout
 block content
     div.category
         h2= title
-        
+
         form(method="POST")
             div
                 label(class= errors && errors.name ? 'error' : '' for="category_name") Name
@@ -11,7 +11,7 @@ block content
                         type="text" 
                         name="name" 
                         value!=category ? category.name : ''
-                        title="The name must be input and less than 30 long." 
+                        title="The name is required and must be less than 30 long." 
                         maxlength="30"
                         pattern="^.{1,30}$"
                         required
@@ -21,7 +21,7 @@ block content
                 label(class= errors && errors.description ? 'error' : '' for="category_description") Description
                     textarea#category_description(
                         name="description" 
-                        title="The description must be input" 
+                        title="The description is required" 
                         required
                         rows="5"
                     )!= category ? category.description : ''
