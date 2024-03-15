@@ -45,10 +45,6 @@
 	display: none !important;
 }
 
-body {
-	background-color: var(--light-scheme-bgc);
-}
-
 h1,
 h1 a,
 h2,
@@ -181,10 +177,6 @@ svg {
 
 .dark * {
 	font-weight: 300;
-}
-
-body.dark  {
-	background-color: var(--dark-scheme-bgc);
 }
 
 .dark h1,
