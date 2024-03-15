@@ -43,7 +43,7 @@ const onError = error => {
 };
 
 const onListening = async () => {
-	serverLog(`Listening on Local:    http://localhost:${PORT}`);
+	serverLog(`Listening on Local:            http://localhost:${PORT}`);
 	serverLog(`Listening on On Your Network:  http://${IP_Address}:${PORT}`);
 	connectDatabase();
 };
