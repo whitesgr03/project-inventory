@@ -26,5 +26,18 @@ const handleClick = e => {
 	e.target.closest(".hamburger") && handleActiveHamburger();
 	e.target.closest(".theme") && handleChangeTheme();
 };
+const handleChange = e => {
+	const imageElement = document.querySelector(".image");
+	imageElement.classList.remove("preview");
+
+	const uploadImage = e.target?.files[0];
+
+	const handlePreview = () => {
+		imageElement.firstElementChild.src = URL.createObjectURL(uploadImage);
+		imageElement.classList.add("preview");
+	};
+
+	uploadImage && uploadImage.type === "image/jpeg" && handlePreview();
+};
 
 document.body.addEventListener("click", handleClick);
