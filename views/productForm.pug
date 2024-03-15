@@ -12,9 +12,9 @@ block content
                         type="text" 
                         name="name" 
                         value!=product ? product.name : ''
-                        title="The name must be input and less than 30 long." 
-                        maxlength="30"
-                        pattern="^.{1,30}$"
+                        title="The name is required and must be less than 100 long." 
+                        maxlength="100"
+                        pattern="^.{1,100}$"
                         required
                     )
                 span.message(aria-live="polite")= errors && errors.name ? errors.name.msg : 'This is a placeholder'
