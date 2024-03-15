@@ -8,6 +8,8 @@ const sharp = require("sharp");
 const Product = require("../models/product");
 const Category = require("../models/category");
 
+const uploadFile = multer({ storage: multer.memoryStorage() });
+
 const productList = asyncHandler(async (req, res, next) => {
 	const products = await Product.find({}, { name: 1 })
 		.sort({ name: 1 })
