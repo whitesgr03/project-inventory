@@ -18,7 +18,6 @@ block content
                         required
                     )
                 span.message(aria-live="polite")= errors && errors.name ? errors.name.msg : 'This is a placeholder'
-
             div
                 label(class= errors && errors.category ? 'error' : '' for="product_category") Category
 
@@ -39,7 +38,6 @@ block content
                                 option(value=category._id)!= category.name
 
                 span.message(aria-live="polite")= errors && errors.category ? errors.category.msg : 'This is a placeholder'
-
             div
                 label(class= errors && errors.price ? 'error' : '' for="product_price") Price
                     input#product_price(
@@ -63,7 +61,6 @@ block content
                         required
                     )
                 span.message(aria-live="polite")= errors && errors.quantity ? errors.quantity.msg : 'This is a placeholder'
-
             div.description
                 label(class= errors && errors.description ? 'error' : ''  for="product_description") Description
                     textarea#product_description(
