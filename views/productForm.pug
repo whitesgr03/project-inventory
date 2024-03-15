@@ -73,21 +73,22 @@ block content
                         required
                     )!= product ? product.description : ''
                 span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
-
             div.uploadImage
-                label(class= errors && errors.uploadImage ? 'error' : '' for="product_uploadImage") Upload Image (only .jpg or .jpeg)
-                    if product
-                        img.preview(src="/images/Giant Snake Dog Toy.jpg")
-                    else 
-                        div.image
+                label(
+                    class= errors && errors.image ? 'error' : '' 
+                    for="product_image") Upload image (only .jpeg)
+                    div.image
+                        img(src="#")
+                        div 
                             span.icon.mdi--file-image-outline 
-                            | Please upload a image file
-                    input#product_uploadImage(
+                            | Please upload a .jpeg file
+                    input#product_image(
                         type="file" 
-                        name="uploadImage"
-                        accept=".jpg, .jpeg"
-                        title="The upload image size must be 800x800."
+                        name="image"
+                        accept="image/jpeg"
+                        title="The image is required, size must be less than 500 kb, width and height must be 800 or greater."
+                        require
                     )
-                span.message(aria-live="polite")= errors && errors.uploadImage ? errors.uploadImage.msg : 'This is a placeholder'
-                
+                span.message(aria-live="polite")= errors && errors.image ? errors.image.msg : 'This is a placeholder'
+            
             button.submit(type="submit") Submit
