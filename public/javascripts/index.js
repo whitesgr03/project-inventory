@@ -41,3 +41,4 @@ const handleChange = e => {
 };
 
 document.body.addEventListener("click", handleClick);
+inputFile && inputFile.addEventListener("change", handleChange);
