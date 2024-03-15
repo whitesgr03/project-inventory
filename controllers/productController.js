@@ -50,8 +50,132 @@ const productCreateGet = asyncHandler(async (req, res, next) => {
 	});
 });
 const productCreatePost = [
+	uploadFile.single("image"),
+	body("name", "The name must be input and less than 100 long.")
+		.trim()
+		.isLength({ min: 1, max: 100 })
+		.escape(),
+	body("price", "The price must be input.")
+		.trim()
+		.isFloat({ min: 1 })
+		.escape(),
+	body("quantity", "The quantity must be input.")
+		.trim()
+		.isInt({ min: 1, max: 999 })
+		.escape(),
+	body("description", "The description must be input.")
+		.trim()
+		.notEmpty()
+		.escape(),
 	asyncHandler(async (req, res, next) => {
-		res.send("This is product create post page");
+		const categories = await Category.find({}, { description: 0 })
+			.sort({ name: 1 })
+			.exec();
+
+		await body("category", "The category must be chosen.")
+			.trim()
+			.custom(
+				categoryId =>
+					typeof categoryId === "string" &&
+					categories.find(
+						category => category._id.toString() === categoryId
+					)
+			)
+			.run(req);
+
+		const inputErrors = validationResult(req);
+
+		const uploadImage = req.file;
+		const imageInfo =
+			uploadImage &&
+			uploadImage.mimetype === "image/jpeg" &&
+			(await sharp(uploadImage.buffer).metadata());
+
+		const validateUploadImage = () => {
+			const errorMessage = {
+				msg: "The image is required, size must be less than 500 kb, width and height must be 800 or greater.",
+			};
+
+			return imageInfo
+				? (imageInfo.size > 500000 ||
+						imageInfo.width < 800 ||
+						imageInfo.height < 800) &&
+						errorMessage
+				: errorMessage;
+		};
+
+		const uploadImageError = validateUploadImage();
+
+		const product =
+			process.env.NODE_ENV === "development"
+				? new Product({
+						...req.body,
+				  })
+				: new Product({
+						...req.body,
+						expiresAfter: new Date(Date.now + 10 * 60 * 1000),
+				  });
+
+		const isProductExist = async () => {
+			const existingProduct = await Product.findOne({
+				name: req.body.name,
+			}).exec();
+
+			const uploadFile = async () => {
+				const resizeImageBuffer = async () =>
+					await sharp(uploadImage.buffer)
+						.resize({ width: 800, height: 800 })
+						.jpeg({ mozjpeg: true })
+						.toBuffer();
+				const googleStorage = new Storage();
+				const bucketName =
+					process.env.NODE_ENV === "development"
+						? "project-inventory-bucket"
+						: "project-inventory-user";
+				const imageName = `${unescape(product.name).replace(
+					/[^a-z0-9]+/gi,
+					"-"
+				)}.jpg`;
+				const imageBuffer =
+					imageInfo.width > 800 || imageInfo.height > 800
+						? await resizeImageBuffer()
+						: uploadImage.buffer;
+
+				await googleStorage
+					.bucket(bucketName)
+					.file(imageName)
+					.save(imageBuffer);
+			};
+
+			const addNewProduct = async () => {
+				await product.save();
+				res.redirect(product.url);
+			};
+
+			const createProduct = async () => {
+				await uploadFile();
+				await addNewProduct();
+			};
+
+			existingProduct
+				? res.redirect(existingProduct.url)
+				: await createProduct();
+		};
+		const renderErrorMessages = () => {
+			const errors = inputErrors.mapped();
+			uploadImageError && (errors.image = uploadImageError);
+
+			res.render("productForm", {
+				title: "Add a new product",
+				categories,
+				product,
+				errors,
+			});
+		};
+
+		inputErrors.isEmpty() && !uploadImageError
+			? isProductExist()
+			: renderErrorMessages();
 	}),
 ];
 const productUpdateGet = asyncHandler(async (req, res, next) => {
