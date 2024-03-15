@@ -45,16 +45,18 @@ const ProductSchema = new Schema(
 			},
 			imageUrl_400: {
 				get() {
-					return `https://ik.imagekit.io/whitesgr03/project-inventory-${
-						this.isUserCreated ? "user" : "bucket"
-					}/tr:w-400,h-400/${this.encodeName}.jpg`;
+					return (
+						getImageUrl("400", this.expiresAfter) +
+						getImageName(this.name)
+					);
 				},
 			},
 			imageUrl_600: {
 				get() {
-					return `https://ik.imagekit.io/whitesgr03/project-inventory-${
-						this.isUserCreated ? "user" : "bucket"
-					}/tr:w-600,h-600/${this.encodeName}.jpg`;
+					return (
+						getImageUrl("600", this.expiresAfter) +
+						getImageName(this.name)
+					);
 				},
 			},
 		},
