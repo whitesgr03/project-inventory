@@ -48,7 +48,7 @@ block content
                         min= 1
                         step="0.01"
                         value=product ? product.price : ''
-                        title="The price must be input and a number." 
+                        title="The price is required and must be a number." 
                         required
                     )
                 span.message(aria-live="polite")= errors && errors.price ? errors.price.msg : 'This is a placeholder'
