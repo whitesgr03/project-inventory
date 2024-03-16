@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const { body, validationResult } = require("express-validator");
+const { validationResult, checkSchema } = require("express-validator");
 
 const Category = require("../models/category");
 const Product = require("../models/product");
@@ -50,53 +50,60 @@ const categoryCreateGet = asyncHandler(async (req, res, next) => {
 		title: "Add a new category",
 	});
 });
-const categoryCreatePost = [
-	body("name", "The name length must be 1 to 30.")
-		.trim()
-		.isLength({ min: 1, max: 30 })
-		.escape(),
-	body("description", "The description must be input.")
-		.trim()
-		.notEmpty()
-		.escape(),
-	asyncHandler(async (req, res, next) => {
-		const category =
-			process.env.NODE_ENV === "development"
-				? new Category({
-						...req.body,
-				  })
-				: new Category({
-						...req.body,
-						expiresAfter: new Date(Date.now() + (10 * 60 * 1000)),
-				  });
+const categoryCreatePost = asyncHandler(async (req, res, next) => {
+	const validationSchema = {
+		name: {
+			errorMessage: "The name length must be 1 to 30.",
+			trim: true,
+			isLength: { options: { min: 1, max: 30 } },
+			escape: true,
+		},
+		description: {
+			errorMessage: "The description must be input.",
+			trim: true,
+			notEmpty: true,
+			escape: true,
+		},
+	};
 
-		const inputErrors = validationResult(req);
+	await checkSchema(validationSchema, ["body"]).run(req);
 
-		const isCategoryExist = async () => {
-			const existingCategory = await Category.findOne({
-				name: req.body.name,
-			}).exec();
+	const schemaErrors = validationResult(req);
 
-			const addNewCategory = async () => {
-				await category.save();
-				res.redirect(category.url);
-			};
+	const category =
+		process.env.NODE_ENV === "development"
+			? new Category({
+					...req.body,
+			  })
+			: new Category({
+					...req.body,
+					expiresAfter: new Date(Date.now() + 10 * 60 * 1000),
+			  });
 
-			existingCategory
-				? res.redirect(existingCategory.url)
-				: await addNewCategory();
+	const isCategoryExist = async () => {
+		const existingCategory = await Category.findOne({
+			name: req.body.name,
+		}).exec();
+
+		const addNewCategory = async () => {
+			await category.save();
+			res.redirect(category.url);
 		};
-		const renderErrorMessages = () => {
-			res.render("categoryForm", {
-				title: "Add a new category",
-				category,
-				errors: inputErrors.mapped(),
-			});
-		};
-		inputErrors.isEmpty() ? isCategoryExist() : renderErrorMessages();
-	}),
-];
 
+		existingCategory
+			? res.redirect(existingCategory.url)
+			: await addNewCategory();
+	};
+	const renderErrorMessages = () => {
+		res.render("categoryForm", {
+			title: "Add a new category",
+			category,
+			errors: schemaErrors.mapped(),
+		});
+	};
+
+	schemaErrors.isEmpty() ? isCategoryExist() : renderErrorMessages();
+});
 const categoryUpdateGet = asyncHandler(async (req, res, next) => {
 	res.send("This is category update get page");
 });
