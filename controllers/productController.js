@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { Storage } = require("@google-cloud/storage");
-const { body, validationResult } = require("express-validator");
+const { validationResult, checkSchema } = require("express-validator");
 const { unescape } = require("validator");
 const multer = require("multer");
 const sharp = require("sharp");
@@ -51,37 +51,51 @@ const productCreateGet = asyncHandler(async (req, res, next) => {
 });
 const productCreatePost = [
 	uploadFile.single("image"),
-	body("name", "The name must be input and less than 100 long.")
-		.trim()
-		.isLength({ min: 1, max: 100 })
-		.escape(),
-	body("price", "The price must be input.")
-		.trim()
-		.isFloat({ min: 1 })
-		.escape(),
-	body("quantity", "The quantity must be input.")
-		.trim()
-		.isInt({ min: 1, max: 999 })
-		.escape(),
-	body("description", "The description must be input.")
-		.trim()
-		.notEmpty()
-		.escape(),
 	asyncHandler(async (req, res, next) => {
 		const categories = await Category.find({}, { description: 0 })
 			.sort({ name: 1 })
 			.exec();
 
-		await body("category", "The category must be chosen.")
-			.trim()
-			.custom(
-				categoryId =>
-					typeof categoryId === "string" &&
-					categories.find(
-						category => category._id.toString() === categoryId
-					)
-			)
-			.run(req);
+		const validationSchema = {
+			name: {
+				errorMessage: "The name must be less than 100 long.",
+				trim: true,
+				isLength: { options: { min: 1, max: 100 } },
+				escape: true,
+			},
+			category: {
+				errorMessage: "The category must be chosen.",
+				trim: true,
+				custom: {
+					options: categoryId =>
+						typeof categoryId === "string" &&
+						categories.find(
+							category => category._id.toString() === categoryId
+						),
+				},
+				escape: true,
+			},
+			price: {
+				errorMessage: "The price must be input.",
+				trim: true,
+				isFloat: { options: { min: 1 } },
+				escape: true,
+			},
+			quantity: {
+				errorMessage: "The quantity must be input.",
+				trim: true,
+				isInt: { options: { min: 1, max: 999 } },
+				escape: true,
+			},
+			description: {
+				errorMessage: "The description must be input.",
+				trim: true,
+				notEmpty: true,
+				escape: true,
+			},
+		};
+
+		await checkSchema(validationSchema, ["body"]).run(req);
 
 		const inputErrors = validationResult(req);
 
