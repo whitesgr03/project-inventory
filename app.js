@@ -45,7 +45,11 @@ process.env.NODE_ENV === "production" &&
 		})
 	);
 app.use(compression());
-app.use(logger("dev"));
+app.use(
+	logger("dev", {
+		skip: (req, res) => req.baseUrl !== "/inventory",
+	})
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
