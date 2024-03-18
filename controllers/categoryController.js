@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const createError = require("http-errors");
 const { validationResult, checkSchema } = require("express-validator");
 
 const Category = require("../models/category");
@@ -23,34 +24,56 @@ const categoryList = asyncHandler(async (req, res, next) => {
 		categories,
 	});
 });
-const categoryDetail = asyncHandler(async (req, res, next) => {
-	const [category, products] = await Promise.all([
-		Category.findById(req.params.id).exec(),
-		Product.find({ category: req.params.id }, { name: 1 })
-			.sort({ name: 1 })
-			.exec(),
-	]);
+const categoryDetail = async (req, res, next) => {
+	try {
+		const [category, products] = await Promise.all([
+			Category.findById(req.params.id).exec(),
+			Product.find({ category: req.params.id }, { name: 1 })
+				.sort({ name: 1 })
+				.exec(),
+		]);
 
-	const categoryNotFound = () => {
-		const err = new Error("Category not found");
-		err.status = 404;
-		return next(err);
-	};
-
-	category === null
-		? categoryNotFound()
-		: res.render("categoryDetail", {
-				title: "Category Detail",
-				category,
-				products,
-		  });
-});
+		category === null
+			? next(createError(404, "Category not found", { type: "category" }))
+			: res.render("categoryDetail", {
+					title: "Category Detail",
+					category,
+					products,
+			  });
+	} catch (err) {
+		next(
+			createError(400, "Category not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "category",
+			})
+		);
+	}
+};
 const categoryCreateGet = asyncHandler(async (req, res, next) => {
 	res.render("categoryForm", {
 		title: "Add a new category",
 	});
 });
 const categoryCreatePost = asyncHandler(async (req, res, next) => {
+const categoryUpdateGet = async (req, res, next) => {
+	try {
+		const category = await Category.findById(req.params.id).exec();
+
+		category === null
+			? next(createError(404, "Category not found", { type: "category" }))
+			: res.render("categoryForm", {
+					title: "Update category",
+					category,
+			  });
+	} catch (err) {
+		next(
+			createError(400, "Category not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "category",
+			})
+		);
+	}
+};
 	const validationSchema = {
 		name: {
 			errorMessage: "The name length must be 1 to 30.",
