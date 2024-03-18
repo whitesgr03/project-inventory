@@ -111,7 +111,7 @@ main ul.list li a:hover {
 	background-color: var(--light-list-link-hover-bgc);
 }
 
-main .error {
+main > .error {
 	flex: 1 1 100%;
 	display: flex;
 	flex-direction: column;
@@ -120,27 +120,27 @@ main .error {
 	row-gap: 20px;
 }
 
-main .error .title {
+main > .error .title {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	row-gap: 20px;
 }
 
-main .error .title h1 {
+main > .error .title h1 {
 	font-size: 1.5rem;
 }
 
-main .error .title h1 span {
+main > .error .title h1 span {
 	font-weight: inherit;
 }
 
-main .error .icon {
+main > .error .icon {
 	width: 80px;
 	height: 80px;
 }
 
-main .error .message {
+main > .error .message {
 	display: flex;
 	flex-direction: column;
 	row-gap: 20px;
@@ -244,11 +244,11 @@ main .error .message {
 		justify-content: space-around;
 	}
 
-	main .error .title h1 {
+	main > .error .title h1 {
 		font-size: 2rem;
 	}
 
-	main .error .icon {
+	main > .error .icon {
 		width: 100px;
 		height: 100px;
 	}
