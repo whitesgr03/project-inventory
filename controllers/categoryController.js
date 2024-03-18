@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const asyncHandler = require("express-async-handler");
 const createError = require("http-errors");
 const { validationResult, checkSchema } = require("express-validator");
@@ -127,17 +128,32 @@ const categoryUpdateGet = async (req, res, next) => {
 		);
 	}
 };
+const categoryUpdatePost = asyncHandler(async (req, res, next) => {
 	const validationSchema = {
 		name: {
-			errorMessage: "The name length must be 1 to 30.",
 			trim: true,
-			isLength: { options: { min: 1, max: 30 } },
+			isLength: {
+				options: { min: 1, max: 30 },
+				errorMessage: "The name length must be 1 to 30.",
+			},
 			escape: true,
+			custom: {
+				options: value =>
+					new Promise(async (resolve, reject) => {
+						const existingCategory = await Category.findOne({
+							$and: [
+								{ name: value },
+								{ _id: { $ne: new ObjectId(req.params.id) } },
+							],
+						}).exec();
+						existingCategory ? reject() : resolve();
+					}),
+				errorMessage: "The name is been used.",
+			},
 		},
 		description: {
-			errorMessage: "The description must be input.",
 			trim: true,
-			notEmpty: true,
+			notEmpty: { errorMessage: "The description must be input." },
 			escape: true,
 		},
 	};
@@ -146,48 +162,26 @@ const categoryUpdateGet = async (req, res, next) => {
 
 	const schemaErrors = validationResult(req);
 
-	const category =
-		process.env.NODE_ENV === "development"
-			? new Category({
-					...req.body,
-			  })
-			: new Category({
-					...req.body,
-					expiresAfter: new Date(Date.now() + 10 * 60 * 1000),
-			  });
+	const category = new Category({
+		_id: req.params.id,
+		...req.body,
+	});
 
-	const isCategoryExist = async () => {
-		const existingCategory = await Category.findOne({
-			name: req.body.name,
-		}).exec();
-
-		const addNewCategory = async () => {
-			await category.save();
-			res.redirect(category.url);
-		};
-
-		existingCategory
-			? res.redirect(existingCategory.url)
-			: await addNewCategory();
+	const updateCategory = async () => {
+		await Category.findByIdAndUpdate(category._id, category);
+		res.redirect(category.url);
 	};
+
 	const renderErrorMessages = () => {
 		res.render("categoryForm", {
-			title: "Add a new category",
+			title: "Update category",
 			category,
 			errors: schemaErrors.mapped(),
 		});
 	};
 
-	schemaErrors.isEmpty() ? isCategoryExist() : renderErrorMessages();
+	schemaErrors.isEmpty() ? updateCategory() : renderErrorMessages();
 });
-const categoryUpdateGet = asyncHandler(async (req, res, next) => {
-	res.send("This is category update get page");
-});
-const categoryUpdatePost = [
-	asyncHandler(async (req, res, next) => {
-		res.send("This is category update post page");
-	}),
-];
 const categoryDeleteGet = asyncHandler(async (req, res, next) => {
 	res.send("This is category delete get page");
 });
