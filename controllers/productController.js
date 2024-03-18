@@ -67,10 +67,10 @@ const productCreatePost = [
 				errorMessage: "The category must be chosen.",
 				trim: true,
 				custom: {
-					options: categoryId =>
-						typeof categoryId === "string" &&
+					options: value =>
+						typeof value === "string" &&
 						categories.find(
-							category => category._id.toString() === categoryId
+							category => category._id.toString() === value
 						),
 				},
 				escape: true,
