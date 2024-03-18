@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const createError = require("http-errors");
 const { Storage } = require("@google-cloud/storage");
 const { validationResult, checkSchema } = require("express-validator");
 const { unescape } = require("validator");
@@ -20,25 +21,28 @@ const productList = asyncHandler(async (req, res, next) => {
 		products,
 	});
 });
-const productDetail = asyncHandler(async (req, res, next) => {
-	const product = await Product.findById(req.params.id)
-		.populate("category")
-		.sort({ name: 1 })
-		.exec();
+const productDetail = async (req, res, next) => {
+	try {
+		const product = await Product.findById(req.params.id)
+			.populate("category")
+			.sort({ name: 1 })
+			.exec();
 
-	const productNotFound = () => {
-		const err = new Error("Product not found");
-		err.status = 404;
-		return next(err);
-	};
-
-	product === null
-		? productNotFound()
-		: res.render("productDetail", {
-				title: "Product Detail",
-				product,
-		  });
-});
+		product === null
+			? next(createError(404, "Product not found", { type: "product" }))
+			: res.render("productDetail", {
+					title: "Product Detail",
+					product,
+			  });
+	} catch (err) {
+		next(
+			createError(400, "Product not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "product",
+			})
+		);
+	}
+};
 const productCreateGet = asyncHandler(async (req, res, next) => {
 	const categories = await Category.find({}, { description: 0 })
 		.sort({ name: 1 })
