@@ -1,5 +1,5 @@
-const serverLog = require("debug")("project-inventory:server");
-const databaseLog = require("debug")("project-inventory:mongoose");
+const serverLog = require("debug")("Server");
+const databaseLog = require("debug")("Mongoose");
 
 const os = require("node:os");
 const app = require("./app");
