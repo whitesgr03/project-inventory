@@ -55,6 +55,59 @@ const categoryCreateGet = asyncHandler(async (req, res, next) => {
 	});
 });
 const categoryCreatePost = asyncHandler(async (req, res, next) => {
+	const validationSchema = {
+		name: {
+			trim: true,
+			isLength: {
+				options: { min: 1, max: 30 },
+				errorMessage: "The name length must be 1 to 30.",
+			},
+			escape: true,
+			custom: {
+				options: value =>
+					new Promise(async (resolve, reject) => {
+						const existingCategory = await Category.findOne({
+							name: value,
+						}).exec();
+						existingCategory ? reject() : resolve();
+					}),
+				errorMessage: "The name is been used.",
+			},
+		},
+		description: {
+			trim: true,
+			notEmpty: { errorMessage: "The description must be input." },
+			escape: true,
+		},
+	};
+
+	await checkSchema(validationSchema, ["body"]).run(req);
+
+	const schemaErrors = validationResult(req);
+
+	const category = new Category({
+		...req.body,
+	});
+
+	const tenMinutes = 10 * 60 * 1000;
+	process.env.NODE_ENV === "production" &&
+		(category.expiresAfter = new Date(Date.now() + tenMinutes));
+
+	const addNewCategory = async () => {
+		await category.save();
+		res.redirect(category.url);
+	};
+
+	const renderErrorMessages = () => {
+		res.render("categoryForm", {
+			title: "Add a new category",
+			category,
+			errors: schemaErrors.mapped(),
+		});
+	};
+
+	schemaErrors.isEmpty() ? addNewCategory() : renderErrorMessages();
+});
 const categoryUpdateGet = async (req, res, next) => {
 	try {
 		const category = await Category.findById(req.params.id).exec();
