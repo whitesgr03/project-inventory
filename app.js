@@ -54,9 +54,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/inventory", inventoryRouter);
 
-// catch 404 and forward to error handler
+// unknown routes handler
 app.use((req, res, next) => {
-	next(createError(404));
+	next(createError(404, "Page not found", { type: "page" }));
 });
 
 // error handler
