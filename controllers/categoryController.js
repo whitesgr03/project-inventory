@@ -188,7 +188,10 @@ const categoryUpdatePost = async (req, res, next) => {
 			});
 
 			const updateCategory = async () => {
-				await Category.findByIdAndUpdate(newCategory._id, newCategory);
+				await Category.findByIdAndUpdate(
+					newCategory._id,
+					newCategory
+				).exec();
 				res.redirect(newCategory.url);
 			};
 
