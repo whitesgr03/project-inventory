@@ -245,11 +245,15 @@ const categoryDeleteGet = async (req, res, next) => {
 			res.render("categoryDetail", locals);
 		};
 
-		!category
-			? next(createError(404, "Category not found", { type: "category" }))
-			: process.env.NODE_ENV === "production" && !category.expiresAfter
-			? res.redirect(category.url)
-			: renderTemplate();
+		category
+			? process.env.NODE_ENV === "development" || category.expiresAfter
+				? renderTemplate()
+				: res.redirect(category.url)
+			: next(
+					createError(404, "Category not found", {
+						type: "category",
+					})
+			  );
 	} catch (err) {
 		next(
 			createError(400, "Category not found", {
