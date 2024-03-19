@@ -34,12 +34,14 @@ const categoryDetail = async (req, res, next) => {
 				.exec(),
 		]);
 
-		category === null
-			? next(createError(404, "Category not found", { type: "category" }))
-			: res.render("categoryDetail", {
+		category
+			? res.render("categoryDetail", {
 					category,
 					products,
-			  });
+			  })
+			: next(
+					createError(404, "Category not found", { type: "category" })
+			  );
 	} catch (err) {
 		next(
 			createError(400, "Category not found", {
