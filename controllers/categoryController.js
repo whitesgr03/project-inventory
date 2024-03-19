@@ -113,11 +113,16 @@ const categoryUpdateGet = async (req, res, next) => {
 	try {
 		const category = await Category.findById(req.params.id).exec();
 
-		category === null
+		!category
 			? next(createError(404, "Category not found", { type: "category" }))
-			: res.render("categoryForm", {
+			: category.expiresAfter
+			? res.render("categoryForm", {
 					title: "Update category",
 					category,
+			  })
+			: res.render("categoryList", {
+					title: "Category List",
+					categories,
 			  });
 	} catch (err) {
 		next(
