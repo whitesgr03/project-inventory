@@ -19,14 +19,6 @@ app.set("view engine", "pug");
 
 process.env.NODE_ENV === "production" &&
 	app.use(
-		rateLimit({
-			windowMs: 1 * 60 * 1000,
-			limit: 20,
-		})
-	);
-
-process.env.NODE_ENV === "production" &&
-	app.use(
 		helmet({
 			contentSecurityPolicy: {
 				directives: {
