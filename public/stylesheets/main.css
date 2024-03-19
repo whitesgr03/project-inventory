@@ -28,6 +28,8 @@ main .product {
 	display: flex;
 	flex-direction: column;
 	row-gap: 20px;
+	flex: 1 1 100%;
+}
 }
 
 main h2 .icon {
