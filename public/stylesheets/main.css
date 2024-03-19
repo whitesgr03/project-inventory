@@ -22,6 +22,41 @@ main .content {
 	justify-content: space-between;
 }
 
+main .content > .error {
+	flex: 1 1 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	row-gap: 20px;
+}
+
+main .content > .error .title {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 20px;
+}
+
+main .content > .error .title h1 {
+	font-size: 1.5rem;
+}
+
+main .content > .error .title h1 span {
+	font-weight: inherit;
+}
+
+main .content > .error .icon {
+	width: 80px;
+	height: 80px;
+}
+
+main .content > .error .message {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
 /* category and product */
 main .category,
 main .product {
@@ -149,41 +184,6 @@ main ul.list li a:hover {
 	background-color: var(--light-list-link-hover-bgc);
 }
 
-main > .error {
-	flex: 1 1 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	row-gap: 20px;
-}
-
-main > .error .title {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	row-gap: 20px;
-}
-
-main > .error .title h1 {
-	font-size: 1.5rem;
-}
-
-main > .error .title h1 span {
-	font-weight: inherit;
-}
-
-main > .error .icon {
-	width: 80px;
-	height: 80px;
-}
-
-main > .error .message {
-	display: flex;
-	flex-direction: column;
-	row-gap: 20px;
-}
-
 /* dark scheme */
 .dark main {
 	background-color: var(--dark-scheme-bgc);
@@ -303,11 +303,11 @@ main > .error .message {
 		justify-content: space-around;
 	}
 
-	main > .error .title h1 {
+	main .content > .error .title h1 {
 		font-size: 2rem;
 	}
 
-	main > .error .icon {
+	main .content > .error .icon {
 		width: 100px;
 		height: 100px;
 	}
