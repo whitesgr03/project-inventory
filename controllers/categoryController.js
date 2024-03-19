@@ -37,7 +37,6 @@ const categoryDetail = async (req, res, next) => {
 		category === null
 			? next(createError(404, "Category not found", { type: "category" }))
 			: res.render("categoryDetail", {
-					title: "Category Detail",
 					category,
 					products,
 			  });
