@@ -116,14 +116,16 @@ const categoryUpdateGet = async (req, res, next) => {
 	try {
 		const category = await Category.findById(req.params.id).exec();
 
-		!category
-			? next(createError(404, "Category not found", { type: "category" }))
-			: process.env.NODE_ENV === "production" && !category.expiresAfter
-			? res.redirect(category.url)
-			: res.render("categoryForm", {
-					title: "Update category",
-					category,
-			  });
+		category
+			? process.env.NODE_ENV === "development" || category.expiresAfter
+				? res.render("categoryForm", {
+						title: "Update category",
+						category,
+				  })
+				: res.redirect(category.url)
+			: next(
+					createError(404, "Category not found", { type: "category" })
+			  );
 	} catch (err) {
 		next(
 			createError(400, "Category not found", {
