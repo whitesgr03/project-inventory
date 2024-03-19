@@ -133,63 +133,91 @@ const categoryUpdateGet = async (req, res, next) => {
 		);
 	}
 };
-const categoryUpdatePost = asyncHandler(async (req, res, next) => {
-	const validationSchema = {
-		name: {
-			trim: true,
-			isLength: {
-				options: { min: 1, max: 30 },
-				errorMessage: "The name length must be 1 to 30.",
-			},
-			escape: true,
-			custom: {
-				options: value =>
-					new Promise(async (resolve, reject) => {
-						const existingCategory = await Category.findOne({
-							$and: [
-								{ name: value },
-								{ _id: { $ne: new ObjectId(req.params.id) } },
-							],
-						}).exec();
-						existingCategory ? reject() : resolve();
-					}),
-				errorMessage: "The name is been used.",
-			},
-		},
-		description: {
-			trim: true,
-			notEmpty: { errorMessage: "The description must be input." },
-			escape: true,
-		},
-	};
+const categoryUpdatePost = async (req, res, next) => {
+	try {
+		const existingCategory = await Category.findById(req.params.id).exec();
+		const validationFields = async () => {
+			const validationSchema = {
+				name: {
+					trim: true,
+					isLength: {
+						options: { min: 1, max: 30 },
+						errorMessage: "The name length must be 1 to 30.",
+					},
+					escape: true,
+					custom: {
+						options: value =>
+							new Promise(async (resolve, reject) => {
+								const existingCategory = await Category.findOne(
+									{
+										$and: [
+											{ name: value },
+											{
+												_id: {
+													$ne: new ObjectId(
+														req.params.id
+													),
+												},
+											},
+										],
+									}
+								).exec();
+								existingCategory ? reject() : resolve();
+							}),
+						errorMessage: "The name is been used.",
+					},
+				},
+				description: {
+					trim: true,
+					notEmpty: {
+						errorMessage: "The description must be input.",
+					},
+					escape: true,
+				},
+			};
 
-	await checkSchema(validationSchema, ["body"]).run(req);
+			await checkSchema(validationSchema, ["body"]).run(req);
 
-	const schemaErrors = validationResult(req);
+			const schemaErrors = validationResult(req);
 
-	const category = new Category({
-		_id: req.params.id,
-		...req.body,
-	});
+			const category = new Category({
+				_id: req.params.id,
+				...req.body,
+			});
 
-	const updateCategory = async () => {
-		await Category.findByIdAndUpdate(category._id, category);
-		res.redirect(category.url);
-	};
+			const updateCategory = async () => {
+				await Category.findByIdAndUpdate(category._id, category);
+				res.redirect(category.url);
+			};
 
-	const renderErrorMessages = () => {
-		res.render("categoryForm", {
-			title: "Update category",
-			category,
-			errors: schemaErrors.mapped(),
-		});
-	};
+			const renderErrorMessages = () => {
+				res.render("categoryForm", {
+					title: "Update category",
+					category,
+					errors: schemaErrors.mapped(),
+				});
+			};
 
-	schemaErrors.isEmpty() ? updateCategory() : renderErrorMessages();
-});
-const categoryDeleteGet = asyncHandler(async (req, res, next) => {
-	res.send("This is category delete get page");
-});
+			schemaErrors.isEmpty() ? updateCategory() : renderErrorMessages();
+		};
+
+		!existingCategory
+			? next(createError(404, "Category not found", { type: "category" }))
+			: existingCategory.expiresAfter
+			? validationFields()
+			: res.render("categoryList", {
+					title: "Category List",
+					categories,
+			  });
+	} catch (err) {
+		next(
+			createError(400, "Category not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "category",
+			})
+		);
+	}
+};
 const categoryDeletePost = [
 	asyncHandler(async (req, res, next) => {
 		res.send("This is category update post page");
