@@ -77,6 +77,39 @@ main .topBar .feature a:hover {
 	background-color: var(--light-button-link-hover-bgc);
 }
 
+/* delete */
+main .category .delete {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex: 1 1 100%;
+	row-gap: 20px;
+}
+
+main .category .delete form {
+	flex-direction: row;
+	border: 0;
+	column-gap: 60px;
+}
+
+main .category .delete form button.submit {
+	background-color: var(--light-error-label-color);
+	color: var(--dark-scheme-color);
+}
+
+main .category .delete form button.submit:hover {
+	background-color: var(--light-button-link-hover-bgc);
+	color: var(--light-scheme-color);
+}
+
+main .category .delete .name {
+	font-size: 1.2rem;
+	font-weight: 700;
+	font-style: italic;
+	color: var(--light-scheme-highlight-color);
+}
+
 /* detail */
 
 main .product .detail {
@@ -177,6 +210,23 @@ main > .error .message {
 
 .dark main .category .alert {
 	color: var(--dark-error-label-color);
+}
+
+.dark main .category .delete .name {
+	font-size: 1.2rem;
+	font-weight: 500;
+	font-style: italic;
+	color: var(--dark-scheme-highlight-color);
+}
+
+.dark main .category .delete form button.submit {
+	background-color: var(--light-error-label-color);
+	color: var(--dark-scheme-color);
+}
+
+.dark main .category .delete form button.submit:hover {
+	background-color: var(--light-list-link-hover-bgc);
+	color: var(--dark-scheme-bgc);
 }
 
 @media (min-width: 400px) {
