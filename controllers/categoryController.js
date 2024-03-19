@@ -86,17 +86,19 @@ const categoryCreatePost = asyncHandler(async (req, res, next) => {
 
 	const schemaErrors = validationResult(req);
 
-	const category = new Category({
+	const category = {
 		...req.body,
-	});
-
-	const tenMinutes = 10 * 60 * 1000;
-	process.env.NODE_ENV === "production" &&
-		(category.expiresAfter = new Date(Date.now() + tenMinutes));
+	};
 
 	const addNewCategory = async () => {
-		await category.save();
-		res.redirect(category.url);
+		const newCategory = new Category(category);
+
+		const tenMinutes = 10 * 60 * 1000;
+		process.env.NODE_ENV === "production" &&
+			(newCategory.expiresAfter = new Date(Date.now() + tenMinutes));
+
+		await newCategory.save();
+		res.redirect(newCategory.url);
 	};
 
 	const renderErrorMessages = () => {
