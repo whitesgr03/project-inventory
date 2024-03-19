@@ -17,6 +17,10 @@ form > div {
 	row-gap: 10px;
 	width: 100%;
 }
+form > div:last-of-type {
+	flex-direction: row;
+	justify-content: space-evenly;
+}
 
 form label.error {
 	color: var(--light-error-label-color);
@@ -84,17 +88,33 @@ form > div.uploadImage label .image.preview > div {
 	display: none;
 }
 
+form a,
 form button.submit {
 	min-height: 45px;
-	color: var(--light-scheme-color);
-	background-color: var(--light-scheme-bgc);
 	border-radius: 10px;
 	border: 2px solid var(--light-scheme-color);
 	padding: 10px 20px;
-	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+form button.submit {
+	background-color: var(--light-success-label-color);
+	color: var(--dark-scheme-color);
+}
+
+form a {
+	background-color: var(--light-scheme-bgc);
+	color: var(--light-scheme-color);
 }
 
 form button.submit:hover {
+	background-color: var(--dark-success-label-color);
+	color: var(--light-scheme-color);
+}
+
+form a:hover {
 	color: var(--dark-scheme-color);
 	background-color: var(--light-scheme-highlight-color);
 }
@@ -133,16 +153,26 @@ form button.submit:hover {
 	border-color: var(--dark-scheme-highlight-color);
 }
 
-.dark form button.submit {
+.dark form a {
 	color: var(--dark-scheme-color);
 	background-color: var(--dark-button-link-hover-bgc);
-	border-color: var(--dark-scheme-color);
 	border: 0;
+}
+
+.dark form button.submit {
+	color: var(--dark-scheme-color);
+	background-color: var(--light-success-label-color);
+	border: 0;
+}
+
+.dark form a:hover {
+	color: var(--light-scheme-color);
+	background-color: var(--dark-scheme-highlight-color);
 }
 
 .dark form button.submit:hover {
 	color: var(--light-scheme-color);
-	background-color: var(--dark-scheme-highlight-color);
+	background-color: var(--dark-success-label-color);
 }
 
 @media (min-width: 400px) {

@@ -26,4 +26,9 @@ block content
                         rows="5"
                     )!= category ? category.description : ''
                 span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
-            button.submit(type="submit") Submit
+            div
+                if category && category._id
+                    a(href=category.url) Cancel
+                else
+                    a(href='/inventory/categories') Cancel
+                button.submit(type="submit") Submit
