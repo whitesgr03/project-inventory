@@ -214,13 +214,32 @@ const categoryUpdatePost = async (req, res, next) => {
 		);
 	}
 };
+const categoryDeleteGet = async (req, res, next) => {
+	try {
+		const [category, products] = await Promise.all([
+			Category.findById(req.params.id).exec(),
+			Product.find({ category: req.params.id }, { name: 1 })
+				.sort({ name: 1 })
+				.exec(),
+		]);
+
+		const renderTemplate = () => {
+			const locals = {
+				category,
+			};
+
+			products.length && (locals.products = products);
+			products.length && (locals.remove = true);
+			!products.length && (locals.title = "Category delete");
+
+			res.render("categoryDetail", locals);
+		};
+
+		!category
 			? next(createError(404, "Category not found", { type: "category" }))
-			: existingCategory.expiresAfter
-			? validationFields()
-			: res.render("categoryList", {
-					title: "Category List",
-					categories,
-			  });
+			: process.env.NODE_ENV === "production" && !category.expiresAfter
+			? res.redirect(category.url)
+			: renderTemplate();
 	} catch (err) {
 		next(
 			createError(400, "Category not found", {
