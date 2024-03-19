@@ -66,7 +66,7 @@ app.use((err, req, res, next) => {
 	res.status(err.status || 500);
 
 	const renderNotFound = () => {
-		errorLog(`${err.cause.name}: ${err.cause.message}`);
+		err.cause && errorLog(`${err.cause.name}: ${err.cause.message}`);
 		res.render("notFound", {
 			type: err.type,
 		});
