@@ -5,13 +5,14 @@ block content
         if products
             div.topBar
                 h2!= category.name
-                div.feature
-                    a(href=category.url+'/delete') 
-                        span.icon.mdi--delete
-                        | Delete
-                    a(href=category.url+'/update') 
-                        span.icon.mdi--edit
-                        | Update
+                if category.expiresAfter
+                    div.feature
+                        a(href=category.url+'/delete') 
+                            span.icon.mdi--delete
+                            | Delete
+                        a(href=category.url+'/update') 
+                            span.icon.mdi--edit
+                            | Update
 
             p #[strong Description:] !{category.description}
             
