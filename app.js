@@ -6,7 +6,6 @@ const errorLog = require("debug")("ServerError");
 
 const compression = require("compression");
 const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
 
 const indexRouter = require("./routes/index");
 const inventoryRouter = require("./routes/inventory");
