@@ -16,6 +16,8 @@ block content
             p #[strong Description:] !{category.description}
             
             h3 Category's products
+            if remove 
+                p.alert #[strong Delete the following products before attempting to delete this category.]
 
             if products.length
                 ul.list
