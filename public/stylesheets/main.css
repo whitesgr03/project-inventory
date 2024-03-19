@@ -30,6 +30,9 @@ main .product {
 	row-gap: 20px;
 	flex: 1 1 100%;
 }
+
+main .category .alert {
+	color: var(--light-error-label-color);
 }
 
 main h2 .icon {
@@ -170,6 +173,10 @@ main > .error .message {
 
 .dark main .topBar .feature a:hover {
 	background-color: var(--dark-button-link-hover-bgc);
+}
+
+.dark main .category .alert {
+	color: var(--dark-error-label-color);
 }
 
 @media (min-width: 400px) {
