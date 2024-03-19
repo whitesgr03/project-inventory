@@ -18,6 +18,9 @@
 	--light-button-link-hover-bgc: #a1a1a1;
 	--light-list-link-hover-bgc: #c4c4c4;
 
+	--light-success-label-color: #0b563d;
+	--light-error-label-color: #911d1d;
+
 	/* dark */
 	--dark-scheme-color: #d1d1d1;
 	--dark-scheme-highlight-color: #f2a145;
@@ -26,6 +29,9 @@
 
 	--dark-button-link-hover-bgc: #483b2e;
 	--dark-list-link-hover-bgc: #573614;
+
+	--dark-success-label-color: #5cb297;
+	--dark-error-label-color: #ff7575;
 
 	/* icon */
 	--icon-mobile-size: 45px;
