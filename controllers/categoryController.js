@@ -206,11 +206,15 @@ const categoryUpdatePost = async (req, res, next) => {
 			schemaErrors.isEmpty() ? updateCategory() : renderErrorMessages();
 		};
 
-		!category
-			? next(createError(404, "Category not found", { type: "category" }))
-			: process.env.NODE_ENV === "production" && !category.expiresAfter
-			? res.redirect(category.url)
-			: validationFields();
+		category
+			? process.env.NODE_ENV === "development" || category.expiresAfter
+				? validationFields()
+				: res.redirect(category.url)
+			: next(
+					createError(404, "Category not found", {
+						type: "category",
+					})
+			  );
 	} catch (err) {
 		next(
 			createError(400, "Category not found", {
