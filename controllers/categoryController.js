@@ -179,20 +179,20 @@ const categoryUpdatePost = async (req, res, next) => {
 
 			const schemaErrors = validationResult(req);
 
-			const category = new Category({
+			const newCategory = new Category({
 				_id: req.params.id,
 				...req.body,
 			});
 
 			const updateCategory = async () => {
-				await Category.findByIdAndUpdate(category._id, category);
-				res.redirect(category.url);
+				await Category.findByIdAndUpdate(newCategory._id, newCategory);
+				res.redirect(newCategory.url);
 			};
 
 			const renderErrorMessages = () => {
 				res.render("categoryForm", {
 					title: "Update category",
-					category,
+					category: newCategory,
 					errors: schemaErrors.mapped(),
 				});
 			};
