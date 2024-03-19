@@ -134,7 +134,7 @@ const categoryUpdateGet = async (req, res, next) => {
 };
 const categoryUpdatePost = async (req, res, next) => {
 	try {
-		const existingCategory = await Category.findById(req.params.id).exec();
+		const category = await Category.findById(req.params.id).exec();
 		const validationFields = async () => {
 			const validationSchema = {
 				name: {
@@ -200,7 +200,20 @@ const categoryUpdatePost = async (req, res, next) => {
 			schemaErrors.isEmpty() ? updateCategory() : renderErrorMessages();
 		};
 
-		!existingCategory
+		!category
+			? next(createError(404, "Category not found", { type: "category" }))
+			: process.env.NODE_ENV === "production" && !category.expiresAfter
+			? res.redirect(category.url)
+			: validationFields();
+	} catch (err) {
+		next(
+			createError(400, "Category not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "category",
+			})
+		);
+	}
+};
 			? next(createError(404, "Category not found", { type: "category" }))
 			: existingCategory.expiresAfter
 			? validationFields()
