@@ -263,12 +263,37 @@ const categoryDeleteGet = async (req, res, next) => {
 		);
 	}
 };
-const categoryDeletePost = [
-	asyncHandler(async (req, res, next) => {
-		res.send("This is category update post page");
-	}),
-];
+const categoryDeletePost = async (req, res, next) => {
+	try {
+		const [category, products] = await Promise.all([
+			Category.findById(req.params.id).exec(),
+			Product.find({ category: req.params.id }).exec(),
+		]);
 
+		const deleteCategory = async () => {
+			await Category.findByIdAndDelete(req.params.id).exec();
+			res.redirect("/inventory/categories");
+		};
+
+		category
+			? process.env.NODE_ENV === "development" ||
+			  (category.expiresAfter && !products.length)
+				? deleteCategory()
+				: res.redirect(category.url)
+			: next(
+					createError(404, "Category not found", {
+						type: "category",
+					})
+			  );
+	} catch (err) {
+		next(
+			createError(400, "Category not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "category",
+			})
+		);
+	}
+};
 module.exports = {
 	index,
 	categoryList,
