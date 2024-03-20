@@ -88,4 +88,9 @@ block content
                     )
                 span.message(aria-live="polite")= errors && errors.image ? errors.image.msg : 'This is a placeholder'
             
-            button.submit(type="submit") Submit
+            div
+                if product && product._id
+                    a(href=product.url) Cancel
+                else
+                    a(href='/inventory/products') Cancel
+                button.submit(type="submit") Submit
