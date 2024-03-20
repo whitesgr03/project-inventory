@@ -43,7 +43,7 @@ const productDetail = async (req, res, next) => {
 	}
 };
 const productCreateGet = asyncHandler(async (req, res, next) => {
-	const categories = await Category.find({}, { description: 0 })
+	const categories = await Category.find({}, { name: 1 })
 		.sort({ name: 1 })
 		.exec();
 
