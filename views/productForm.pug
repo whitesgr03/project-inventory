@@ -32,7 +32,7 @@ block content
                             option(value="" disabled selected) Please choose a category
 
                         for category in categories
-                            if product && product.category && (product.category._id.toString() === category._id.toString())
+                            if product && (product.category === category._id.toString())
                                 option(value=category._id selected)!= category.name
                             else
                                 option(value=category._id)!= category.name
