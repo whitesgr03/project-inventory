@@ -28,12 +28,11 @@ const productDetail = async (req, res, next) => {
 			.sort({ name: 1 })
 			.exec();
 
-		product === null
-			? next(createError(404, "Product not found", { type: "product" }))
-			: res.render("productDetail", {
-					title: "Product Detail",
+		product
+			? res.render("productDetail", {
 					product,
-			  });
+			  })
+			: next(createError(404, "Product not found", { type: "product" }));
 	} catch (err) {
 		next(
 			createError(400, "Product not found", {
