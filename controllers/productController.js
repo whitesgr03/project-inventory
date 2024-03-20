@@ -55,45 +55,60 @@ const productCreateGet = asyncHandler(async (req, res, next) => {
 const productCreatePost = [
 	uploadFile.single("image"),
 	asyncHandler(async (req, res, next) => {
-		const categories = await Category.find({}, { description: 0 })
+		const categories = await Category.find({}, { name: 1 })
 			.sort({ name: 1 })
 			.exec();
 
 		const validationSchema = {
 			name: {
-				errorMessage: "The name must be less than 100 long.",
 				trim: true,
-				isLength: { options: { min: 1, max: 100 } },
+				isLength: {
+					options: { min: 1, max: 100 },
+					errorMessage: "The name must be less than 100 long.",
+				},
 				escape: true,
+				custom: {
+					options: value =>
+						new Promise(async (resolve, reject) => {
+							const existingProduct = await Product.findOne({
+								name: value,
+							}).exec();
+							existingProduct ? reject() : resolve();
+						}),
+					errorMessage: "The name is been used.",
+				},
 			},
 			category: {
-				errorMessage: "The category must be chosen.",
 				trim: true,
+				escape: true,
 				custom: {
 					options: value =>
 						typeof value === "string" &&
 						categories.find(
 							category => category._id.toString() === value
 						),
+					errorMessage: "The category must be chosen.",
+				},
+			},
+			price: {
+				trim: true,
+				isFloat: {
+					options: { min: 1 },
+					errorMessage: "The price must be input.",
 				},
 				escape: true,
 			},
-			price: {
-				errorMessage: "The price must be input.",
-				trim: true,
-				isFloat: { options: { min: 1 } },
-				escape: true,
-			},
 			quantity: {
-				errorMessage: "The quantity must be input.",
 				trim: true,
-				isInt: { options: { min: 1, max: 999 } },
+				isInt: {
+					options: { min: 1, max: 999 },
+					errorMessage: "The quantity must be input.",
+				},
 				escape: true,
 			},
 			description: {
-				errorMessage: "The description must be input.",
 				trim: true,
-				notEmpty: true,
+				notEmpty: { errorMessage: "The description must be input." },
 				escape: true,
 			},
 		};
@@ -123,21 +138,11 @@ const productCreatePost = [
 
 		const uploadImageError = validateUploadImage();
 
-		const product =
-			process.env.NODE_ENV === "development"
-				? new Product({
-						...req.body,
-				  })
-				: new Product({
-						...req.body,
-						expiresAfter: new Date(Date.now + 10 * 60 * 1000),
-				  });
+		const product = {
+			...req.body,
+		};
 
-		const isProductExist = async () => {
-			const existingProduct = await Product.findOne({
-				name: req.body.name,
-			}).exec();
-
+		const createProduct = async () => {
 			const uploadFile = async () => {
 				const resizeImageBuffer = async () =>
 					await sharp(uploadImage.buffer)
@@ -163,21 +168,24 @@ const productCreatePost = [
 					.file(imageName)
 					.save(imageBuffer);
 			};
-
 			const addNewProduct = async () => {
-				await product.save();
-				res.redirect(product.url);
-			};
+				const newProduct = new Product({
+					product,
+				});
 
-			const createProduct = async () => {
-				await uploadFile();
-				await addNewProduct();
-			};
+				const tenMinutes = 10 * 60 * 1000;
+				process.env.NODE_ENV === "production" &&
+					(newProduct.expiresAfter = new Date(
+						Date.now() + tenMinutes
+					));
 
-			existingProduct
-				? res.redirect(existingProduct.url)
-				: await createProduct();
+				await newProduct.save();
+				res.redirect(newProduct.url);
+			};
+			await uploadFile();
+			await addNewProduct();
 		};
+
 		const renderErrorMessages = () => {
 			const errors = inputErrors.mapped();
 			uploadImageError && (errors.image = uploadImageError);
@@ -191,7 +199,7 @@ const productCreatePost = [
 		};
 
 		inputErrors.isEmpty() && !uploadImageError
-			? isProductExist()
+			? createProduct()
 			: renderErrorMessages();
 	}),
 ];
