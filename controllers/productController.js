@@ -209,9 +209,31 @@ const productCreatePost = [
 			: renderErrorMessages();
 	}),
 ];
-const productUpdateGet = asyncHandler(async (req, res, next) => {
-	res.send("This is product update get page");
-});
+const productUpdateGet = async (req, res, next) => {
+	try {
+		const product = await Product.findById(req.params.id).exec();
+		const categories = await Category.find({}, { name: 1 })
+			.sort({ name: 1 })
+			.exec();
+
+		product
+			? process.env.NODE_ENV === "development" || product.expiresAfter
+				? res.render("productForm", {
+						title: "Update product",
+						categories,
+						product,
+				  })
+				: res.redirect(product.url)
+			: next(createError(404, "Product not found", { type: "product" }));
+	} catch (err) {
+		next(
+			createError(400, "Product not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "product",
+			})
+		);
+	}
+};
 const productUpdatePost = [
 	asyncHandler(async (req, res, next) => {
 		res.send("This is product update post page");
