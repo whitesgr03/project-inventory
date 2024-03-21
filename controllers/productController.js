@@ -113,6 +113,8 @@ const productCreatePost = [
 			},
 		};
 
+		const nameFiled = req.body.name;
+
 		await checkSchema(validationSchema, ["body"]).run(req);
 
 		const inputErrors = validationResult(req);
