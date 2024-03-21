@@ -9,7 +9,12 @@ const sharp = require("sharp");
 const Product = require("../models/product");
 const Category = require("../models/category");
 
+const googleStorage = new Storage();
 const uploadFile = multer({ storage: multer.memoryStorage() });
+const bucketName =
+	process.env.NODE_ENV === "development"
+		? "project-inventory-bucket"
+		: "project-inventory-user";
 
 const productList = asyncHandler(async (req, res, next) => {
 	const products = await Product.find({}, { name: 1 })
