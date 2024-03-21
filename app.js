@@ -25,6 +25,7 @@ process.env.NODE_ENV === "production" &&
 						"storage.googleapis.com",
 						"ik.imagekit.io",
 						"data:",
+						"blob:",
 					],
 					styleSrc: [
 						"'self'",
