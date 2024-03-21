@@ -3,8 +3,8 @@ const { unescape } = require("validator");
 
 const Schema = mongoose.Schema;
 
-const getImageName = name =>
-	`${unescape(name).replace(/[^a-z0-9]+/gi, "-")}.jpg`;
+const getImageName = (name, lastModified) =>
+	`${unescape(name).replace(/[^a-z0-9]+/gi, "-")}-${+lastModified}.jpg`;
 
 const getImageUrl = (size, userCreated) =>
 	`https://ik.imagekit.io/whitesgr03/project-inventory-${
@@ -22,6 +22,7 @@ const ProductSchema = new Schema(
 		},
 		price: { type: Number, required: true },
 		quantity: { type: Number, required: true },
+		lastModified: { type: Date },
 		expiresAfter: {
 			type: Date,
 			immutable: true,
@@ -38,14 +39,14 @@ const ProductSchema = new Schema(
 				get() {
 					return `https://storage.googleapis.com/project-inventory-${
 						this.expiresAfter ? "user" : "bucket"
-					}/${getImageName(this.name)}`;
+					}/${getImageName(this.name, this.lastModified)}`;
 				},
 			},
 			imageUrl_300: {
 				get() {
 					return (
 						getImageUrl("300", this.expiresAfter) +
-						getImageName(this.name)
+						getImageName(this.name, this.lastModified)
 					);
 				},
 			},
@@ -53,7 +54,7 @@ const ProductSchema = new Schema(
 				get() {
 					return (
 						getImageUrl("400", this.expiresAfter) +
-						getImageName(this.name)
+						getImageName(this.name, this.lastModified)
 					);
 				},
 			},
@@ -61,7 +62,7 @@ const ProductSchema = new Schema(
 				get() {
 					return (
 						getImageUrl("600", this.expiresAfter) +
-						getImageName(this.name)
+						getImageName(this.name, this.lastModified)
 					);
 				},
 			},
