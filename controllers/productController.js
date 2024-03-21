@@ -150,21 +150,19 @@ const productCreatePost = [
 		};
 
 		const createProduct = async () => {
-			const uploadFile = async () => {
+			const currentTime = new Date();
+			const uploadNewProductImage = async () => {
+				const imageName = `${nameFiled.replace(
+					/[^a-z0-9]+/gi,
+					"-"
+				)}-${+currentTime}.jpg`;
+
 				const resizeImageBuffer = async () =>
 					await sharp(uploadImage.buffer)
 						.resize({ width: 800, height: 800 })
 						.jpeg({ mozjpeg: true })
 						.toBuffer();
-				const googleStorage = new Storage();
-				const bucketName =
-					process.env.NODE_ENV === "development"
-						? "project-inventory-bucket"
-						: "project-inventory-user";
-				const imageName = `${unescape(product.name).replace(
-					/[^a-z0-9]+/gi,
-					"-"
-				)}.jpg`;
+
 				const imageBuffer =
 					imageInfo.width > 800 || imageInfo.height > 800
 						? await resizeImageBuffer()
@@ -177,7 +175,8 @@ const productCreatePost = [
 			};
 			const addNewProduct = async () => {
 				const newProduct = new Product({
-					product,
+					...product,
+					lastModified: currentTime,
 				});
 
 				const tenMinutes = 10 * 60 * 1000;
@@ -189,7 +188,7 @@ const productCreatePost = [
 				await newProduct.save();
 				res.redirect(newProduct.url);
 			};
-			await uploadFile();
+			await uploadNewProductImage();
 			await addNewProduct();
 		};
 
