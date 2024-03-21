@@ -20,7 +20,6 @@ block content
                 span.message(aria-live="polite")= errors && errors.name ? errors.name.msg : 'This is a placeholder'
             div
                 label(class= errors && errors.category ? 'error' : '' for="product_category") Category
-
                     select#product_category(
                         name='category' 
                         title="The category must be chosen"
@@ -74,8 +73,8 @@ block content
                 label(
                     class= errors && errors.image ? 'error' : '' 
                     for="product_image") Upload image (only .jpeg)
-                    div.image
-                        img(src="#")
+                    div.image(class= product ? 'preview' : '')
+                        img(src= product ? product.imageUrl : '')
                         div 
                             span.icon.mdi--file-image-outline 
                             | Please upload a .jpeg file
