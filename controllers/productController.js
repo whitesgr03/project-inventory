@@ -117,7 +117,7 @@ const productCreatePost = [
 
 		await checkSchema(validationSchema, ["body"]).run(req);
 
-		const inputErrors = validationResult(req);
+		const schemaErrors = validationResult(req);
 
 		const uploadImage = req.file;
 		const imageInfo =
@@ -189,7 +189,7 @@ const productCreatePost = [
 		};
 
 		const renderErrorMessages = () => {
-			const errors = inputErrors.mapped();
+			const errors = schemaErrors.mapped();
 			uploadImageError && (errors.image = uploadImageError);
 
 			res.render("productForm", {
@@ -200,7 +200,7 @@ const productCreatePost = [
 			});
 		};
 
-		inputErrors.isEmpty() && !uploadImageError
+		schemaErrors.isEmpty() && !uploadImageError
 			? createProduct()
 			: renderErrorMessages();
 	}),
