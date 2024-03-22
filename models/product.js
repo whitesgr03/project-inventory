@@ -22,7 +22,7 @@ const ProductSchema = new Schema(
 		},
 		price: { type: Number, required: true },
 		quantity: { type: Number, required: true },
-		lastModified: { type: Date },
+		lastModified: { type: Date, required: true },
 		expiresAfter: {
 			type: Date,
 			immutable: true,
