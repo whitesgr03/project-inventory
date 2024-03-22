@@ -73,7 +73,7 @@ block content
                 label(
                     class= errors && errors.image ? 'error' : '' 
                     for="product_image") Upload image (only .jpeg)
-                    div.image(class= product ? 'preview' : '')
+                    div.image(class= product && product.imageUrl ? 'preview' : '')
                         img(src= product ? product.imageUrl : '')
                         div 
                             span.icon.mdi--file-image-outline 
