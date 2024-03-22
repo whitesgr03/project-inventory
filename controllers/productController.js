@@ -463,6 +463,48 @@ const productDeleteGet = async (req, res, next) => {
 		);
 	}
 };
+const productDeletePost = async (req, res, next) => {
+	try {
+		const product = await Product.findById(req.params.id).exec();
+
+		const handleDelete = async () => {
+			const deleteProductImage = async () => {
+				const productImageName = `${unescape(product.name).replace(
+					/[^a-z0-9]+/gi,
+					"-"
+				)}-${+product.lastModified}.jpg`;
+
+				await googleStorage
+					.bucket(bucketName)
+					.file(productImageName)
+					.delete();
+			};
+			const deleteProduct = async () => {
+				await Product.findByIdAndDelete(req.params.id).exec();
+				res.redirect("/inventory/products");
+			};
+			await deleteProductImage();
+			await deleteProduct();
+		};
+
+		product
+			? process.env.NODE_ENV === "development" || product.expiresAfter
+				? handleDelete()
+				: res.redirect(product.url)
+			: next(
+					createError(404, "Product not found", {
+						type: "product",
+					})
+			  );
+	} catch (err) {
+		next(
+			createError(400, "Product not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "product",
+			})
+		);
+	}
+};
 module.exports = {
 	productList,
 	productDetail,
