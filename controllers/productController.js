@@ -438,16 +438,31 @@ const productUpdatePost = [
 		}
 	},
 ];
+const productDeleteGet = async (req, res, next) => {
+	try {
+		const product = await Product.findById(req.params.id).exec();
 
-const productDeleteGet = asyncHandler(async (req, res, next) => {
-	res.send("This is product delete get page");
-});
-const productDeletePost = [
-	asyncHandler(async (req, res, next) => {
-		res.send("This is product update post page");
-	}),
-];
-
+		product
+			? process.env.NODE_ENV === "development" || product.expiresAfter
+				? res.render("productDetail", {
+						title: "Product delete",
+						product,
+				  })
+				: res.redirect(product.url)
+			: next(
+					createError(404, "Product not found", {
+						type: "product",
+					})
+			  );
+	} catch (err) {
+		next(
+			createError(400, "Product not found", {
+				cause: process.env.NODE_ENV === "development" ? err : {},
+				type: "product",
+			})
+		);
+	}
+};
 module.exports = {
 	productList,
 	productDetail,
