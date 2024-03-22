@@ -236,9 +236,9 @@ const categoryDeleteGet = async (req, res, next) => {
 		const renderTemplate = () => {
 			const locals = {
 				category,
+				products,
 			};
 
-			products.length && (locals.products = products);
 			products.length && (locals.remove = true);
 			!products.length && (locals.title = "Category delete");
 
