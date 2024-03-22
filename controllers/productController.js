@@ -148,6 +148,7 @@ const productCreatePost = [
 
 		const product = {
 			...req.body,
+			category: new ObjectId(req.body.category),
 		};
 
 		const createProduct = async () => {
