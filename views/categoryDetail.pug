@@ -31,7 +31,8 @@ block content
         else
             h2= title
             div.delete
-                p Do you really want to delete #[span.name!= category.name] ?
+                p Do you really want to delete?
+                p.name!= category.name
                 form(method='POST')
                     a(href=category.url) Cancel
                     button.submit(type='submit') Delete
