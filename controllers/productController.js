@@ -340,51 +340,67 @@ const productUpdatePost = [
 					);
 				};
 
-				const uploadImageError = validateUploadImage();
+				const uploadImageError = uploadImage && validateUploadImage();
 
 				const product = {
 					_id: req.params.id,
 					...req.body,
+					imageUrl: currentProduct.imageUrl,
 				};
 
 				const updateProduct = async () => {
 					const currentTime = new Date();
-					const deleteProductImage = async () => {
-						const productImageName = `${unescape(
-							currentProduct.name
-						).replace(
-							/[^a-z0-9]+/gi,
-							"-"
-						)}-${+currentProduct.lastModified}.jpg`;
 
+					const customEscape = str =>
+						str.replace(/[^a-z0-9]+/gi, "-");
+
+					const currentProductImageName = `${customEscape(
+						unescape(currentProduct.name)
+					)}-${+currentProduct.lastModified}.jpg`;
+
+					const newProductImageName = `${customEscape(
+						nameFiled
+					)}-${+currentTime}.jpg`;
+
+					const RenameProductImage = async () => {
 						await googleStorage
 							.bucket(bucketName)
-							.file(productImageName)
-							.delete();
+							.file(currentProductImageName)
+							.move(newProductImageName);
 					};
+					const handleUpdateImage = async () => {
+						const deleteProductImage = async () => {
+							await googleStorage
+								.bucket(bucketName)
+								.file(currentProductImageName)
+								.delete();
+						};
 
-					const uploadNewProductImage = async () => {
-						const newProductImageName = `${nameFiled.replace(
-							/[^a-z0-9]+/gi,
-							"-"
-						)}-${+currentTime}.jpg`;
-						const resizeImageBuffer = async () =>
-							await sharp(uploadImage.buffer)
-								.resize({ width: 800, height: 800 })
-								.jpeg({ mozjpeg: true })
-								.toBuffer();
+						const uploadNewProductImage = async () => {
+							const resizeImageBuffer = async () =>
+								await sharp(uploadImage.buffer)
+									.resize({
+										width: 800,
+										height: 800,
+									})
+									.jpeg({
+										mozjpeg: true,
+									})
+									.toBuffer();
 
-						const imageBuffer =
-							imageInfo.width > 800 || imageInfo.height > 800
-								? await resizeImageBuffer()
-								: uploadImage.buffer;
+							const imageBuffer =
+								imageInfo.width > 800 || imageInfo.height > 800
+									? await resizeImageBuffer()
+									: uploadImage.buffer;
 
-						await googleStorage
-							.bucket(bucketName)
-							.file(newProductImageName)
-							.save(imageBuffer);
+							await googleStorage
+								.bucket(bucketName)
+								.file(newProductImageName)
+								.save(imageBuffer);
+						};
+						await deleteProductImage();
+						await uploadNewProductImage();
 					};
-
 					const editProduct = async () => {
 						const newProduct = new Product({
 							...product,
@@ -397,8 +413,8 @@ const productUpdatePost = [
 						res.redirect(newProduct.url);
 					};
 
-					await deleteProductImage();
-					await uploadNewProductImage();
+					!uploadImage && (await RenameProductImage());
+					uploadImage && (await handleUpdateImage());
 					await editProduct();
 				};
 
@@ -414,7 +430,7 @@ const productUpdatePost = [
 					});
 				};
 
-				schemaErrors.isEmpty()
+				schemaErrors.isEmpty() && !uploadImageError
 					? updateProduct()
 					: renderErrorMessages();
 			};
