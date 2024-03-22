@@ -2,7 +2,7 @@ extends layout
 
 block content
     div.category
-        if products
+        if !title
             div.topBar
                 h2!= category.name
                 if category.expiresAfter
