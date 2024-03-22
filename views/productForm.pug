@@ -26,15 +26,15 @@ block content
                         required
                         )
                         if product && product.category
-                            option(value="" disabled ) Please choose a category
+                            option(value="" disabled) Please choose a category
                         else
                             option(value="" disabled selected) Please choose a category
 
                         for category in categories
-                            if product && (product.category === category._id.toString())
-                                option(value=category._id selected)!= category.name
+                            if product && (product.category.toString() === category._id.toString())
+                                option(value=category._id.toString() selected)!= category.name
                             else
-                                option(value=category._id)!= category.name
+                                option(value=category._id.toString())!= category.name
 
                 span.message(aria-live="polite")= errors && errors.category ? errors.category.msg : 'This is a placeholder'
             div
