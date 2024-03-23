@@ -8,9 +8,10 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || "3000";
 const URI = process.env.DATABASE_URL;
 
-const IP_Address = os
-	.networkInterfaces()
-	.en0.find(interface => interface.family === "IPv4").address;
+const IP_Address =
+	process.env.NODE_ENV === "development" &&
+	os.networkInterfaces().en0.find(interface => interface.family === "IPv4")
+		.address;
 
 const connectDatabase = async () => {
 	databaseLog("Start connecting");
@@ -43,8 +44,12 @@ const onError = error => {
 };
 
 const onListening = async () => {
-	serverLog(`Listening on Local:            http://localhost:${PORT}`);
-	serverLog(`Listening on On Your Network:  http://${IP_Address}:${PORT}`);
+	process.env.NODE_ENV === "development" &&
+		serverLog(`Listening on Local:            http://localhost:${PORT}`);
+	process.env.NODE_ENV === "development" &&
+		serverLog(
+			`Listening on On Your Network:  http://${IP_Address}:${PORT}`
+		);
 	connectDatabase();
 };
 
