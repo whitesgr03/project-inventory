@@ -7,3 +7,7 @@ node_modules
 images/
 
 local/
+
+fly.*
+
+*docker*
