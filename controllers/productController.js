@@ -10,7 +10,10 @@ const sharp = require("sharp");
 const Product = require("../models/product");
 const Category = require("../models/category");
 
-const googleStorage = new Storage();
+const googleStorage = new Storage({
+	credentials: JSON.parse(process.env.CREDENTIALS),
+});
+
 const uploadFile = multer({ storage: multer.memoryStorage() });
 const bucketName =
 	process.env.NODE_ENV === "development"
