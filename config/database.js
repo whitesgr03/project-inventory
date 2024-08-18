@@ -15,6 +15,6 @@ const db = mongoose.connection;
 
 db.on("connecting", () => databaseLog("Connecting..."));
 
-mongoose.connect(process.env.DATABASE_URL).catch(err => handleError(err));
+mongoose.connect(process.env.MONGO_URL).catch(err => handleError(err));
 
 export default db;
