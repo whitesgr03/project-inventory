@@ -1,50 +1,51 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const logger = require("morgan");
-const errorLog = require("debug")("ServerError");
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const compression = require("compression");
-const helmet = require("helmet");
+import express from "express";
+import createError from "http-errors";
+import morgan from "morgan";
+import debug from "debug";
+import compression from "compression";
+import helmet from "helmet";
 
-const indexRouter = require("./routes/index");
-const inventoryRouter = require("./routes/inventory");
+// routes
+import indexRouter from "./routes/index.js";
+import inventoryRouter from "./routes/inventory.js";
 
 const app = express();
+const errorLog = debug("HandleErrorRouter");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const helmetOptions = {
+	contentSecurityPolicy: {
+		directives: {
+			imgSrc: [
+				"storage.googleapis.com",
+				"ik.imagekit.io",
+				"data:",
+				"blob:",
+			],
+			styleSrc: ["'self'", "fonts.googleapis.com", "necolas.github.io"],
+		},
+	},
+};
+const staticOptions = {
+	index: false,
+	maxAge: "1d",
+	redirect: false,
+};
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-process.env.NODE_ENV === "production" &&
-	app.use(
-		helmet({
-			contentSecurityPolicy: {
-				directives: {
-					imgSrc: [
-						"storage.googleapis.com",
-						"ik.imagekit.io",
-						"data:",
-						"blob:",
-					],
-					styleSrc: [
-						"'self'",
-						"fonts.googleapis.com",
-						"necolas.github.io",
-					],
-				},
-			},
-		})
-	);
+app.use(morgan("dev"));
 app.use(compression());
-app.use(
-	logger("dev", {
-		skip: (req, res) => req.baseUrl !== "/inventory",
-	})
-);
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"), staticOptions));
+app.use(helmet(helmetOptions));
 
+app.get("/favicon.ico", (req, res) => res.status(204));
 app.use("/", indexRouter);
 app.use("/inventory", inventoryRouter);
 
@@ -72,4 +73,4 @@ app.use((err, req, res, next) => {
 	err.type ? renderNotFound() : renderError();
 });
 
-module.exports = app;
+export default app;
