@@ -12,7 +12,19 @@ import Category from "../models/category.js";
 import Product from "../models/product.js";
 
 const googleStorage = new Storage({
-	credentials: JSON.parse(process.env.CREDENTIALS),
+	credentials: {
+		type: process.env.GADCTYPE,
+		project_id: process.env.GADCID,
+		private_key_id: process.env.GADCPRIVATEKEYID,
+		private_key: process.env.GADCIDPRIVATEKEY.replace(/\\n/g, "\n"),
+		client_email: process.env.GADCCLIENTEMAIL,
+		client_id: process.env.GADCCLIENTID,
+		auth_uri: process.env.GADCAUTHURI,
+		token_uri: process.env.GADCTOKENURI,
+		auth_provider_x509_cert_url: process.env.GADCAUTHPROVIDERX509,
+		client_x509_cert_url: process.env.GADCCLIENTX509,
+		universe_domain: process.env.GADCUNIVERSEDOMAIN,
+	},
 });
 
 const uploadFile = multer({ storage: multer.memoryStorage() });
