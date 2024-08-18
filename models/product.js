@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { unescape } = require("validator");
+import mongoose from "mongoose";
+import unescape from "validator/lib/unescape.js";
 
 const Schema = mongoose.Schema;
 
@@ -72,4 +72,4 @@ const ProductSchema = new Schema(
 
 const ProductModel = mongoose.model("Product", ProductSchema);
 
-module.exports = ProductModel;
+export default ProductModel;

@@ -1,39 +1,41 @@
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
-const categoryController = require("../controllers/categoryController");
-const productController = require("../controllers/productController");
+import * as categoryControllers from "../controllers/categoryController.js";
+import * as productControllers from "../controllers/productController.js";
 
-router.get("/", categoryController.index);
+router.get("/", categoryControllers.index);
 
 router
 	.route("/category/create")
-	.get(categoryController.categoryCreateGet)
-	.post(categoryController.categoryCreatePost);
+	.get(categoryControllers.categoryCreateGet)
+	.post(categoryControllers.categoryCreatePost);
 router
 	.route("/category/:id/update")
-	.get(categoryController.categoryUpdateGet)
-	.post(categoryController.categoryUpdatePost);
+	.get(categoryControllers.categoryUpdateGet)
+	.post(categoryControllers.categoryUpdatePost);
 router
 	.route("/category/:id/delete")
-	.get(categoryController.categoryDeleteGet)
-	.post(categoryController.categoryDeletePost);
-router.get("/category/:id", categoryController.categoryDetail);
-router.get("/categories", categoryController.categoryList);
+	.get(categoryControllers.categoryDeleteGet)
+	.post(categoryControllers.categoryDeletePost);
+	
+router.get("/category/:id", categoryControllers.categoryDetail);
+router.get("/categories", categoryControllers.categoryList);
 
 router
 	.route("/product/create")
-	.get(productController.productCreateGet)
-	.post(productController.productCreatePost);
+	.get(productControllers.productCreateGet)
+	.post(productControllers.productCreatePost);
 router
 	.route("/product/:id/update")
-	.get(productController.productUpdateGet)
-	.post(productController.productUpdatePost);
+	.get(productControllers.productUpdateGet)
+	.post(productControllers.productUpdatePost);
 router
 	.route("/product/:id/delete")
-	.get(productController.productDeleteGet)
-	.post(productController.productDeletePost);
-router.get("/product/:id", productController.productDetail);
-router.get("/products", productController.productList);
+	.get(productControllers.productDeleteGet)
+	.post(productControllers.productDeletePost);
+router.get("/product/:id", productControllers.productDetail);
+router.get("/products", productControllers.productList);
 
-module.exports = router;
+export default router;

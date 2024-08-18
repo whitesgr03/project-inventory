@@ -1,14 +1,15 @@
-const { ObjectId } = require("mongodb");
-const asyncHandler = require("express-async-handler");
-const createError = require("http-errors");
-const { Storage } = require("@google-cloud/storage");
-const { validationResult, checkSchema } = require("express-validator");
-const { unescape } = require("validator");
-const multer = require("multer");
-const sharp = require("sharp");
+import sharp from "sharp";
+import multer from "multer";
+import { Types } from "mongoose";
+import createError from "http-errors";
+import unescape from "validator/lib/unescape.js";
 
-const Product = require("../models/product");
-const Category = require("../models/category");
+import { Storage } from "@google-cloud/storage";
+import asyncHandler from "express-async-handler";
+import { validationResult, checkSchema } from "express-validator";
+
+import Category from "../models/category.js";
+import Product from "../models/product.js";
 
 const googleStorage = new Storage({
 	credentials: JSON.parse(process.env.CREDENTIALS),
@@ -151,7 +152,7 @@ const productCreatePost = [
 
 		const product = {
 			...req.body,
-			category: new ObjectId(req.body.category),
+			category: Types.ObjectId.createFromHexString(req.body.category),
 		};
 
 		const createProduct = async () => {
@@ -266,7 +267,7 @@ const productUpdatePost = [
 												{ name: value },
 												{
 													_id: {
-														$ne: new ObjectId(
+														$ne: Types.ObjectId.createFromHexString(
 															req.params.id
 														),
 													},
@@ -525,7 +526,7 @@ const productDeletePost = async (req, res, next) => {
 		);
 	}
 };
-module.exports = {
+export {
 	productList,
 	productDetail,
 	productCreateGet,

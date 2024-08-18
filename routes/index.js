@@ -1,8 +1,7 @@
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-	res.redirect("/inventory");
-});
+router.get("/", (req, res) => res.redirect("/inventory"));
 
-module.exports = router;
+export default router;

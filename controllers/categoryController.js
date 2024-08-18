@@ -1,10 +1,10 @@
-const { ObjectId } = require("mongodb");
-const asyncHandler = require("express-async-handler");
-const createError = require("http-errors");
-const { validationResult, checkSchema } = require("express-validator");
+import { Types } from "mongoose";
+import createError from "http-errors";
+import asyncHandler from "express-async-handler";
+import { validationResult, checkSchema } from "express-validator";
 
-const Category = require("../models/category");
-const Product = require("../models/product");
+import Category from "../models/category.js";
+import Product from "../models/product.js";
 
 const index = asyncHandler(async (req, res, next) => {
 	const numCategories = Category.countDocuments().exec();
@@ -156,7 +156,7 @@ const categoryUpdatePost = async (req, res, next) => {
 											{ name: value },
 											{
 												_id: {
-													$ne: new ObjectId(
+													$ne: Types.ObjectId.createFromHexString(
 														req.params.id
 													),
 												},
@@ -294,7 +294,7 @@ const categoryDeletePost = async (req, res, next) => {
 		);
 	}
 };
-module.exports = {
+export {
 	index,
 	categoryList,
 	categoryDetail,
