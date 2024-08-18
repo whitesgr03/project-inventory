@@ -47,7 +47,6 @@ const productDetail = async (req, res, next) => {
 	try {
 		const product = await Product.findById(req.params.id)
 			.populate("category")
-			.sort({ name: 1 })
 			.exec();
 
 		product
@@ -461,7 +460,6 @@ const productUpdatePost = [
 						})
 				  );
 		} catch (err) {
-			console.log("err", err);
 			next(
 				createError(400, "Product not found", {
 					cause: process.env.NODE_ENV === "development" ? err : {},
