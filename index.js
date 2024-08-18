@@ -4,14 +4,17 @@ import mongoose from "mongoose";
 
 import db from "./config/database.js";
 import app from "./app.js";
+import handleSeeding from "./config/seed.js";
 
 const databaseLog = debug("Mongoose");
 const serverLog = debug("Server");
 
 const port = process.env.PORT || "3000";
 
-const handleServer = () => {
-	databaseLog("MongoDB connecting successfully");
+const handleServer = async () => {
+	databaseLog("Connecting successfully");
+	await handleSeeding();
+
 	const handleListening = async () => {
 		const IP_Address = os
 			.networkInterfaces()
@@ -36,7 +39,7 @@ const handleServer = () => {
 		mongoose.disconnect();
 		databaseLog(`Database is disconnected.`);
 		process.exit(1);
-	}; 
+	};
 	app.listen(port, process.env.NODE_ENV === "development" && handleListening)
 		.on("error", handleError)
 		.on("close", handleClose);
@@ -47,4 +50,3 @@ db.on("connected", handleServer).on("error", err => {
 	databaseLog(err);
 	app.close();
 });
-
