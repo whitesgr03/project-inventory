@@ -1,56 +1,50 @@
-const serverLog = require("debug")("Server");
-const databaseLog = require("debug")("Mongoose");
+import os from "node:os";
+import debug from "debug";
+import mongoose from "mongoose";
 
-const os = require("node:os");
-const app = require("./app");
-const mongoose = require("mongoose");
+import db from "./config/database.js";
+import app from "./app.js";
 
-const PORT = process.env.PORT || "3000";
-const URI = process.env.DATABASE_URL;
+const databaseLog = debug("Mongoose");
+const serverLog = debug("Server");
 
-const IP_Address =
-	process.env.NODE_ENV === "development" &&
-	os.networkInterfaces().en0.find(interface => interface.family === "IPv4")
-		.address;
+const port = process.env.PORT || "3000";
 
-const connectDatabase = async () => {
-	databaseLog("Start connecting");
-
-	const handleError = err => {
-		databaseLog(`${err.name}: ${err.message}`);
-		process.exit(1);
+const handleServer = () => {
+	databaseLog("MongoDB connecting successfully");
+	const handleListening = async () => {
+		const IP_Address = os
+			.networkInterfaces()
+			.en0.find(internet => internet.family === "IPv4").address;
+		serverLog(`Listening on Local:        http://localhost:${port}`);
+		serverLog(`Listening on Your Network: http://${IP_Address}:${port}`);
 	};
-
-	mongoose.connect(URI).catch(err => handleError(err));
-
-	mongoose.connection.on("connected", () =>
-		databaseLog("Connecting successfully")
-	);
-
-	mongoose.connection.on("error", err => handleError(err));
+	const handleError = error => {
+		serverLog(`Server listening error.`);
+		switch (error.code) {
+			case "EACCES":
+				serverLog(`Port ${port} requires elevated privileges`);
+			case "EADDRINUSE":
+				serverLog(`Port ${port} is already in use`);
+			default:
+				serverLog(error);
+		}
+		app.close();
+	};
+	const handleClose = () => {
+		serverLog(`Server is closed.`);
+		mongoose.disconnect();
+		databaseLog(`Database is disconnected.`);
+		process.exit(1);
+	}; 
+	app.listen(port, process.env.NODE_ENV === "development" && handleListening)
+		.on("error", handleError)
+		.on("close", handleClose);
 };
 
-const onError = error => {
-	switch (error.code) {
-		case "EACCES":
-			serverLog(`Port ${PORT} requires elevated privileges`);
-			process.exit(1);
-		case "EADDRINUSE":
-			serverLog(`Port ${PORT} is already in use`);
-			process.exit(1);
-		default:
-			throw error;
-	}
-};
+db.on("connected", handleServer).on("error", err => {
+	databaseLog("Database error");
+	databaseLog(err);
+	app.close();
+});
 
-const onListening = async () => {
-	process.env.NODE_ENV === "development" &&
-		serverLog(`Listening on Local:            http://localhost:${PORT}`);
-	process.env.NODE_ENV === "development" &&
-		serverLog(
-			`Listening on On Your Network:  http://${IP_Address}:${PORT}`
-		);
-	connectDatabase();
-};
-
-app.listen(PORT, onListening).on("error", onError);
