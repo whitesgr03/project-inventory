@@ -70,6 +70,8 @@ const ProductSchema = new Schema(
 	}
 );
 
+ProductSchema.index({ expiresAfter: 1 }, { expireAfterSeconds: 1 });
+
 const ProductModel = mongoose.model("Product", ProductSchema);
 
 export default ProductModel;

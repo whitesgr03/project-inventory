@@ -6,10 +6,7 @@ const CategorySchema = new Schema(
 	{
 		name: { type: String, required: true },
 		description: { type: String, required: true },
-		expiresAfter: {
-			type: Date,
-			immutable: true,
-		},
+		expiresAfter: { type: Date, immutable: true },
 	},
 	{
 		virtuals: {
@@ -21,6 +18,9 @@ const CategorySchema = new Schema(
 		},
 	}
 );
+
+CategorySchema.index({ expiresAfter: 1 }, { expireAfterSeconds: 1 });
+
 
 const CategoryModel = mongoose.model("Category", CategorySchema);
 
