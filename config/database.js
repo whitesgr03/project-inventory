@@ -13,7 +13,7 @@ const handleError = err => {
 
 const db = mongoose.connection;
 
-db.on("connecting", () => databaseLog("Connecting MongoDB..."));
+db.on("connecting", () => databaseLog("Connecting..."));
 
 mongoose.connect(process.env.DATABASE_URL).catch(err => handleError(err));
 
