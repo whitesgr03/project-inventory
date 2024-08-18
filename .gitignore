@@ -1,13 +1,7 @@
 node_modules
 
-*.env
+.env*
 
 *credentials.*
 
-images/
-
 local/
-
-fly.*
-
-*docker*
