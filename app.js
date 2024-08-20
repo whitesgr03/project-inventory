@@ -31,7 +31,6 @@ const helmetOptions = {
 };
 const staticOptions = {
 	index: false,
-	maxAge: "1d",
 	redirect: false,
 };
 
@@ -39,11 +38,11 @@ const staticOptions = {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-app.use(morgan("dev"));
-app.use(compression());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public"), staticOptions));
 app.use(helmet(helmetOptions));
+app.use(express.static(path.join(__dirname, "public"), staticOptions));
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan(process.env.production ? "common" : "dev"));
+app.use(compression());
 
 app.get("/favicon.ico", (req, res) => res.status(204));
 app.use("/", indexRouter);
