@@ -12,7 +12,7 @@ const CategorySchema = new Schema(
 		virtuals: {
 			url: {
 				get() {
-					return `/inventory/category/${this._id}`;
+					return `/inventory/categories/${this._id}`;
 				},
 			},
 		},
@@ -20,7 +20,6 @@ const CategorySchema = new Schema(
 );
 
 CategorySchema.index({ expiresAfter: 1 }, { expireAfterSeconds: 1 });
-
 
 const CategoryModel = mongoose.model("Category", CategorySchema);
 
