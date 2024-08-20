@@ -12,7 +12,7 @@ const seedingCategories = async () => {
 			{
 				name: "Dry Dog Food",
 				description:
-					"Discover our great selection of the best dry dog food at fantastic prices shipped across Ireland. Find dog food that matches the nutritional needs of your dog, based on age, breed, or special health and dietary needs. ",
+					"Discover our great selection of the best dry dog food at fantastic prices shipped across Ireland. Find dog food that matches the nutritional needs of your dog, based on age, breed, or special health and dietary needs.",
 			},
 			{
 				name: "Wet Dog Food",
@@ -27,7 +27,7 @@ const seedingCategories = async () => {
 			{
 				name: "Dog Toys",
 				description:
-					"Dog toys can help you build a trusting relationship with your dog and provide all-important exercise and activity. Dog sports, including dog agility courses, are also gaining popularity and various dog training equipment can help you & your pet be successful in your goals and bring variety and enjoyment to your dog's agility sessions. Chew toys can also be great in keeping your dog's teeth and gums healthy. Jaw muscles can be strengthened through extensive chewing. It also helps to keep teeth clean, combatting plaque and tartar build up through dental abrasion. ",
+					"Dog toys can help you build a trusting relationship with your dog and provide all-important exercise and activity. Dog sports, including dog agility courses, are also gaining popularity and various dog training equipment can help you & your pet be successful in your goals and bring variety and enjoyment to your dog's agility sessions. Chew toys can also be great in keeping your dog's teeth and gums healthy. Jaw muscles can be strengthened through extensive chewing. It also helps to keep teeth clean, combatting plaque and tartar build up through dental abrasion.",
 			},
 		];
 		await Category.insertMany(categories);
@@ -70,9 +70,9 @@ const seedingProducts = async () => {
 				lastModified: currentTime,
 			},
 			{
-				name: 'Wolf of Wilderness Adult "Oak Woods" – Wild Boar',
+				name: 'Wolf of Wilderness Adult "Oak Woods" - Wild Boar',
 				description:
-					"Species appropriate, grain-free dry dog food that mimics the wolf’s natural wild diet, made with 41% fresh chicken and wild boar refined with berries, wild herbs and roots.",
+					"Species appropriate, grain-free dry dog food that mimics the wolf's natural wild diet, made with 41% fresh chicken and wild boar refined with berries, wild herbs and roots.",
 				category: categories[0]._id,
 				price: 7.99,
 				quantity: 50,
