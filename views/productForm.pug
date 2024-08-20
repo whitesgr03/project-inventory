@@ -11,7 +11,7 @@ block content
                     input#product_name(
                         type="text" 
                         name="name" 
-                        value!=product ? product.name : ''
+                        value= product ? product.name : ''
                         title="The name is required and must be less than 100 long." 
                         maxlength="100"
                         pattern="^.{1,100}$"
@@ -32,9 +32,9 @@ block content
 
                         for category in categories
                             if product && (product.category.toString() === category._id.toString())
-                                option(value=category._id.toString() selected)!= category.name
+                                option(value=category._id.toString() selected)= category.name
                             else
-                                option(value=category._id.toString())!= category.name
+                                option(value=category._id.toString())= category.name
 
                 span.message(aria-live="polite")= errors && errors.category ? errors.category.msg : 'This is a placeholder'
             div
@@ -67,7 +67,7 @@ block content
                         title="The description is required" 
                         rows="5"
                         required
-                    )!= product ? product.description : ''
+                    )= product ? product.description : ''
                 span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
             div.uploadImage
                 label(

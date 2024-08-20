@@ -10,7 +10,7 @@ block content
                     input#category_name(
                         type="text" 
                         name="name" 
-                        value!=category ? category.name : ''
+                        value= category ? category.name : ''
                         title="The name is required and must be less than 30 long." 
                         maxlength="30"
                         pattern="^.{1,30}$"
@@ -24,7 +24,7 @@ block content
                         title="The description is required" 
                         required
                         rows="5"
-                    )!= category ? category.description : ''
+                    )= category ? category.description : ''
                 span.message(aria-live="polite")= errors && errors.description ? errors.description.msg : 'This is a placeholder'
             div
                 if category && category._id

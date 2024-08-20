@@ -5,7 +5,7 @@ block content
     div.product
         if !title
             div.topBar
-                h2!= product.name
+                h2= product.name
                 if product.expiresAfter
                     div.feature
                         a(href=product.url+'/delete') 
@@ -28,15 +28,15 @@ block content
                             `, 
                         )
                 div.info
-                    p #[strong Category:] !{product.category.name}
+                    p #[strong Category:] #{product.category.name}
                     p #[strong Price:] $#{product.price}
                     p #[strong Quantity:] #{product.quantity}
-                    p #[strong Description:] !{product.description}
+                    p #[strong Description:] #{product.description}
         else 
             h2= title
             div.delete
                 p Do you really want to delete?
-                p.name!= product.name
+                p.name= product.name
                 form(method='POST')
                     a(href=product.url) Cancel
                     button.submit(type='submit') Delete

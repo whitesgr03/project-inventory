@@ -4,7 +4,7 @@ block content
     div.category
         if !title
             div.topBar
-                h2!= category.name
+                h2= category.name
                 if category.expiresAfter
                     div.feature
                         a(href=category.url+'/delete') 
@@ -14,17 +14,17 @@ block content
                             span.icon.mdi--edit
                             | Update
 
-            p #[strong Description:] !{category.description}
+            p #[strong Description:] #{category.description}
             
             h3 Category's products
-            if remove 
+            if alert 
                 p.alert #[strong Delete the following products before attempting to delete this category.]
 
             if products.length
                 ul.list
                     each product, index in products
                         li 
-                            a(href=product.url) #{index + 1}. !{product.name}
+                            a(href=product.url) #{index + 1}. #{product.name}
             else
                 p This category has no products.
 
@@ -32,7 +32,7 @@ block content
             h2= title
             div.delete
                 p Do you really want to delete?
-                p.name!= category.name
+                p.name= category.name
                 form(method='POST')
                     a(href=category.url) Cancel
                     button.submit(type='submit') Delete
