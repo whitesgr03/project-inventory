@@ -13,7 +13,7 @@ import indexRouter from "./routes/index.js";
 import inventoryRouter from "./routes/inventory.js";
 
 const app = express();
-const errorLog = debug("HandleErrorRouter");
+const errorLog = debug("ServerError");
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const helmetOptions = {
@@ -67,6 +67,7 @@ app.use((err, req, res, next) => {
 
 	const renderError = () => {
 		errorLog(`${err.name}: ${err.message}`);
+		errorLog(err);
 		res.render("error");
 	};
 
