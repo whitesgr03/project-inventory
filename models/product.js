@@ -1,18 +1,8 @@
 import mongoose from "mongoose";
-import unescape from "validator/lib/unescape.js";
+
+import { getImageUrl } from "../utils/handleImage.js";
 
 const Schema = mongoose.Schema;
-
-const getImageName = (name, lastModified) => {
-	return lastModified
-		? `${unescape(name).replace(/[^a-z0-9]+/gi, "-")}-${+lastModified}.jpg`
-		: `${unescape(name).replace(/[^a-z0-9]+/gi, "-")}.jpg`;
-};
-
-const getImageUrl = (size, userCreated) =>
-	`https://ik.imagekit.io/whitesgr03/project-inventory-${
-		userCreated ? "user" : "bucket"
-	}/tr:w-${size},h-${size}/`;
 
 const ProductSchema = new Schema(
 	{
@@ -35,50 +25,38 @@ const ProductSchema = new Schema(
 		virtuals: {
 			url: {
 				get() {
-					return `/inventory/product/${this._id}`;
+					return `/inventory/products/${this._id}`;
 				},
 			},
 			imageUrl: {
 				get() {
-					return `https://storage.googleapis.com/project-inventory-${
-						this.expiresAfter ? "user" : "bucket"
-					}/${getImageName(
-						this.name,
-						this.expiresAfter ? this.lastModified : null
-					)}`;
+					return `https://storage.googleapis.com/${getImageUrl({
+						product: this,
+					})}`;
 				},
 			},
 			imageUrl_300: {
 				get() {
-					return (
-						getImageUrl("300", this.expiresAfter) +
-						getImageName(
-							this.name,
-							this.expiresAfter ? this.lastModified : null
-						)
-					);
+					return `https://ik.imagekit.io/whitesgr03/${getImageUrl({
+						product: this,
+						size: 300,
+					})}`;
 				},
 			},
 			imageUrl_400: {
 				get() {
-					return (
-						getImageUrl("400", this.expiresAfter) +
-						getImageName(
-							this.name,
-							this.expiresAfter ? this.lastModified : null
-						)
-					);
+					return `https://ik.imagekit.io/whitesgr03/${getImageUrl({
+						product: this,
+						size: 400,
+					})}`;
 				},
 			},
 			imageUrl_600: {
 				get() {
-					return (
-						getImageUrl("600", this.expiresAfter) +
-						getImageName(
-							this.name,
-							this.expiresAfter ? this.lastModified : null
-						)
-					);
+					return `https://ik.imagekit.io/whitesgr03/${getImageUrl({
+						product: this,
+						size: 600,
+					})}`;
 				},
 			},
 		},
