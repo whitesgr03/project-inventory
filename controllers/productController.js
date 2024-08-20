@@ -2,14 +2,14 @@ import sharp from "sharp";
 import multer from "multer";
 import { Types } from "mongoose";
 import createError from "http-errors";
-import unescape from "validator/lib/unescape.js";
-
 import { Storage } from "@google-cloud/storage";
 import asyncHandler from "express-async-handler";
-import { validationResult, checkSchema } from "express-validator";
+import { validationResult, checkSchema, matchedData } from "express-validator";
 
 import Category from "../models/category.js";
 import Product from "../models/product.js";
+
+import { encodeFile } from "../utils/handleImage.js";
 
 const googleStorage = new Storage({
 	credentials: {
@@ -26,14 +26,10 @@ const googleStorage = new Storage({
 		universe_domain: process.env.GADCUNIVERSEDOMAIN,
 	},
 });
-
+const bucketName = "project-inventory-user";
 const uploadFile = multer({ storage: multer.memoryStorage() });
-const bucketName =
-	process.env.NODE_ENV === "development"
-		? "project-inventory-bucket"
-		: "project-inventory-user";
 
-const productList = asyncHandler(async (req, res, next) => {
+const productList = asyncHandler(async (req, res) => {
 	const products = await Product.find({}, { name: 1 })
 		.sort({ name: 1 })
 		.exec();
@@ -43,27 +39,18 @@ const productList = asyncHandler(async (req, res, next) => {
 		products,
 	});
 });
-const productDetail = async (req, res, next) => {
-	try {
-		const product = await Product.findById(req.params.id)
-			.populate("category")
-			.exec();
+const productDetail = asyncHandler(async (req, res, next) => {
+	const product = await Product.findById(req.params.id)
+		.populate("category")
+		.exec();
 
-		product
-			? res.render("productDetail", {
-					product,
-			  })
-			: next(createError(404, "Product not found", { type: "product" }));
-	} catch (err) {
-		next(
-			createError(400, "Product not found", {
-				cause: process.env.NODE_ENV === "development" ? err : {},
-				type: "product",
-			})
-		);
-	}
-};
-const productCreateGet = asyncHandler(async (req, res, next) => {
+	product
+		? res.render("productDetail", {
+				product,
+		  })
+		: next(createError(404, "Product not found", { type: "product" }));
+});
+const productCreateGet = asyncHandler(async (req, res) => {
 	const categories = await Category.find({}, { name: 1 })
 		.sort({ name: 1 })
 		.exec();
@@ -75,19 +62,18 @@ const productCreateGet = asyncHandler(async (req, res, next) => {
 });
 const productCreatePost = [
 	uploadFile.single("image"),
-	asyncHandler(async (req, res, next) => {
+	asyncHandler(async (req, res) => {
 		const categories = await Category.find({}, { name: 1 })
 			.sort({ name: 1 })
 			.exec();
-
 		const validationSchema = {
 			name: {
 				trim: true,
 				isLength: {
-					options: { min: 1, max: 100 },
+					options: { max: 100 },
 					errorMessage: "The name must be less than 100 long.",
+					bail: true,
 				},
-				escape: true,
 				custom: {
 					options: value =>
 						new Promise(async (resolve, reject) => {
@@ -101,10 +87,8 @@ const productCreatePost = [
 			},
 			category: {
 				trim: true,
-				escape: true,
 				custom: {
 					options: value =>
-						typeof value === "string" &&
 						categories.find(
 							category => category._id.toString() === value
 						),
@@ -115,427 +99,328 @@ const productCreatePost = [
 				trim: true,
 				isFloat: {
 					options: { min: 1 },
-					errorMessage: "The price must be input.",
+					errorMessage: "The price is required.",
 				},
-				escape: true,
 			},
 			quantity: {
 				trim: true,
 				isInt: {
 					options: { min: 1, max: 999 },
-					errorMessage: "The quantity must be input.",
+					errorMessage: "The quantity is required.",
 				},
-				escape: true,
 			},
 			description: {
 				trim: true,
-				notEmpty: { errorMessage: "The description must be input." },
-				escape: true,
+				notEmpty: { errorMessage: "The description is required." },
 			},
 		};
-
-		const nameFiled = req.body.name;
-
 		await checkSchema(validationSchema, ["body"]).run(req);
-
 		const schemaErrors = validationResult(req);
 
-		const uploadImage = req.file;
+		const { file } = req;
 		const imageInfo =
-			uploadImage &&
-			uploadImage.mimetype === "image/jpeg" &&
-			(await sharp(uploadImage.buffer).metadata());
-
-		const validateUploadImage = () => {
-			const errorMessage = {
-				msg: "The image is required, size must be less than 500 kb, width and height must be 800 or greater.",
-			};
-
-			return imageInfo
-				? (imageInfo.size > 500000 ||
-						imageInfo.width < 800 ||
-						imageInfo.height < 800) &&
-						errorMessage
-				: errorMessage;
-		};
-
-		const uploadImageError = validateUploadImage();
-
-		const product = {
-			...req.body,
-			category: Types.ObjectId.createFromHexString(req.body.category),
-		};
+			file?.mimetype === "image/jpeg" &&
+			(await sharp(file.buffer).metadata());
+		const imageError =
+			!imageInfo ||
+			imageInfo.size > 500000 ||
+			imageInfo.width < 800 ||
+			imageInfo.height < 800;
 
 		const createProduct = async () => {
-			const currentTime = new Date();
+			const oneDay = 24 * 60 * 60;
+			const product = matchedData(req);
+
+			let newProductUrl = null;
 			const uploadNewProductImage = async () => {
-				const imageName = `${nameFiled.replace(
-					/[^a-z0-9]+/gi,
-					"-"
-				)}-${+currentTime}.jpg`;
+				const fileName = encodeFile(product.name);
 
-				const resizeImageBuffer = async () =>
-					await sharp(uploadImage.buffer)
-						.resize({ width: 800, height: 800 })
-						.jpeg({ mozjpeg: true })
-						.toBuffer();
-
-				const imageBuffer =
-					imageInfo.width > 800 || imageInfo.height > 800
-						? await resizeImageBuffer()
-						: uploadImage.buffer;
+				const handleImageBuffer = async () =>
+					imageInfo.width === 800 && imageInfo.height === 800
+						? file.buffer
+						: await sharp(file.buffer)
+								.resize({ width: 800, height: 800 })
+								.jpeg({ mozjpeg: true })
+								.toBuffer();
 
 				await googleStorage
 					.bucket(bucketName)
-					.file(imageName)
-					.save(imageBuffer);
+					.file(fileName)
+					.save(await handleImageBuffer(), {
+						metadata: {
+							contentType: file.mimetype,
+							cacheControl: `public, max-age=${oneDay}`,
+						},
+					});
 			};
 			const addNewProduct = async () => {
+				const currentTime = new Date();
 				const newProduct = new Product({
 					...product,
 					lastModified: currentTime,
+					expiresAfter: new Date(
+						currentTime.getTime() + oneDay * 1000
+					),
 				});
 
-				const tenMinutes = 10 * 60 * 1000;
-				process.env.NODE_ENV === "production" &&
-					(newProduct.expiresAfter = new Date(
-						Date.now() + tenMinutes
-					));
-
 				await newProduct.save();
-				res.redirect(newProduct.url);
+				newProductUrl = newProduct.url;
 			};
-			await uploadNewProductImage();
-			await addNewProduct();
+			await Promise.all([uploadNewProductImage(), addNewProduct()]);
+			res.redirect(newProductUrl);
 		};
-
 		const renderErrorMessages = () => {
 			const errors = schemaErrors.mapped();
-			uploadImageError && (errors.image = uploadImageError);
-
+			imageError &&
+				(errors.image = {
+					msg: "The image is required, size must be less than 500 kb, width and height must be 800 or greater.",
+				});
 			res.render("productForm", {
 				title: "Add a new product",
 				categories,
-				product,
+				product: {
+					...req.body,
+					category: Types.ObjectId.createFromHexString(
+						req.body.category
+					),
+				},
 				errors,
 			});
 		};
 
-		schemaErrors.isEmpty() && !uploadImageError
+		schemaErrors.isEmpty() && !imageError
 			? createProduct()
 			: renderErrorMessages();
 	}),
 ];
-const productUpdateGet = async (req, res, next) => {
-	try {
+const productUpdateGet = asyncHandler(async (req, res, next) => {
+	const product = await Product.findById(req.params.id).exec();
+	const categories = await Category.find({}, { name: 1 })
+		.sort({ name: 1 })
+		.exec();
+
+	product
+		? !product?.expiresAfter
+			? res.redirect(product.url)
+			: res.render("productForm", {
+					title: "Update product",
+					categories,
+					product,
+			  })
+		: next(createError(404, "Product not found", { type: "product" }));
+});
+const productUpdatePost = [
+	uploadFile.single("image"),
+	asyncHandler(async (req, res, next) => {
 		const product = await Product.findById(req.params.id).exec();
 		const categories = await Category.find({}, { name: 1 })
 			.sort({ name: 1 })
 			.exec();
+		const validationFields = async () => {
+			const validationSchema = {
+				name: {
+					trim: true,
+					isLength: {
+						options: { max: 100 },
+						errorMessage: "The name must be less than 100 long.",
+					},
+					custom: {
+						options: value =>
+							new Promise(async (resolve, reject) => {
+								const existingProduct = await Product.findOne({
+									$and: [
+										{ name: value },
+										{
+											_id: {
+												$ne: Types.ObjectId.createFromHexString(
+													req.params.id
+												),
+											},
+										},
+									],
+								}).exec();
+								existingProduct ? reject() : resolve();
+							}),
+						errorMessage: "The name is been used.",
+					},
+				},
+				category: {
+					trim: true,
+					custom: {
+						options: value =>
+							categories.find(
+								category => category._id.toString() === value
+							),
+						errorMessage: "The category is required.",
+					},
+				},
+				price: {
+					trim: true,
+					isFloat: {
+						options: { min: 1 },
+						errorMessage: "The price is required.",
+					},
+				},
+				quantity: {
+					trim: true,
+					isInt: {
+						options: { min: 1, max: 999 },
+						errorMessage: "The quantity is required.",
+					},
+				},
+				description: {
+					trim: true,
+					notEmpty: {
+						errorMessage: "The description is required.",
+					},
+				},
+			};
 
-		product
-			? process.env.NODE_ENV === "development" || product.expiresAfter
-				? res.render("productForm", {
-						title: "Update product",
-						categories,
-						product,
-				  })
-				: res.redirect(product.url)
-			: next(createError(404, "Product not found", { type: "product" }));
-	} catch (err) {
-		next(
-			createError(400, "Product not found", {
-				cause: process.env.NODE_ENV === "development" ? err : {},
-				type: "product",
-			})
-		);
-	}
-};
-const productUpdatePost = [
-	uploadFile.single("image"),
-	async (req, res, next) => {
-		try {
-			const currentProduct = await Product.findById(req.params.id).exec();
-			const categories = await Category.find({}, { name: 1 })
-				.sort({ name: 1 })
-				.exec();
-			const validationFields = async () => {
-				const validationSchema = {
-					name: {
-						trim: true,
-						isLength: {
-							options: { min: 1, max: 100 },
-							errorMessage:
-								"The name must be less than 100 long.",
-						},
-						escape: true,
-						custom: {
-							options: value =>
-								new Promise(async (resolve, reject) => {
-									const existingProduct =
-										await Product.findOne({
-											$and: [
-												{ name: value },
-												{
-													_id: {
-														$ne: Types.ObjectId.createFromHexString(
-															req.params.id
-														),
-													},
-												},
-											],
-										}).exec();
+			await checkSchema(validationSchema, ["body"]).run(req);
 
-									existingProduct ? reject() : resolve();
-								}),
-							errorMessage: "The name is been used.",
-						},
-					},
-					category: {
-						trim: true,
-						escape: true,
-						custom: {
-							options: value =>
-								typeof value === "string" &&
-								categories.find(
-									category =>
-										category._id.toString() === value
-								),
-							errorMessage: "The category must be chosen.",
-						},
-					},
-					price: {
-						trim: true,
-						isFloat: {
-							options: { min: 1 },
-							errorMessage: "The price must be input.",
-						},
-						escape: true,
-					},
-					quantity: {
-						trim: true,
-						isInt: {
-							options: { min: 1, max: 999 },
-							errorMessage: "The quantity must be input.",
-						},
-						escape: true,
-					},
-					description: {
-						trim: true,
-						notEmpty: {
-							errorMessage: "The description must be input.",
-						},
-						escape: true,
-					},
+			const schemaErrors = validationResult(req);
+
+			const { file } = req;
+
+			const imageInfo =
+				file?.mimetype === "image/jpeg" &&
+				(await sharp(file.buffer).metadata());
+			const imageError =
+				!imageInfo ||
+				imageInfo.size > 500000 ||
+				imageInfo.width < 800 ||
+				imageInfo.height < 800;
+
+			const updateProduct = async () => {
+				const oneDay = 24 * 60 * 60;
+				const oldProduct = product;
+				const newProduct = matchedData(req);
+				const fileName = encodeFile(newProduct.name);
+
+				const RenameProductImage = async () => {
+					const oldFileName = encodeFile(oldProduct.name);
+					await googleStorage
+						.bucket(bucketName)
+						.file(oldFileName)
+						.move(fileName);
 				};
-
-				const nameFiled = req.body.name;
-
-				await checkSchema(validationSchema, ["body"]).run(req);
-
-				const schemaErrors = validationResult(req);
-
-				const uploadImage = req.file;
-				const imageInfo =
-					uploadImage &&
-					uploadImage.mimetype === "image/jpeg" &&
-					(await sharp(uploadImage.buffer).metadata());
-
-				const validateUploadImage = () => {
-					const errorMessage = {
-						msg: "The image is required, size must be less than 500 kb, width and height must be 800 or greater.",
-					};
-
-					return (
-						(!imageInfo ||
-							imageInfo.size > 500000 ||
-							imageInfo.width < 800 ||
-							imageInfo.height < 800) &&
-						errorMessage
-					);
-				};
-
-				const uploadImageError = uploadImage && validateUploadImage();
-
-				const product = {
-					_id: req.params.id,
-					...req.body,
-					imageUrl: currentProduct.imageUrl,
-				};
-
-				const updateProduct = async () => {
-					const currentTime = new Date();
-
-					const customEscape = str =>
-						str.replace(/[^a-z0-9]+/gi, "-");
-
-					const currentProductImageName = `${customEscape(
-						unescape(currentProduct.name)
-					)}-${+currentProduct.lastModified}.jpg`;
-
-					const newProductImageName = `${customEscape(
-						nameFiled
-					)}-${+currentTime}.jpg`;
-
-					const RenameProductImage = async () => {
-						await googleStorage
-							.bucket(bucketName)
-							.file(currentProductImageName)
-							.move(newProductImageName);
-					};
-					const handleUpdateImage = async () => {
-						const deleteProductImage = async () => {
-							await googleStorage
-								.bucket(bucketName)
-								.file(currentProductImageName)
-								.delete();
-						};
-
-						const uploadNewProductImage = async () => {
-							const resizeImageBuffer = async () =>
-								await sharp(uploadImage.buffer)
-									.resize({
-										width: 800,
-										height: 800,
-									})
-									.jpeg({
-										mozjpeg: true,
-									})
+				const handleUpdateImage = async () => {
+					const handleImageBuffer = async () =>
+						imageInfo.width === 800 && imageInfo.height === 800
+							? file.buffer
+							: await sharp(file.buffer)
+									.resize({ width: 800, height: 800 })
+									.jpeg({ mozjpeg: true })
 									.toBuffer();
 
-							const imageBuffer =
-								imageInfo.width > 800 || imageInfo.height > 800
-									? await resizeImageBuffer()
-									: uploadImage.buffer;
-
-							await googleStorage
-								.bucket(bucketName)
-								.file(newProductImageName)
-								.save(imageBuffer);
-						};
-						await deleteProductImage();
-						await uploadNewProductImage();
-					};
-					const editProduct = async () => {
-						const newProduct = new Product({
-							...product,
-							lastModified: currentTime,
+					await googleStorage
+						.bucket(bucketName)
+						.file(fileName)
+						.save(await handleImageBuffer(), {
+							metadata: {
+								contentType: file.mimetype,
+								cacheControl: `public, max-age=${oneDay}`,
+							},
 						});
-						await Product.findByIdAndUpdate(
-							product._id,
-							newProduct
-						).exec();
-						res.redirect(newProduct.url);
-					};
-
-					!uploadImage && (await RenameProductImage());
-					uploadImage && (await handleUpdateImage());
-					await editProduct();
+				};
+				const editProduct = async () => {
+					await Product.findByIdAndUpdate(product._id, {
+						...newProduct,
+						lastModified: new Date(),
+					}).exec();
 				};
 
-				const renderErrorMessages = () => {
-					const errors = schemaErrors.mapped();
-					uploadImageError && (errors.image = uploadImageError);
-
-					res.render("productForm", {
-						title: "Update product",
-						product,
-						categories,
-						errors,
-					});
-				};
-
-				schemaErrors.isEmpty() && !uploadImageError
-					? updateProduct()
-					: renderErrorMessages();
+				await Promise.all([
+					file && handleUpdateImage(),
+					!file &&
+						oldProduct.name !== newProduct.name &&
+						RenameProductImage(),
+					editProduct(),
+				]);
+				res.redirect(product.url);
 			};
-			currentProduct
-				? process.env.NODE_ENV === "development" ||
-				  currentProduct.expiresAfter
-					? validationFields()
-					: res.redirect(currentProduct.url)
-				: next(
-						createError(404, "Product not found", {
-							type: "product",
-						})
-				  );
-		} catch (err) {
-			next(
-				createError(400, "Product not found", {
-					cause: process.env.NODE_ENV === "development" ? err : {},
+
+			const renderErrorMessages = () => {
+				const errors = schemaErrors.mapped();
+				file &&
+					imageError &&
+					(errors.image = {
+						msg: "The image is required, size must be less than 500 kb, width and height must be 800 or greater.",
+					});
+				res.render("productForm", {
+					title: "Update product",
+					product: {
+						...req.body,
+						_id: req.params.id,
+						category: Types.ObjectId.createFromHexString(
+							req.body.category
+						),
+						imageUrl: product.imageUrl,
+					},
+					categories,
+					errors,
+				});
+			};
+
+			schemaErrors.isEmpty() && (!file || !imageError)
+				? updateProduct()
+				: renderErrorMessages();
+		};
+		product
+			? !product?.expiresAfter
+				? res.redirect(product.url)
+				: validationFields()
+			: next(
+					createError(404, "Product not found", {
+						type: "product",
+					})
+			  );
+	}),
+];
+const productDeleteGet = asyncHandler(async (req, res, next) => {
+	const product = await Product.findById(req.params.id).exec();
+
+	product
+		? !product?.expiresAfter
+			? res.redirect(product.url)
+			: res.render("productDetail", {
+					title: "Product delete",
+					product,
+			  })
+		: next(
+				createError(404, "Product not found", {
 					type: "product",
 				})
-			);
-		}
-	},
-];
-const productDeleteGet = async (req, res, next) => {
-	try {
-		const product = await Product.findById(req.params.id).exec();
+		  );
+});
+const productDeletePost = asyncHandler(async (req, res, next) => {
+	const product = await Product.findById(req.params.id).exec();
 
-		product
-			? process.env.NODE_ENV === "development" || product.expiresAfter
-				? res.render("productDetail", {
-						title: "Product delete",
-						product,
-				  })
-				: res.redirect(product.url)
-			: next(
-					createError(404, "Product not found", {
-						type: "product",
-					})
-			  );
-	} catch (err) {
-		next(
-			createError(400, "Product not found", {
-				cause: process.env.NODE_ENV === "development" ? err : {},
-				type: "product",
-			})
-		);
-	}
-};
-const productDeletePost = async (req, res, next) => {
-	try {
-		const product = await Product.findById(req.params.id).exec();
-
-		const handleDelete = async () => {
-			const deleteProductImage = async () => {
-				const productImageName = `${unescape(product.name).replace(
-					/[^a-z0-9]+/gi,
-					"-"
-				)}-${+product.lastModified}.jpg`;
-
-				await googleStorage
-					.bucket(bucketName)
-					.file(productImageName)
-					.delete();
-			};
-			const deleteProduct = async () => {
-				await Product.findByIdAndDelete(req.params.id).exec();
-				res.redirect("/inventory/products");
-			};
-			await deleteProductImage();
-			await deleteProduct();
+	const handleDelete = async () => {
+		const deleteProductImage = async () => {
+			await googleStorage
+				.bucket(bucketName)
+				.file(encodeFile(product.name))
+				.delete();
 		};
 
-		product
-			? process.env.NODE_ENV === "development" || product.expiresAfter
-				? handleDelete()
-				: res.redirect(product.url)
-			: next(
-					createError(404, "Product not found", {
-						type: "product",
-					})
-			  );
-	} catch (err) {
-		next(
-			createError(400, "Product not found", {
-				cause: process.env.NODE_ENV === "development" ? err : {},
-				type: "product",
-			})
-		);
-	}
-};
+		await Product.findByIdAndDelete(req.params.id)
+			.exec()
+			.then(async () => await deleteProductImage());
+
+		res.redirect("/inventory/products");
+	};
+
+	product
+		? !product?.expiresAfter
+			? res.redirect(product.url)
+			: handleDelete()
+		: next(
+				createError(404, "Product not found", {
+					type: "product",
+				})
+		  );
+});
 export {
 	productList,
 	productDetail,
